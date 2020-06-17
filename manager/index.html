@@ -11,18 +11,41 @@
 </head>
 
 <body>
-   <div class="container-fluid vh-100">
-      <div class="row min-vh-75">
-         <!--Header-->
-
+   <div class="container-fluid vh-100 d-flex flex-column align-items-stretch">
+      <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between"><!--Header-->
+         <h1 class="ml-3">eCommerce Admin</h1>
+         <button type="button" class="btn btn-light px-2 py-1 font-weight-bold">Log Out</button>
       </div>
-      <div class="row" style="height: 92%"><!--Main-->
-         <div class="col-2 bg-light"> <!--Aside-->
+      <div class="row flex-grow-1"><!--Main-->
+         <div class="col-lg-2 no-bs-dark-2 d-flex flex-column align-items-start"><!--Aside-->
+            <!--Temporal anchors, in the future they'll be more fancy :u-->
+            <div class="d-flex flex-column mt-3">
+               <h4 class="mb-0">Products</h4>
+               <a href="#">Products</a>
+            </div>
 
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Create</h4>
+               <a href="#">Add Product</a>
+               <a href="#">Add Category</a>
+            </div>
+
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Update</h4>
+               <a href="#">Update Product</a>
+               <a href="#">Update Category</a>
+            </div>
+
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Users</h4>
+               <a href="#">Users</a>
+               <a href="#">Create user</a>
+               <a href="#">Update user</a>
+            </div>
          </div>
-         <div class="col-10 h-100 bg-dark"><!--Content-->
+         <div class="col no-bs-dark-3"><!--Content-->
             <div class="mx-auto p-5 mt-5 col-11 bg-light ">
-               <h2 >Product</h2>
+               <h2 class="title">Product</h2>
                <table class="table w-75 mt-5 mx-auto text-aling-center">
                   <thead>
                      <tr>
