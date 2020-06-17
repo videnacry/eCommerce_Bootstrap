@@ -22,7 +22,6 @@ body{
     color: white;
 }
 
-<<<<<<< HEAD
 .manager-menu {
     display: none;
 }
@@ -30,7 +29,6 @@ body{
 #products_list {
     display: block;
 }
-=======
 .carousel-height, .carousel-height img{
     height:40vw;
 }
@@ -43,4 +41,3 @@ body{
     cursor:pointer;
     opacity:1;
 }
->>>>>>> user
