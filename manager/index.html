@@ -15,7 +15,7 @@
       <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between">
          <!--Header-->
          <h1 class="ml-3">eCommerce Admin</h1>
-         <button type="button" class="btn btn-secondary px-2 py-1 mr-3 font-weight-bold">Log Out</button>
+         <button type="button" class="btn btn-dark px-2 py-1 mr-3 font-weight-bold">Log Out</button>
       </div>
       <div class="row flex-grow-1">
          <!--Main-->
@@ -49,7 +49,6 @@
          <!--Content-->
          <div class="col no-bs-dark-3">
             <!-- product tab -->
-
             <div id="products_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
                style="display:none;">
                <h2 class="m-3">Product</h2>
@@ -103,12 +102,13 @@
 
                   <input type="text" class="form-control mt-5 " placeholder="Title">
                   <select class="form-control mt-5">
-                     <option>Choose color</option>
-                     <option value="black">black</option>
-                     <option value="white">white</option>
-                     <option value="red">red</option>
-                     <option value="green">green</option>s
-                     <option value="blue">blue</option>
+                     <option selected>Choose color...</option>
+                     <option value="black">Black</option>
+                     <option value="white">White</option>
+                     <option value="red">Red</option>
+                     <option value="blue">Blue</option>
+                     <option value="green">Green</option>
+                     <option value="yellow">Yellow</option>
                   </select>
                   <button type="button" class=" btn btn-dark w-25 mt-5">Create</button>
                </div>
@@ -121,12 +121,13 @@
 
                   <input type="text" class="form-control mt-5 " placeholder="Title">
                   <select class="form-control mt-5">
-                     <option>Choose color</option>
-                     <option value="black">black</option>
-                     <option value="white">white</option>
-                     <option value="red">red</option>
-                     <option value="green">green</option>s
-                     <option value="blue">blue</option>
+                     <option selected>Choose color...</option>
+                     <option value="black">Black</option>
+                     <option value="white">White</option>
+                     <option value="red">Red</option>
+                     <option value="blue">Blue</option>
+                     <option value="green">Green</option>
+                     <option value="yellow">Yellow</option>
                   </select>
                   <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
                </div>
@@ -141,7 +142,6 @@
                         <th scope="col">id</th>
                         <th scope="col">name</th>
                         <th scope="col">email</th>
-
                         <th scope="col">edit</th>
                      </tr>
                   </thead>
@@ -182,8 +182,6 @@
                         <td>exaample@mail.com</td>
                         <td><button type="button" class="btn btn-primary">Edit</button></td>
                      </tr>
-
-
                   </tbody>
                </table>
             </div>
@@ -243,12 +241,13 @@
                      <fieldset class="form-group">
                         <h5>Color</h5>
                         <select class="form-control custom-select" id="apf_product_color" placeholder="Choose color">
-                           <option>Black</option>
-                           <option>White</option>
-                           <option>Red</option>
-                           <option>Blue</option>
-                           <option>Green</option>
-                           <option>Yellow</option>
+                           <option selected>Choose color...</option>
+                           <option value="black">Black</option>
+                           <option value="white">White</option>
+                           <option value="red">Red</option>
+                           <option value="blue">Blue</option>
+                           <option value="green">Green</option>
+                           <option value="yellow">Yellow</option>
                         </select>
                      </fieldset>
                   </div>
