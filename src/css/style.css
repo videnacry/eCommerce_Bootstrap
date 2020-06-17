@@ -2,6 +2,24 @@ body{
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar{
+    background-color: transparent;
+    width: 0.5vw;
+}
+
+::-webkit-scrollbar-track{
+    background-color: rgb(49, 49, 49);
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: rgb(83, 83, 83);
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(95, 95, 95);
+}
+
+
 .no-bs-dark-1{
     background-color: rgb(10, 10, 10);
     color: rgb(228, 228, 228);
