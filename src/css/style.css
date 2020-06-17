@@ -17,3 +17,11 @@
     background-color: rgb(39, 39, 39);
     color: white;
 }
+
+.manager-menu {
+    display: none;
+}
+
+#products_list {
+    display: block;
+}
