@@ -7,29 +7,38 @@
    <link rel="stylesheet" href="/src/css/style.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body class="bg-dark text-light">
+<body>
    <div class="container-fluid vh-100 d-flex flex-column align-items-stretch">
-      <div class="row no-bs-dark-1" style="height: 10%;"><!--Header-->
-         <h1>eCommerce Admin</h1>
+      <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between"><!--Header-->
+         <h1 class="ml-3">eCommerce Admin</h1>
+         <button type="button" class="btn btn-light px-2 py-1 font-weight-bold">Log Out</button>
       </div>
       <div class="row flex-grow-1"><!--Main-->
-         <div class="col-lg-2 no-bs-dark-2 d-flex flex-column"><!--Aside-->
+         <div class="col-lg-2 no-bs-dark-2 d-flex flex-column align-items-start"><!--Aside-->
             <!--Temporal anchors, in the future they'll be more fancy :u-->
-            <h4>Products</h4>
-            <a href="#">Products</a>
+            <div class="d-flex flex-column mt-3">
+               <h4 class="mb-0">Products</h4>
+               <a href="#">Products</a>
+            </div>
 
-            <h4>Create</h4>
-            <a href="#">Add Product</a>
-            <a href="#">Add Category</a>
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Create</h4>
+               <a href="#">Add Product</a>
+               <a href="#">Add Category</a>
+            </div>
 
-            <h4>Update</h4>
-            <a href="#">Update Product</a>
-            <a href="#">Update Category</a>
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Update</h4>
+               <a href="#">Update Product</a>
+               <a href="#">Update Category</a>
+            </div>
 
-            <h4>Users</h4>
-            <a href="#">Users</a>
-            <a href="#">Create user</a>
-            <a href="#">Update user</a>
+            <div class="d-flex flex-column mt-4">
+               <h4 class="mb-0">Users</h4>
+               <a href="#">Users</a>
+               <a href="#">Create user</a>
+               <a href="#">Update user</a>
+            </div>
          </div>
          <div class="col no-bs-dark-3"><!--Content-->
             
