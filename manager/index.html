@@ -12,12 +12,15 @@
 
 <body>
    <div class="container-fluid vh-100 d-flex flex-column align-items-stretch">
-      <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between"><!--Header-->
+      <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between">
+         <!--Header-->
          <h1 class="ml-3">eCommerce Admin</h1>
          <button type="button" class="btn btn-secondary px-2 py-1 mr-3 font-weight-bold">Log Out</button>
       </div>
-      <div class="row flex-grow-1"><!--Main-->
-         <div class="no-bs-dark-2 d-flex flex-column align-items-start"><!--Aside-->
+      <div class="row flex-grow-1">
+         <!--Main-->
+         <div class="no-bs-dark-2 d-flex flex-column align-items-start">
+            <!--Aside-->
             <!--Temporal anchors, in the future they'll be more fancy :u-->
             <div class="d-flex flex-column mt-3 p-2 px-5">
                <h4 class="mb-0">Products</h4>
@@ -43,9 +46,13 @@
                <a href="#" data-href="#update_user">Update user</a>
             </div>
          </div>
-         <div class="col no-bs-dark-3"><!--Content-->
-            <div id="products_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
-               <h2 class="title">Product</h2>
+         <!--Content-->
+         <div class="col no-bs-dark-3">
+            <!-- product tab -->
+
+            <div id="products_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display:none;">
+               <h2 class="m-3">Product</h2>
                <table class="table w-75 mt-5 mx-auto text-aling-center">
                   <thead>
                      <tr class="no-bs-dark-2">
@@ -90,6 +97,183 @@
                   </tbody>
                </table>
             </div>
+            <!-- new product tab -->
+            <div id="add_product" class="manager-menu" style="display:none;">
+               <h2>New Product</h2>
+               <div class="col-10 border ">
+                  <div class="form-group w-75 mx-auto">
+                     <input type="text" class="form-control mt-5" placeholder="Product Name">
+                     <input type="number" class="form-control mt-5" placeholder="Price">
+                     <div class="custom-file mt-5">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">upload image</label>
+                     </div>
+                     <textarea class="form-control mt-5" id="exampleFormControlTextarea1"
+                        placeholder="Product Description" rows="5"></textarea>
+                     <input type="number" class="form-control mt-5" placeholder="items in stock">
+                     <select class="form-control mt-5">
+                        <option>Select color</option>
+                        <option value="black">black</option>
+                        <option value="white">white</option>
+                        <option value="red">red</option>
+                        <option value="green">green</option>s
+                        <option value="blue">blue</option>
+                     </select>
+                     <label for="" class="mt-5">Category</label>
+                     <div class="row mt-5">
+                        <div class="col">
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="">
+                              <label class="form-check-label">
+                                 category #1
+                              </label>
+                           </div>
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="">
+                              <label class="form-check-label">
+                                 category #1
+                              </label>
+                           </div>
+                        </div>
+                        <div class="col">
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="">
+                              <label class="form-check-label">
+                                 category #1
+                              </label>
+                           </div>
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="">
+                              <label class="form-check-label">
+                                 category #1
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- add category -->
+            <div id="add_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display: none;">
+               <h2 class="m-3">Add Category</h2>
+               <div class="form-group w-50  mx-auto mt-5 text-center">
+
+                  <input type="text" class="form-control mt-5 " placeholder="Title">
+                  <select class="form-control mt-5">
+                     <option>Choose color</option>
+                     <option value="black">black</option>
+                     <option value="white">white</option>
+                     <option value="red">red</option>
+                     <option value="green">green</option>s
+                     <option value="blue">blue</option>
+                  </select>
+                  <button type="button" class=" btn btn-dark w-25 mt-5">Create</button>
+               </div>
+            </div>
+            <!-- update category -->
+            <div id="update_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display: none;">
+               <h2 class="m-3">Update Category</h2>
+               <div class="form-group w-50  mx-auto mt-5 text-center">
+
+                  <input type="text" class="form-control mt-5 " placeholder="Title">
+                  <select class="form-control mt-5">
+                     <option>Choose color</option>
+                     <option value="black">black</option>
+                     <option value="white">white</option>
+                     <option value="red">red</option>
+                     <option value="green">green</option>s
+                     <option value="blue">blue</option>
+                  </select>
+                  <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
+               </div>
+            </div>
+            <!-- user or manager tab -->
+            <div id="users_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display:none;">
+               <h2 class="m-3">User</h2>
+               <table class="table w-75 mt-5 mx-auto text-aling-center">
+                  <thead>
+                     <tr class="no-bs-dark-2">
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+
+                        <th scope="col">edit</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+                     <tr class="no-bs-dark-2">
+                        <td>001</td>
+                        <td>manager Name</td>
+                        <td>exaample@mail.com</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                     </tr>
+
+
+                  </tbody>
+               </table>
+            </div>
+            <!-- Create user -->
+            <div id="create_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display:none;">
+               <h2 class="m-3">Create User</h2>
+               <div class="form-group w-50  mx-auto mt-5 text-center">
+                  <input type="text" class="form-control mt-5 " placeholder="Name">
+                  <input type="email" class="form-control mt-5 " placeholder="Email">
+                  <input type="password" class="form-control mt-5 " placeholder="Password">
+                  
+                  <button type="button" class=" btn btn-dark w-25 mt-5">Create</button>
+               </div>
+
+            </div>
+            <!-- Update user -->
+            <div id="update_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg"
+               style="display:none;">
+               <h2 class="m-3">Update User</h2>
+               <div class="form-group w-50  mx-auto mt-5 text-center">
+                  <input type="text" class="form-control mt-5 " placeholder="Name">
+                  <input type="email" class="form-control mt-5 " placeholder="Email">
+                  <input type="password" class="form-control mt-5 " placeholder="Password">
+                  
+                  <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
+               </div>
+
+            </div>
+            <!--  -->
          </div>
       </div>
 
@@ -102,7 +286,7 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
          crossorigin="anonymous"></script>
-      <script src="/src/js/main.js" defer></script>   
+      <script src="/src/js/main.js" defer></script>
 </body>
 
 </html>
