@@ -6,15 +6,20 @@
         <link rel="stylesheet" href="src/css/style.css">
     </head>
     <body style="overflow-x: hidden;">
-        <div class="container-fluid no-bs-dark-4">
-            <nav class="navbar sticky-top navbar-dark no-bs-dark-2 ">
-            <a class="navbar-brand">eCommerce with Bootstrap</a>
-            <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-              <button class="btn btn-outline-light my-2 my-sm-0 mx-2" type="submit">Login</button>
-              <button class="btn btn-outline-light my-2 my-sm-0 mx-1" type="button">Cart</button>
-            </form>
+        <div class="container-fluid no-bs-dark-4 p-0">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-dark no-bs-dark-2">
+              <a class="navbar-brand">eCommerce with Bootstrap</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+                <form class="form-inline">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline-light my-2 my-sm-0 mx-2" type="submit">Login</button>
+                  <button class="btn btn-outline-light my-2 my-sm-0 mx-1" type="button">Cart</button>
+                </form>
+              </div>
           </nav>
             <header>
                 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -23,7 +28,7 @@
                   <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
                   <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
                 </ol>
-                <div class="carousel-inner" style="height:70vh">
+                <div class="carousel-inner carousel-height">
                   <div class="carousel-item active">
                     <img src="file:///C:/Users/Blein/OneDrive/Im%C3%A1genes/Magnate.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
