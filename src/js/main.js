@@ -7,7 +7,9 @@ $(document).ready(() => {
     })
 
     $("#add_product_btn").click(addProduct)
+
 })
+
 
 function addProduct() {
     const name = $("#apf_product_name")
@@ -16,6 +18,8 @@ function addProduct() {
     const price = $("#apf_product_price")
     const stock = $("#apf_product_stock")
     const color = $("#apf_product_color")
-    //Checking if the form is correct and filled
 
+    //Checking if the form is correct and filled
+    
 }
+

@@ -1,3 +1,25 @@
+body{
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar{
+    background-color: transparent;
+    width: 0.5vw;
+}
+
+::-webkit-scrollbar-track{
+    background-color: rgb(49, 49, 49);
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: rgb(83, 83, 83);
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(95, 95, 95);
+}
+
+
 .no-bs-dark-1{
     background-color: rgb(10, 10, 10);
     color: rgb(228, 228, 228);
@@ -8,7 +30,7 @@
     color: rgb(231, 231, 231);
 }
 
-.no-bs-dark-3{
+.no-bs-dark-3,.dropdown-item-dark:hover{
     background-color: rgb(26, 26, 26);
     color: rgb(238, 238, 238);
 }
@@ -24,4 +46,23 @@
 
 #products_list {
     display: block;
+}
+.carousel-height, .carousel-height img{
+    height:40vw;
+}
+
+.card-item{
+    opacity:0.8;
+}
+
+.card-item:hover{
+    cursor:pointer;
+    opacity:1;
+}
+
+.fullscreen-modal .modal-dialog{
+   width: 100%;
+   max-width: 900px;
+   color: rgb(49, 49, 49);
+
 }
