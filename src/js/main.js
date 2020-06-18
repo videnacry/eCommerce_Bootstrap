@@ -27,7 +27,60 @@ function addProduct() {
 
 
 
-
+const data= {
+    product:[
+        {
+            title:"a",
+            price:01,
+            color:"z",
+        },
+        {
+            title:"b",
+            price:02,
+            color:"r",
+        },
+        {
+            title:"",
+            price:0,
+            color,
+        },
+        {
+            title:"",
+            price:0,
+            color,
+        },
+        {
+            title:"",
+            price:0,
+            color,
+        },
+        {
+            title:"",
+            price:0,
+            color,
+        },
+    ],
+    users:[
+        {
+            name:"1",
+            email:"1",
+            id:01,
+            
+        },
+        {
+            name:"2",
+            email:"2",
+            id:02,
+            
+        },
+        {
+            name:"3",
+            email:"3",
+            id:03,
+            
+        },
+    ]
+}
 
 
 
@@ -40,24 +93,25 @@ let objExample = {
     value:"hola"
 }
 
-
-
-
-
-
-
-
 function saveLocalStorage(key, obj){
     let arr = [];
     if(localStorage.getItem(key) === null) {
         arr.push(obj);
         localStorage.setItem(key, JSON.stringify(arr));
       } else {
-        let arr = JSON.parse(localStorage.getItem(key));
-        arr.push(obj);
-        localStorage.setItem(key, JSON.stringify(arr));
+        // let arr = JSON.parse(localStorage.getItem(key));
+        // arr.push(obj);
+        // localStorage.setItem(key, JSON.stringify(arr));
       }
 }
+
+// function editLocalStorage(){
+
+// }
+
+
+
+
 
 
 
