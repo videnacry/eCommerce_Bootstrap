@@ -101,8 +101,8 @@
                <h2 class="m-3">Add Category</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
 
-                  <input type="text" class="form-control mt-5 " placeholder="Title">
-                  <select class="form-control mt-5">
+                  <input type="text" class="form-control mt-5 " placeholder="Title" id = "inputCategoryTitle">
+                  <select class="form-control mt-5" id="selectCategoryColor">
                      <option selected>Choose color...</option>
                      <option value="black">Black</option>
                      <option value="white">White</option>
@@ -189,7 +189,7 @@
                <h2 class="m-3">Create User</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
                   <input type="text" class="form-control mt-5 " placeholder="Name" id="inputUserName">
-                  <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail">
+                  <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                   <input type="password" class="form-control mt-5 " placeholder="Password" id="inputUserPass">
                   
                   <button type="button" class=" btn btn-dark w-25 mt-5" id="btnCreateUser">Create</button>

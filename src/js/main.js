@@ -168,13 +168,6 @@ function saveLocalStorage(key, obj){
 
 
 
-
-
-
-
-
-
-
 let UserObj = []
 
 
@@ -185,34 +178,59 @@ function createUser()
     let email = $("#inputUserEmail");
     let pass = $("#inputUserPass");
 
-    if(name.val() == "")
+    if(name.val() == "" || name.val().length < 3)
     {
-        // name.css("outline","3px solid red")
-        name.after("<div>puto</div>")
-    }else{
-        name.css("outline","none")
-        newUser.name = name.val()
-        
+        name.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid name</div>')
+        return
     }
-    if(email.val() == ""){
-        email.css("outline","3px solid red")
-    }else
+    if(email.val() == "")
     {
-        email.css("outline","none")
-        newUser.email = email.val()
+        email.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid email example: example@mail.com</div>')
+        return
     }
-    
-    
-    if(pass.val() == ""){
-        pass.css("outline","3px solid red")
-    }else
+    if(pass.val() == "" || pass.val().length < 8)
     {
-        pass.css("outline","none")
-        newUser.password = pass.val()
+        pass.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid password</div>')
+        return
     }
+
+
+    let newUser = {
+        name: name.val(),
+        email: email.val(),
+        password: pass.val()
+    }
+
+
+    UserObj.push(newUser)
+    console.log(UserObj)
+
 
 }
 
+
+
+function createCategory()
+{
+    const title = $("#inputCategoryTitle");
+    const color = $("#selectCategoryColor");
+
+    if (title.val() == ""){
+        title.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid category</div>')
+        return
+    }
+    if(color.val()?? ""){
+        color.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid color</div>')
+        return
+    }
+
+    let newCategory = {
+        title: title.val(),
+        color: color.val()
+    }
+
+    categoryList.push(newCategory)
+}
 
 
 
@@ -229,5 +247,10 @@ $("#btnCreateUser").click((e)=>
     createUser()
     
 })
+
+
+
+
+
 
 
