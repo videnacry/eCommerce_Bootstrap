@@ -379,34 +379,34 @@
                          <label><h3>Shipping Address</h3></label>
                        </div>
                        <div class="form-group col-6">
-                         <input class="form-control" type="text" placeholder="Name">
+                         <input id="checkout-name" class="form-control" type="text" placeholder="Name">
                        </div>
                        <div class="form-group col-6">
-                          <input class="form-control" type="text" placeholder="Last name">
+                          <input id="checkout-last-name" class="form-control" type="text" placeholder="Last name">
                        </div>
                        <div class="form-group col-12">
-                         <input class="form-control" type="text" placeholder="Adress">
+                         <input id="checkout-address" class="form-control" type="text" placeholder="Adress">
                        </div>
                        <div class="form-group col-12">
-                         <input class="form-control" type="text" placeholder="City">
+                         <input id="checkout-city" class="form-control" type="text" placeholder="City">
                        </div>
                        <div class="form-group col-4">
-                         <input class="form-control" type="text" placeholder="Country">
+                         <input id="checkout-country" class="form-control" type="text" placeholder="Country">
                        </div>
                        <div class="form-group col-4">
-                         <input class="form-control" type="text" placeholder="Province">
+                         <input id="checkout-province" class="form-control" type="text" placeholder="Province">
                        </div>
                        <div class="form-group col-4">
-                         <input class="form-control" type="text" placeholder="Postal code">
+                         <input id="checkout-postal-code" class="form-control" type="text" placeholder="Postal code">
                        </div>  
                        <div class="form-group col-12">
-                         <input class="form-control" type="text" placeholder="Phone">
+                         <input id="checkout-phone" class="form-control" type="text" placeholder="Phone">
                        </div>     
                        <div class="form-group col-6">
-                        <a class="btn">&lt; RETURN TO CART</a>
+                        <a class="btn" id="return-to-cart">&lt; RETURN TO CART</a>
                        </div>                   
                        <div class="form-group col-6">
-                         <input type="submit" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
+                         <input type="submit" id="continue-to-shipping" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
                        </div>
                      </div>
                      <div id="shipping-info">
@@ -495,6 +495,11 @@
                            <p class="m-auto">Card title</p>
                            <p class="m-auto">Card price</p>
                          </div>
+                         <div class="row text-dark p-3">
+                           <img src="https://avatars.mds.yandex.net/get-zen_doc/100325/pub_5b534b4a86603300a9ccc5de_5b534c1b4ec18100a9d638c2/scale_1200">
+                           <p class="m-auto">Card title</p>
+                           <p class="m-auto">Card price</p>
+                         </div>
                        </div> 
                        <div class="form-group col-12 row my-3">
                          <div class="col-9">
@@ -534,8 +539,8 @@
       @ 2020 bootstrap shop
    </footer>
    <!-- JS, Popper.js, and jQuery -->
-   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous">
    </script>
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
@@ -543,6 +548,7 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
    </script>
+   <script src="src/js/main.js"></script>
 </body>
 
 </html>
