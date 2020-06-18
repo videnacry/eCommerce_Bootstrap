@@ -3,19 +3,35 @@ $(document).ready(() => {
     $("a").click(e => {
         $(".manager-menu").hide()
         $("" + e.target.getAttribute("data-href") + "").show()
-
-        //Add product, update product
-        $("#add_product").children("h2").text("Add Product")
-        $("#add_product_btn").text("Add Product")
-        if(e.target.getAttribute("data-href") == "#update_product") showUpdateProduct()
     })
 
-    $("#apf_btn").click(drawCategories)
-    $("#add_product_btn").click(addProduct)
+    $("#apf_btn").click(() => { 
+        drawCategories()
+        $("#add_product").children("h2").text("Add Product")
+        $("#add_product_btn").text("Add Product")
+        $("#add_product_btn").click(addProduct)
+    })
 })
 
-let productList = []
-let categoryList = []
+let data = getStorage() || {
+    products: [],
+    categories: [],
+    users: []
+}
+
+function drawProductList() {
+    let i = 1
+    for(const prod of data.products) {
+        $("#pl_list").append(`
+        <tr class="no-bs-dark-2">
+            <td>${i}</td>
+            <td>${prod.name}</td>
+            <td>${prod.price}</td>
+            <td>${prod.stock}</td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn">Edit</button></td>
+        </tr>`)
+    }
+}
 
 function addProduct(product) {
     const name = $("#apf_product_name")
@@ -77,9 +93,24 @@ function addProduct(product) {
         color.after(`<div class="apf_error alert alert-danger mt-1 p-1">A color is required</div>`)
     }
 
-    if(!categories.is(":checked")) {
+    if(weight.val().length == 0 || weight.val() <= 0) {
         validate = false
-        categories.parent().parent().after(`<div class="apf_error alert alert-danger mt-1 p-1">Select at least 1 category</div>`)
+
+        if(weight.val().length == 0)
+            weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight is required</div>`)
+        else 
+            weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight has to be bigger than 0</div>`)
+    }
+
+    if(data.categories.length > 0) {
+        if(!categories.is(":checked")) {
+            validate = false
+            categories.parent().parent().after(`<div class="apf_error alert alert-danger mt-1 p-1">Select at least 1 category</div>`)
+        }
+    } else {
+        validate = false
+        $("#apf_product_categories").append(`<div class="apf_error alert alert-danger mt-1 p-1">There are no categories created, 
+        create one before adding a product</div>`)
     }
 
     if(!validate) return
@@ -88,7 +119,7 @@ function addProduct(product) {
     //Transform category checkbox to strings
     let selectedCategories = []
     for(const cat of categories) if(cat.checked) selectedCategories.push(cat.name)
- 
+
     //Product object creation
     let newProduct = {
         name: name.val(),
@@ -103,12 +134,10 @@ function addProduct(product) {
     console.log(newProduct)
     }   
 
-    if(product !== undefined) productList.splice(productList.indexOf(product), 1)
-    productList.push(newProduct)
+    if(product !== undefined) data.products.splice(data.products.indexOf(product), 1)
+    data.products.push(newProduct)
+    saveStorage()
 
-    //Reset button event listener
-    $("#add_product_btn").click(addProduct)
-    
     //Returns to products menu
     $(".manager-menu").hide()
     $("#products_list").show()
@@ -120,9 +149,15 @@ function addProduct(product) {
 
 function drawCategories() {
     $(".apf_product_category").remove()
+    $(".apf_error").remove()
+
+    if(data.categories.length == 0) {
+        $("#apf_product_categories").append(`<div class="apf_error alert alert-danger mt-1 p-1">There are no categories created, 
+        create one before adding a product</div>`)
+    }
 
     let id = 0
-    for(const cat of categoryList) {
+    for(const cat of data.categories) {
         $("#apf_product_categories").append(`
         <div class="custom-control custom-checkbox p-1 ml-4">
             <input type="checkbox" class="custom-control-input apf_product_category" name="${cat}" id="apf_product_cat_${id}">
@@ -137,22 +172,29 @@ function showUpdateProduct(product) {
     $("#add_product").children("h2").text("Update Product")
     $("#add_product_btn").text("Update Product")
 
+    $("#apf_product_name").val(product.name)
+    $("#apf_product_description").val(product.description)
+    $("#apf_product_image").val(product.img)
+    $("#apf_product_price").val(product.price)
+    $("#apf_product_stock").val(product.stock)
+    $("#apf_product_weight").val(product.weight)
+    $("#apf_product_color").val(product.color)
+    for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
 
-    if(product !== undefined) {
-        console.log("hola")
-        $("#apf_product_name").val(product.name)
-        $("#apf_product_description").val(product.description)
-        $("#apf_product_image").val(product.img)
-        $("#apf_product_price").val(product.price)
-        $("#apf_product_stock").val(product.stock)
-        $("#apf_product_weight").val(product.weight)
-        $("#apf_product_color").val(product.color)
-        for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
-
-        $("#add_product_btn").click(() => addProduct(product))
-    }
+    $("#add_product_btn").click(() => addProduct(product))
 }
 
+function getStorage() { 
+    return JSON.parse(localStorage.getItem("data"))
+}
+
+function saveStorage() {
+    localStorage.setItem("data", JSON.stringify(data))
+}
+
+
+
+/*OLD LOCAL STORAGE
 function saveLocalStorage(key, obj){
     let arr = [];
     if(localStorage.getItem(key) === null) {
@@ -164,7 +206,7 @@ function saveLocalStorage(key, obj){
         localStorage.setItem(key, JSON.stringify(arr));
       }
 }
-
+*/
 
 
 
