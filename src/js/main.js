@@ -135,6 +135,8 @@ function addProduct(product) {
         weight: weight.val(),
         color: color.val(),
         categories: selectedCategories
+    }    
+    console.log(newProduct)
     }   
 
     if(product !== undefined) data.products.splice(data.products.indexOf(product), 1)
@@ -145,6 +147,10 @@ function addProduct(product) {
     $(".manager-menu").hide()
     $("#products_list").show()
 }
+
+
+
+
 
 function drawCategories() {
     $(".apf_product_category").remove()
@@ -209,7 +215,85 @@ function saveLocalStorage(key, obj){
 
 
 
+let UserObj = []
 
+
+
+function createUser()
+{
+    let name = $("#inputUserName");
+    let email = $("#inputUserEmail");
+    let pass = $("#inputUserPass");
+
+    if(name.val() == "" || name.val().length < 3)
+    {
+        name.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid name</div>')
+        return
+    }
+    if(email.val() == "")
+    {
+        email.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid email example: example@mail.com</div>')
+        return
+    }
+    if(pass.val() == "" || pass.val().length < 8)
+    {
+        pass.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid password</div>')
+        return
+    }
+
+
+    let newUser = {
+        name: name.val(),
+        email: email.val(),
+        password: pass.val()
+    }
+
+
+    UserObj.push(newUser)
+    console.log(UserObj)
+
+
+}
+
+
+
+function createCategory()
+{
+    const title = $("#inputCategoryTitle");
+    const color = $("#selectCategoryColor");
+
+    if (title.val() == ""){
+        title.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid category</div>')
+        return
+    }
+    if(color.val()?? ""){
+        color.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid color</div>')
+        return
+    }
+
+    let newCategory = {
+        title: title.val(),
+        color: color.val()
+    }
+
+    categoryList.push(newCategory)
+}
+
+
+
+
+
+
+
+
+
+
+$("#btnCreateUser").click((e)=>
+{
+    e.preventDefault()
+    createUser()
+    
+})
 
 
 
