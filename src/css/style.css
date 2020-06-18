@@ -1,3 +1,4 @@
+/*GENERAL*/
 body{
     overflow-x: hidden;
 }
@@ -19,7 +20,6 @@ body{
     background-color: rgb(95, 95, 95);
 }
 
-
 .no-bs-dark-1{
     background-color: rgb(10, 10, 10);
     color: rgb(228, 228, 228);
@@ -40,13 +40,23 @@ body{
     color: white;
 }
 
+
+/*MANAGER*/
 .manager-menu {
     display: none;
+    min-width: 300px;
+}
+
+.manager-menu .col {
+    min-width: 250px;
 }
 
 #products_list {
     display: block;
 }
+
+
+/*USER*/
 .carousel-height, .carousel-height img{
     height:40vw;
 }
