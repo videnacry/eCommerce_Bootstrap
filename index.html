@@ -357,14 +357,14 @@
                  <p class="modal-title display-4">Checkout</p>
                  <button type="button" class="close btn-empty-light" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
-                 </button>                 
+                 </button>                
                </div>
                <div class="modal-body py-0 row">
                  <div class="col-12 col-md-6 no-bs-dark-3 px-4">
                    <form>
-                     <div class="form-row">
+                     <div id="customer-info" class="form-row">
                        <div class="form-group col-12">
-                         <label class="lead" for="checkout-email"><b>Contact information</b></label>
+                         <label class="mt-2" for="checkout-email"><h3>Contact information</h3></label>
                        </div>
                        <div class="form-group col-12">
                          <input class="form-control" id="checkout-email" placeholder="Email">
@@ -376,7 +376,7 @@
                          </div>
                        </div>
                        <div class="form-group col-12">
-                         <label class="lead"><b>Shipping Address</b></label>
+                         <label><h3>Shipping Address</h3></label>
                        </div>
                        <div class="form-group col-6">
                          <input class="form-control" type="text" placeholder="Name">
@@ -408,6 +408,62 @@
                        <div class="form-group col-6">
                          <input type="submit" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
                        </div>
+                     </div>
+                     <div id="shipping-info">
+                        <div class="bg-light border rounded px-4">
+                           <ul class="list-group list-group-flush text-dark">
+                              <li class="list-group-item d-flex justify-content-between px-0">
+                                 <div class="col-9 row">
+                                    <span class="text-muted col-3 px-0">Contact</span>
+                                    <span id="" class="col-9">email</span>
+                                 </div>
+                                 <a class="text-primary px-0">Change</a>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between px-0">
+                                 <div class="col-9 row">
+                                    <span class="text-muted col-3 px-0">Ship to</span>
+                                    <span id="" class="col-9">Address</span>
+                                 </div>
+                                 <a class="text-primary px-0">Change</a>
+                              </li>
+                           </ul>
+                        </div>
+                        <h3 class="mt-4 mb-2">Shipping method</h3>
+                        <div>
+                           <ul class="list-group text-dark">
+                              <li class="list-group-item d-flex justify-content-between">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio">
+                                    <label class="form-check-label" for="">UPS Worldwide Expediter</label>
+                                 </div>
+                                 <p>Price</p>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio">
+                                    <label class="form-check-label" for="">UPS Worldwide Saver</label>
+                                 </div>
+                                 <p>Price</p>
+                              </li>
+                              <li class="list-group-item d-flex justify-content-between">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="radio">
+                                    <label class="form-check-label" for="">UPS Worldwide Express</label>
+                                 </div>
+                                 <p>Price</p>
+                              </li>
+                           </ul>     
+                           <div class="form-row mt-3">
+                              <div class="form-group col-6">
+                               <a class="btn">&lt; RETURN TO CUSTOMER INFO</a>
+                              </div>                   
+                              <div class="form-group col-6 mt-3">
+                                <input type="submit" class="btn no-bs-dark-1" value="CONTINUE TO SUMMERY">
+                              </div>                              
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row">
                        <div class="form-group col-12">
                          <a class="btn"><small>Refund policy</small></a>
                          <a class="btn"><small>Terms of service</small></a>
@@ -431,6 +487,11 @@
                          </div>
                          <div class="row text-dark p-3">
                            <img src="https://i.redd.it/fq4ue3tybxw11.png">
+                           <p class="m-auto">Card title</p>
+                           <p class="m-auto">Card price</p>
+                         </div>
+                         <div class="row text-dark p-3">
+                           <img src="https://www.cultureentertainment.us/wp-content/uploads/2018/09/Why-Any-Business-Needs-Animation-Video-Services.jpg">
                            <p class="m-auto">Card title</p>
                            <p class="m-auto">Card price</p>
                          </div>
