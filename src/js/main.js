@@ -100,77 +100,12 @@ function addProduct() {
         color: color.val(),
         categories: selectedCategories
     }    
+    console.log(newProduct)
 }
 
 
 
 
-
-let data= {
-    product:[
-        {
-            title:"a",
-            price:01,
-            color:"z",
-        },
-        {
-            title:"b",
-            price:02,
-            color:"r",
-        },
-        {
-            title:"",
-            price:0,
-            color,
-        },
-        {
-            title:"",
-            price:0,
-            color,
-        },
-        {
-            title:"",
-            price:0,
-            color,
-        },
-        {
-            title:"",
-            price:0,
-            color,
-        },
-    ],
-    users:[
-        {
-            name:"1",
-            email:"1",
-            id:01,
-            
-        },
-        {
-            name:"2",
-            email:"2",
-            id:02,
-            
-        },
-        {
-            name:"3",
-            email:"3",
-            id:03,
-            
-        },
-    ]
-}
-
-
-
-
-
-
-
-
-let objExample = {
-    value:"hola"
-}
 
 function drawCategories() {
     const container = $("#apf_product_categories")
@@ -218,9 +153,6 @@ function saveLocalStorage(key, obj){
       }
 }
 
-// function editLocalStorage(){
-
-// }
 
 
 
@@ -231,9 +163,58 @@ function saveLocalStorage(key, obj){
 
 
 
+let UserObj = []
+
+
+
+function createUser()
+{
+    let name = $("#inputUserName");
+    let email = $("#inputUserEmail");
+    let pass = $("#inputUserPass");
+
+    if(name.val() == "")
+    {
+        name.css("outline","3px solid red")
+    }else{
+        name.css("outline","none")
+        newUser.name = name.val()
+        
+    }
+    if(email.val() == ""){
+        email.css("outline","3px solid red")
+    }else
+    {
+        email.css("outline","none")
+        newUser.email = email.val()
+    }
+    
+    
+    if(pass.val() == ""){
+        pass.css("outline","3px solid red")
+    }else
+    {
+        pass.css("outline","none")
+        newUser.password = pass.val()
+    }
+
+}
 
 
 
 
+
+
+
+
+
+
+
+$("#btnCreateUser").click((e)=>
+{
+    e.preventDefault()
+    createUser()
+    
+})
 
 
