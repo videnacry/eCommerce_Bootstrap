@@ -113,12 +113,11 @@ function addProduct(product) {
 }
 
 function drawCategories() {
-    const container = $("#apf_product_categories")
     $(".apf_product_category").remove()
 
     let id = 0
     for(const cat of categoryList) {
-        container.append(`
+        $("#apf_product_categories").append(`
         <div class="custom-control custom-checkbox p-1 ml-4">
             <input type="checkbox" class="custom-control-input apf_product_category" name="${cat}" id="apf_product_cat_${id}">
             <label class="custom-control-label" for="apf_product_cat_${id}">${cat}</label>
