@@ -3,10 +3,6 @@ $(document).ready(() => {
     $("a").click(e => {
         $(".manager-menu").hide()
         $("" + e.target.getAttribute("data-href") + "").show()
-
-        //Add product, update product
-        $("#add_product").children("h2").text("Add Product")
-        $("#add_product_btn").text("Add Product")
     })
 
     $("#apf_btn").click(() => { 
@@ -22,7 +18,20 @@ let data = getStorage() || {
     categories: [],
     users: []
 }
-saveStorage()
+
+function drawProductList() {
+    let i = 1
+    for(const prod of data.products) {
+        $("#pl_list").append(`
+        <tr class="no-bs-dark-2">
+            <td>${i}</td>
+            <td>${prod.name}</td>
+            <td>${prod.price}</td>
+            <td>${prod.stock}</td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn">Edit</button></td>
+        </tr>`)
+    }
+}
 
 function addProduct(product) {
     const name = $("#apf_product_name")
