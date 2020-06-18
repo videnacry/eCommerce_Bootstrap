@@ -1,5 +1,6 @@
-body {
-   overflow-x: hidden;
+/*GENERAL*/
+body{
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -19,10 +20,9 @@ body {
    background-color: rgb(95, 95, 95);
 }
 
-
-.no-bs-dark-1 {
-   background-color: rgb(10, 10, 10);
-   color: rgb(228, 228, 228);
+.no-bs-dark-1{
+    background-color: rgb(10, 10, 10);
+    color: rgb(228, 228, 228);
 }
 
 .no-bs-dark-2 {
@@ -41,17 +41,25 @@ body {
    color: white;
 }
 
+
+/*MANAGER*/
 .manager-menu {
-   display: none;
+    display: none;
+    min-width: 300px;
+}
+
+.manager-menu .col {
+    min-width: 250px;
 }
 
 #products_list {
    display: block;
 }
 
-.carousel-height,
-.carousel-height img {
-   height: 40vw;
+
+/*USER*/
+.carousel-height, .carousel-height img{
+    height:40vw;
 }
 
 .card-item {
