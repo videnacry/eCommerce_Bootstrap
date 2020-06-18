@@ -17,7 +17,7 @@ $(document).ready(() => {
 let productList = []
 let categoryList = []
 
-function addProduct() {
+function addProduct(product) {
     const name = $("#apf_product_name")
     const description = $("#apf_product_description")
     const img = $("#apf_product_image")
@@ -88,7 +88,7 @@ function addProduct() {
     //Transform category checkbox to strings
     let selectedCategories = []
     for(const cat of categories) if(cat.checked) selectedCategories.push(cat.name)
-
+ 
     //Product object creation
     let newProduct = {
         name: name.val(),
@@ -101,6 +101,17 @@ function addProduct() {
         categories: selectedCategories
     }    
     console.log(newProduct)
+    }   
+
+    if(product !== undefined) productList.splice(productList.indexOf(product), 1)
+    productList.push(newProduct)
+
+    //Reset button event listener
+    $("#add_product_btn").click(addProduct)
+    
+    //Returns to products menu
+    $(".manager-menu").hide()
+    $("#products_list").show()
 }
 
 
@@ -108,12 +119,11 @@ function addProduct() {
 
 
 function drawCategories() {
-    const container = $("#apf_product_categories")
     $(".apf_product_category").remove()
 
     let id = 0
     for(const cat of categoryList) {
-        container.append(`
+        $("#apf_product_categories").append(`
         <div class="custom-control custom-checkbox p-1 ml-4">
             <input type="checkbox" class="custom-control-input apf_product_category" name="${cat}" id="apf_product_cat_${id}">
             <label class="custom-control-label" for="apf_product_cat_${id}">${cat}</label>
@@ -138,6 +148,8 @@ function showUpdateProduct(product) {
         $("#apf_product_weight").val(product.weight)
         $("#apf_product_color").val(product.color)
         for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
+
+        $("#add_product_btn").click(() => addProduct(product))
     }
 }
 
@@ -175,7 +187,8 @@ function createUser()
 
     if(name.val() == "")
     {
-        name.css("outline","3px solid red")
+        // name.css("outline","3px solid red")
+        name.after("<div>puto</div>")
     }else{
         name.css("outline","none")
         newUser.name = name.val()
