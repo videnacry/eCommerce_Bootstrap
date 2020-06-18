@@ -3,6 +3,11 @@ $(document).ready(() => {
     $("a").click(e => {
         $(".manager-menu").hide()
         $("" + e.target.getAttribute("data-href") + "").show()
+
+        //Add product, update product
+        $("#add_product").children("h2").text("Add Product")
+        $("#add_product_btn").text("Add Product")
+        if(e.target.getAttribute("data-href") == "#update_product") showUpdateProduct()
     })
 
     $("#apf_btn").click(drawCategories)
@@ -80,9 +85,9 @@ function addProduct() {
     if(!validate) return
     //VALIDATION DONE
     
-    //Transform category checkbox to string. Later on development, when categories exist as an object, this will not be needed
+    //Transform category checkbox to strings
     let selectedCategories = []
-    for(const cat of categories) if(cat.checked) selectedCategories.push(cat.id)
+    for(const cat of categories) if(cat.checked) selectedCategories.push(cat.name)
 
     //Product object creation
     let newProduct = {
@@ -109,6 +114,25 @@ function drawCategories() {
             <label class="custom-control-label" for="apf_product_cat_${id}">${cat}</label>
         </div>`)
         id++
+    }
+}
+
+function showUpdateProduct(product) {
+    $("#add_product").show()
+    $("#add_product").children("h2").text("Update Product")
+    $("#add_product_btn").text("Update Product")
+
+
+    if(product !== undefined) {
+        console.log("hola")
+        $("#apf_product_name").val(product.name)
+        $("#apf_product_description").val(product.description)
+        $("#apf_product_image").val(product.img)
+        $("#apf_product_price").val(product.price)
+        $("#apf_product_stock").val(product.stock)
+        $("#apf_product_weight").val(product.weight)
+        $("#apf_product_color").val(product.color)
+        for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
     }
 }
 
