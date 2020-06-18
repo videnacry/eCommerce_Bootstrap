@@ -17,7 +17,7 @@ $(document).ready(() => {
 let productList = []
 let categoryList = []
 
-function addProduct() {
+function addProduct(product) {
     const name = $("#apf_product_name")
     const description = $("#apf_product_description")
     const img = $("#apf_product_image")
@@ -88,7 +88,7 @@ function addProduct() {
     //Transform category checkbox to strings
     let selectedCategories = []
     for(const cat of categories) if(cat.checked) selectedCategories.push(cat.name)
-
+ 
     //Product object creation
     let newProduct = {
         name: name.val(),
@@ -99,7 +99,17 @@ function addProduct() {
         weight: weight.val(),
         color: color.val(),
         categories: selectedCategories
-    }    
+    }   
+
+    if(product !== undefined) productList.splice(productList.indexOf(product), 1)
+    productList.push(newProduct)
+
+    //Reset button event listener
+    $("#add_product_btn").click(addProduct)
+    
+    //Returns to products menu
+    $(".manager-menu").hide()
+    $("#products_list").show()
 }
 
 function drawCategories() {
@@ -133,6 +143,8 @@ function showUpdateProduct(product) {
         $("#apf_product_weight").val(product.weight)
         $("#apf_product_color").val(product.color)
         for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
+
+        $("#add_product_btn").click(() => addProduct(product))
     }
 }
 
