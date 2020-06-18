@@ -6,10 +6,14 @@ $(document).ready(() => {
         $("" + e.target.getAttribute("data-href") + "").show()
     })
 
+
+
     $("#add_product_btn").click(addProduct)
 
 })
 
+let productList = []
+let categoryList = ["Glasses", "Potatoes", "Drugs"]
 
 function addProduct() {
     const name = $("#apf_product_name")
@@ -17,6 +21,7 @@ function addProduct() {
     const img = $("#apf_product_image")
     const price = $("#apf_product_price")
     const stock = $("#apf_product_stock")
+    const weight = $("#apf_product_weight")
     const color = $("#apf_product_color")
     const categories = $(".apf_product_category")
 
@@ -78,31 +83,22 @@ function addProduct() {
     if(!validate) return
     //VALIDATION DONE
     
+    //Transform category checkbox to string. Later on development, when categories exist as an object, this will not be needed
+    let selectedCategories = []
+    for(const cat of categories) if(cat.checked) selectedCategories.push(cat.id)
+
     //Product object creation
+    let newProduct = {
+        name: name.val(),
+        description: description.val(),
+        img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
+        price: price.val(),
+        stock: stock.val(),
+        weight: weight.val(),
+        color: color.val(),
+        categories: selectedCategories
+    }    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let objExample = {
-    value:"hola"
-}
-
-
-
-
-
-
 
 
 function saveLocalStorage(key, obj){
