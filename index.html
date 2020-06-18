@@ -21,7 +21,7 @@
                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                <button class="btn no-bs-dark-3 my-2 my-sm-0" type="submit">Search</button>
                <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-2" type="submit">Login</button>
-               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" type="button">Cart</button>
+               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" data-toggle="modal" data-target="#checkout" type="button">Cart</button>
             </form>
          </div>
       </nav>
@@ -82,10 +82,6 @@
          </div>
       </div>
       <main>
-
-
-        
-
          <div class="container">
             <div class="row">
                <div class="col-lg-6 col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product">
@@ -352,6 +348,118 @@
                   </div>
                </div>
             </div>
+         </div>
+
+         <div id="checkout" class="modal fullscreen-modal" role="dialog">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content no-bs-dark-4">
+               <div class="modal-header no-bs-dark-1">
+                 <p class="modal-title display-4">Checkout</p>
+                 <button type="button" class="close btn-empty-light" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>                 
+               </div>
+               <div class="modal-body py-0 row">
+                 <div class="col-12 col-md-6 no-bs-dark-3 px-4">
+                   <form>
+                     <div class="form-row">
+                       <div class="form-group col-12">
+                         <label class="lead" for="checkout-email"><b>Contact information</b></label>
+                       </div>
+                       <div class="form-group col-12">
+                         <input class="form-control" id="checkout-email" placeholder="Email">
+                         <div class="form-check">
+                           <input class="form-check-input" type="checkbox" id="up-to-date">
+                           <label class="form-check-label" for="up-to-date">
+                             Keep me up to date on news ans exclusive offers
+                           </label>
+                         </div>
+                       </div>
+                       <div class="form-group col-12">
+                         <label class="lead"><b>Shipping Address</b></label>
+                       </div>
+                       <div class="form-group col-6">
+                         <input class="form-control" type="text" placeholder="Name">
+                       </div>
+                       <div class="form-group col-6">
+                          <input class="form-control" type="text" placeholder="Last name">
+                       </div>
+                       <div class="form-group col-12">
+                         <input class="form-control" type="text" placeholder="Adress">
+                       </div>
+                       <div class="form-group col-12">
+                         <input class="form-control" type="text" placeholder="City">
+                       </div>
+                       <div class="form-group col-4">
+                         <input class="form-control" type="text" placeholder="Country">
+                       </div>
+                       <div class="form-group col-4">
+                         <input class="form-control" type="text" placeholder="Province">
+                       </div>
+                       <div class="form-group col-4">
+                         <input class="form-control" type="text" placeholder="Postal code">
+                       </div>  
+                       <div class="form-group col-12">
+                         <input class="form-control" type="text" placeholder="Phone">
+                       </div>     
+                       <div class="form-group col-6">
+                        <a class="btn">&lt; RETURN TO CART</a>
+                       </div>                   
+                       <div class="form-group col-6">
+                         <input type="submit" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
+                       </div>
+                       <div class="form-group col-12">
+                         <a class="btn"><small>Refund policy</small></a>
+                         <a class="btn"><small>Terms of service</small></a>
+                       </div>         
+                     </div>
+                   </form>
+                 </div>
+                 <div class="col-12 col-md-6 bg-light px-4 text-dark">
+                   <form>
+                     <div class="form-row">
+                       <div class="col-12 order-items">
+                         <div class="row text-dark p-3">
+                           <img src="https://i.ytimg.com/vi/fhGtA75r4jw/maxresdefault.jpg">
+                           <p class="m-auto">Card title</p>
+                           <p class="m-auto">Card price</p>
+                         </div>
+                         <div class="row text-dark p-3">
+                           <img src="https://awarenessact.com/wp-content/uploads/2018/08/spiritkitty-1024x612.jpg">
+                           <p class="m-auto">Card title</p>
+                           <p class="m-auto">Card price</p>
+                         </div>
+                         <div class="row text-dark p-3">
+                           <img src="https://i.redd.it/fq4ue3tybxw11.png">
+                           <p class="m-auto">Card title</p>
+                           <p class="m-auto">Card price</p>
+                         </div>
+                       </div> 
+                       <div class="form-group col-12 row my-3">
+                         <div class="col-9">
+                          <input type="text" class="form-control" placeholder="Gift card or discount code">
+                         </div>
+                         <div class="col-3 p-0">
+                          <input type="button" class="btn no-bs-dark-3 btn-block" value="APPLY">
+                         </div>
+                       </div>
+                       <div class="order-prices col-12 border-top border-bottom my-3">
+                        <div class="d-flex justify-content-between">
+                          <p>Subtotal</p><p>subtotal price</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <p>Shipping</p><p>shipping price</p>                          
+                        </div>
+                       </div>
+                       <div class="order-total col-12 d-flex justify-content-between">
+                        <p class="lead"><b>Total</b></p><p class="lead"><b>Total price</b></p>
+                       </div>
+                     </div>
+                   </form>
+                 </div>
+               </div>
+             </div>
+           </div>
          </div>
 
       </main>

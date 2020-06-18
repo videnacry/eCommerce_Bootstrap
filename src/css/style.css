@@ -35,6 +35,11 @@ body{
     color: rgb(238, 238, 238);
 }
 
+.btn.no-bs-dark-1:hover,.btn.no-bs-dark-2:hover,.btn.no-bs-dark-3:hover{
+    background-color: rgb(228, 228, 228);
+    color:rgb(26, 26, 26)
+}
+
 .no-bs-dark-4{
     background-color: rgb(39, 39, 39);
     color: white;
@@ -64,5 +69,33 @@ body{
    width: 100%;
    max-width: 900px;
    color: rgb(49, 49, 49);
+}
 
+.order-items{
+    height:40vh;
+    overflow: hidden;
+}
+
+.order-items:hover{
+    overflow-y: auto;
+}
+
+.order-items img{
+    max-width: 150px;
+    width:30%;
+    max-height: 80px;
+    height:15vw;
+}
+
+.btn.text-light:hover{
+    color:#ff0000;
+}
+
+.btn-empty-light{
+    color:whitesmoke;
+    text-shadow:0 3px rgb(199, 0, 0);
+}
+
+.btn-empty-light:hover{
+    color:white;
 }
