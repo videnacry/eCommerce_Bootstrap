@@ -59,3 +59,10 @@ body{
     cursor:pointer;
     opacity:1;
 }
+
+.fullscreen-modal .modal-dialog{
+   width: 100%;
+   max-width: 900px;
+   color: rgb(49, 49, 49);
+
+}

@@ -7,7 +7,14 @@ $(document).ready(() => {
     })
 
     $("#add_product_btn").click(addProduct)
+
+    $(".card-header").on("click", function(e){
+       e.preventDefault()
+       $("#modal-product").modal("show")
+    })
+
 })
+
 
 function addProduct() {
     const name = $("#apf_product_name")
@@ -20,3 +27,4 @@ function addProduct() {
     //Checking if the form is correct and filled
     
 }
+
