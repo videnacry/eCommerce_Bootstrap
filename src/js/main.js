@@ -15,10 +15,18 @@ $(document).ready(() => {
     showValidation($("#checkout-name"),"Hey, that's not valid","is-invalid","invalid-feedback")
     showValidation($("#checkout-phone"),"Hey, your phone is required to contact you","is-invalid","invalid-feedback")
     $("#customer-info form").submit(function(event){event.preventDefault()})
-    $("#continue-to-shipping").click(function(event){
-        alert("a")
-        replace($("#customer-info"),$("shipping-info"))
+    $("#continue-to-shipping").click(function(){
+        replace($("#customer-info"),$("#shipping-info"))
     })
+    let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
+    shippingToCustomer(buttonsShippingToCustomer)
+    function shippingToCustomer(buttonsSelectors){
+        buttonsSelectors.forEach(function(button){
+            $(button).click(function(){
+                replace($("#shipping-info"),$("#customer-info"))                
+            })
+        })
+    }
 })
 
 
@@ -35,8 +43,10 @@ function addProduct() {
 }
 
 function replace(element,replace){
-    element.fadeOut()
-    replace.fadeIn()
+    element.fadeOut(500)
+    setTimeout(function(){
+        replace.fadeIn(500)
+    },500)
 }
 
 /**
