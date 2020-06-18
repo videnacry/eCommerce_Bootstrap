@@ -27,7 +27,7 @@
             <!--Temporal anchors, in the future they'll be more fancy :u-->
             <div class="d-flex flex-column mt-3 p-2 px-5">
                <h4 class="mb-0">Products</h4>
-               <a href="#" data-href="#products_list">Products</a>
+               <a id="pl_btn" href="#" data-href="#products_list">Products</a>
             </div>
 
             <div class="d-flex flex-column mt-3 p-2 px-5">
@@ -72,7 +72,6 @@
             <div id="add_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="m-3">Add Category</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
-
                   <input type="text" class="form-control mt-5 " placeholder="Title" id = "inputCategoryTitle">
                   <select class="form-control mt-5" id="selectCategoryColor">
                      <option selected>Choose color...</option>
@@ -83,7 +82,7 @@
                      <option value="green">Green</option>
                      <option value="yellow">Yellow</option>
                   </select>
-                  <button type="button" class=" btn btn-dark w-25 mt-5">Create</button>
+                  <button type="button" class="btn btn-dark w-25 mt-5" id="btnCreateCategory">Create</button>
                </div>
             </div>
             <!-- update category -->

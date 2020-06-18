@@ -2,8 +2,11 @@ $(document).ready(() => {
     //EVENT LISTENERS
     $("a").click(e => {
         $(".manager-menu").hide()
+        $("input, textarea").val("")
         $("" + e.target.getAttribute("data-href") + "").show()
     })
+
+    $("#pl_btn").click(drawProductList)
 
     $("#apf_btn").click(() => { 
         drawCategories()
@@ -11,6 +14,18 @@ $(document).ready(() => {
         $("#add_product_btn").text("Add Product")
         $("#add_product_btn").click(addProduct)
     })
+
+    $("#btnCreateUser").click(e => {
+        e.preventDefault()
+        createUser()
+    })
+
+    $("#btnCreateCategory").click(e => {
+        e.preventDefault()
+        createCategory()
+    })
+
+    drawProductList()
 })
 
 let data = getStorage() || {
@@ -19,11 +34,22 @@ let data = getStorage() || {
     users: []
 }
 
+function getStorage() { 
+    return JSON.parse(localStorage.getItem("data"))
+}
+
+function saveStorage() {
+    localStorage.setItem("data", JSON.stringify(data))
+}
+
 function drawProductList() {
+    $(".pl_product").remove()
+    $("#products_list").show()
+
     let i = 1
     for(const prod of data.products) {
         $("#pl_list").append(`
-        <tr class="no-bs-dark-2">
+        <tr class="no-bs-dark-2 pl_product">
             <td>${i}</td>
             <td>${prod.name}</td>
             <td>${prod.price}</td>
@@ -33,8 +59,8 @@ function drawProductList() {
     }
 
     $(".pl_edit_btn").click(e => {
-        const id = e.getAttribute("data-productId")
-        showUpdateProduct(data.products[id])
+        const id = e.target.getAttribute("data-productId")
+        showUpdateProduct(data.products[id-1])
     })
 }
 
@@ -123,7 +149,7 @@ function addProduct(product) {
     
     //Transform category checkbox to strings
     let selectedCategories = []
-    for(const cat of categories) if(cat.checked) selectedCategories.push(cat.name)
+    for(const cat of categories) if(cat.checked) selectedCategories.push(categoryNameToObj(cat.name))
 
     //Product object creation
     let newProduct = {
@@ -136,8 +162,6 @@ function addProduct(product) {
         color: color.val(),
         categories: selectedCategories
     }    
-    console.log(newProduct)
-    }   
 
     if(product !== undefined) data.products.splice(data.products.indexOf(product), 1)
     data.products.push(newProduct)
@@ -145,15 +169,88 @@ function addProduct(product) {
 
     //Returns to products menu
     $(".manager-menu").hide()
-    $("#products_list").show()
+    drawProductList()
+}
+
+function createUser()
+{
+    $(".apf_error").remove()
+
+    let name = $("#inputUserName");
+    let email = $("#inputUserEmail");
+    let pass = $("#inputUserPass");
+
+    let validate = true
+
+    if(name.val() == "" || name.val().length < 3)
+    {
+        name.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid name</div>')
+        validate = false
+    }
+    if(email.val() == "")
+    {
+        email.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid email example: example@mail.com</div>')
+        validate = false
+    }
+    if(pass.val() == "" || pass.val().length < 8)
+    {
+        pass.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid password</div>')
+        validate = false
+    }
+
+    if(!validate) return
+
+    let newUser = {
+        name: name.val(),
+        email: email.val(),
+        password: pass.val()
+    }
+
+    data.users.push(newUser)
+    saveStorage()
+
+    //Returns to products menu
+    $(".manager-menu").hide()
+    drawProductList()
+}
+
+function createCategory()
+{
+    $(".apf_error").remove()
+
+    const title = $("#inputCategoryTitle");
+    const color = $("#selectCategoryColor");
+
+    let validate = true
+
+    if (title.val().length == 0){
+        title.after('<div class="apf_error alert alert-danger mt-1 p-1">Category name is required</div>')
+        validate = false
+    }
+
+    if(color.val() == "Choose color..."){
+        color.after('<div class="apf_error alert alert-danger mt-1 p-1">Category color is required</div>')
+        validate = false
+    }
+
+    if(!validate) return
+
+    let newCategory = {
+        title: title.val(),
+        color: color.val()
+    }
+
+    data.categories.push(newCategory)
+    saveStorage()
+
+    //Returns to products menu
+    $(".manager-menu").hide()
+    drawProductList()
 }
 
 
-
-
-
 function drawCategories() {
-    $(".apf_product_category").remove()
+    $(".apf_product_category").parent().remove()
     $(".apf_error").remove()
 
     if(data.categories.length == 0) {
@@ -165,17 +262,20 @@ function drawCategories() {
     for(const cat of data.categories) {
         $("#apf_product_categories").append(`
         <div class="custom-control custom-checkbox p-1 ml-4">
-            <input type="checkbox" class="custom-control-input apf_product_category" name="${cat}" id="apf_product_cat_${id}">
-            <label class="custom-control-label" for="apf_product_cat_${id}">${cat}</label>
+            <input type="checkbox" class="custom-control-input apf_product_category" name="${cat.title}" id="apf_product_cat_${id}">
+            <label class="custom-control-label" for="apf_product_cat_${id}">${cat.title}</label>
         </div>`)
         id++
     }
 }
 
 function showUpdateProduct(product) {
+    $(".manager-menu").hide()
     $("#add_product").show()
+    
     $("#add_product").children("h2").text("Update Product")
     $("#add_product_btn").text("Update Product")
+    drawCategories()
 
     $("#apf_product_name").val(product.name)
     $("#apf_product_description").val(product.description)
@@ -184,120 +284,22 @@ function showUpdateProduct(product) {
     $("#apf_product_stock").val(product.stock)
     $("#apf_product_weight").val(product.weight)
     $("#apf_product_color").val(product.color)
-    for(const cat of $(".apf_product_category")) if(product.categories.includes(cat.name)) cat.prop("checked")
-
+    
+    for(const cat of $(".apf_product_category"))
+        if(searchMatchCategory(product, cat.name)) cat.checked = true
+        
     $("#add_product_btn").click(() => addProduct(product))
 }
 
-function getStorage() { 
-    return JSON.parse(localStorage.getItem("data"))
+//Helper function to transform category name to object
+function categoryNameToObj(name) {
+    for(const cat of data.categories) 
+        if(cat.title == name) return cat
 }
 
-function saveStorage() {
-    localStorage.setItem("data", JSON.stringify(data))
+//Helper function to search for a category in a product
+function searchMatchCategory(product, name) {
+    for(const cat of product.categories)
+        if(cat.title == name) return true
 }
-
-
-
-/*OLD LOCAL STORAGE
-function saveLocalStorage(key, obj){
-    let arr = [];
-    if(localStorage.getItem(key) === null) {
-        arr.push(obj);
-        localStorage.setItem(key, JSON.stringify(arr));
-      } else {
-        let arr = JSON.parse(localStorage.getItem(key));
-        arr.push(obj);
-        localStorage.setItem(key, JSON.stringify(arr));
-      }
-}
-*/
-
-
-
-let UserObj = []
-
-
-
-function createUser()
-{
-    let name = $("#inputUserName");
-    let email = $("#inputUserEmail");
-    let pass = $("#inputUserPass");
-
-    if(name.val() == "" || name.val().length < 3)
-    {
-        name.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid name</div>')
-        return
-    }
-    if(email.val() == "")
-    {
-        email.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid email example: example@mail.com</div>')
-        return
-    }
-    if(pass.val() == "" || pass.val().length < 8)
-    {
-        pass.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid password</div>')
-        return
-    }
-
-
-    let newUser = {
-        name: name.val(),
-        email: email.val(),
-        password: pass.val()
-    }
-
-
-    UserObj.push(newUser)
-    console.log(UserObj)
-
-
-}
-
-
-
-function createCategory()
-{
-    const title = $("#inputCategoryTitle");
-    const color = $("#selectCategoryColor");
-
-    if (title.val() == ""){
-        title.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid category</div>')
-        return
-    }
-    if(color.val()?? ""){
-        color.after('<div class="apf_error alert alert-danger mt-1 p-1">enter a valid color</div>')
-        return
-    }
-
-    let newCategory = {
-        title: title.val(),
-        color: color.val()
-    }
-
-    categoryList.push(newCategory)
-}
-
-
-
-
-
-
-
-
-
-
-$("#btnCreateUser").click((e)=>
-{
-    e.preventDefault()
-    createUser()
-    
-})
-
-
-
-
-
-
 
