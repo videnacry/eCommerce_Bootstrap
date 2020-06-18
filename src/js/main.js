@@ -28,9 +28,14 @@ function drawProductList() {
             <td>${prod.name}</td>
             <td>${prod.price}</td>
             <td>${prod.stock}</td>
-            <td><button type="button" class="btn btn-primary pl_edit_btn">Edit</button></td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn" data-productId="${i}">Edit</button></td>
         </tr>`)
     }
+
+    $(".pl_edit_btn").click(e => {
+        const id = e.getAttribute("data-productId")
+        showUpdateProduct(data.products[id])
+    })
 }
 
 function addProduct(product) {
