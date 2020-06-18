@@ -1,19 +1,16 @@
 $(document).ready(() => {
-    
     //EVENT LISTENERS
     $("a").click(e => {
         $(".manager-menu").hide()
         $("" + e.target.getAttribute("data-href") + "").show()
     })
 
-
-
+    $("#apf_btn").click(drawCategories)
     $("#add_product_btn").click(addProduct)
-
 })
 
 let productList = []
-let categoryList = ["Glasses", "Potatoes", "Drugs"]
+let categoryList = []
 
 function addProduct() {
     const name = $("#apf_product_name")
@@ -50,7 +47,7 @@ function addProduct() {
     if(img.val().length < 1 || img.val().split(",").length > 4) {
         validate = false
 
-        if(img.val().length == 1)
+        if(img.val().length < 1)
             img.after(`<div class="apf_error alert alert-danger mt-1 p-1">An image is required</div>`)
         else 
             img.after(`<div class="apf_error alert alert-danger mt-1 p-1">You only can upload up to 4 images</div>`)
@@ -100,6 +97,20 @@ function addProduct() {
     }    
 }
 
+function drawCategories() {
+    const container = $("#apf_product_categories")
+    $(".apf_product_category").remove()
+
+    let id = 0
+    for(const cat of categoryList) {
+        container.append(`
+        <div class="custom-control custom-checkbox p-1 ml-4">
+            <input type="checkbox" class="custom-control-input apf_product_category" name="${cat}" id="apf_product_cat_${id}">
+            <label class="custom-control-label" for="apf_product_cat_${id}">${cat}</label>
+        </div>`)
+        id++
+    }
+}
 
 function saveLocalStorage(key, obj){
     let arr = [];
