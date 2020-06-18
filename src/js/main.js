@@ -8,11 +8,6 @@ $(document).ready(() => {
 
     $("#add_product_btn").click(addProduct)
 
-    $(".card-header").on("click", function(e){
-       e.preventDefault()
-       $("#modal-product").modal("show")
-    })
-
 })
 
 
