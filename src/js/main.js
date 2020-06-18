@@ -23,3 +23,50 @@ function addProduct() {
     
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+let objExample = {
+    value:"hola"
+}
+
+
+
+
+
+
+
+
+function saveLocalStorage(key, obj){
+    let arr = [];
+    if(localStorage.getItem(key) === null) {
+        arr.push(obj);
+        localStorage.setItem(key, JSON.stringify(arr));
+      } else {
+        let arr = JSON.parse(localStorage.getItem(key));
+        arr.push(obj);
+        localStorage.setItem(key, JSON.stringify(arr));
+      }
+}
+
+
+
+
+
+
+
+
+
+
+
+
