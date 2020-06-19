@@ -39,7 +39,11 @@ $(document).ready(() => {
 let data = getStorage() || {
     products: [],
     categories: [],
-    users: []
+    users: [{
+        name: "admin",
+        email: "admin@ecommerce.com",
+        password: "admin"
+    }]
 }
 
 function getStorage() { return JSON.parse(localStorage.getItem("data")) }
@@ -53,22 +57,20 @@ function drawProductList() {
     $(".pl_product").remove()
     $("#products_list").show()
 
-    let i = 0
     for(const prod of data.products) {
         $("#pl_list").append(`
         <tr class="no-bs-dark-2 pl_product">
-            <td>${i}</td>
+            <td>${prod.id}</td>
             <td>${prod.name}</td>
             <td>${prod.price}</td>
             <td>${prod.stock}</td>
-            <td><button type="button" class="btn btn-primary pl_edit_btn" data-productId="${i}">Edit</button></td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn" data-productId="${prod.id}">Edit</button></td>
         </tr>`)
-        i++
     }
 
     $(".pl_edit_btn").click(e => {
         const id = e.target.getAttribute("data-productId")
-        showUpdateProduct(data.products[id])
+        showUpdateProduct(productIdToObj(id))
     })
 }
 
@@ -128,20 +130,26 @@ function createProduct(product) {
     const weight = $("#apf_product_weight")
     const color = $("#apf_product_color")
     const categories = $(".apf_product_category")
+    
+    let updatingProduct = false
+    if(product.id !== undefined) updatingProduct = true
 
     //Checking if the form is correct and filled
     let validate = true
     $(".apf_error").remove()
 
     if(name.val().length < 3 || searchForSameName(data.products, name.val())) {
-        validate = false
-
-        if(searchForSameName(data.products, name.val()))
+        //This doesn't have effect if admin is updating a product
+        if(searchForSameName(data.products, name.val()) && !updatingProduct) {
             name.after(`<div class="apf_error alert alert-danger mt-1 p-1">There is a product already with this name</div>`)
-        else if(name.val().length == 0)
+            validate = false
+        } else if(name.val().length == 0) {
             name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name is required</div>`)
-        else 
+            validate = false
+        } else if(name.val().length < 3) {
             name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name has to be at least 3 characters</div>`)
+            validate = false
+        }
     }
 
     if(description.val().length < 6) {
@@ -201,6 +209,8 @@ function createProduct(product) {
         create one before adding a product</div>`)
     }
 
+    
+
     if(!validate) return
     //VALIDATION DONE
     
@@ -208,8 +218,16 @@ function createProduct(product) {
     let selectedCategories = []
     for(const cat of categories) if(cat.checked) selectedCategories.push(categoryNameToObj(cat.name))
 
+    
+    //FIRST PRODUCT INDEX HANDLER
+    let lastProductId = 1
+    if(data.products.length > 0)
+        lastProductId = (data.products[data.products.length - 1].id) + 1
+    if(updatingProduct) lastProductId = product.id   
+        
     //Product object creation
-    let newProduct = {
+    const newProduct = {
+        id: lastProductId,
         name: name.val(),
         description: description.val(),
         img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
@@ -220,7 +238,7 @@ function createProduct(product) {
         categories: selectedCategories
     }    
 
-    if(product !== undefined) data.products.slice(data.products.indexOf(product), 1)
+    if(updatingProduct) data.products.splice(data.products.indexOf(product), 1)
     data.products.push(newProduct)
     saveStorage()
 
@@ -326,6 +344,11 @@ function createCategory()
 /*E> CREATE OBJECT FUNCTIONS*/
 /******************************************************************************************************************************************************/
 /*S> HELPER FUNCTIONS*/
+
+function productIdToObj(id) {
+    for(const prod of data.products)
+        if(prod.id == id) return prod
+}
 
 //Helper function to transform category name to object
 function categoryNameToObj(name) {
