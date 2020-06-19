@@ -409,12 +409,19 @@ function searchForSameName(list, name) {
 /******************************************************************************************************************************************************/
 /*S> PRINT PRODUCTS*/
 
+function printProducts(){
+   let products = getStorage().products
 
+   for(const prod of products){
+      $("#product-result").append($(createProductCard(prod)).click(createProductModal))
+   }
+
+}
 
 function createProductCard(product){
    return `
    <div class="col-lg-6 col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product" data-product-id="${product.id}">
-      <div class="card card-item mno-bs-dark-3">
+      <div class="card card-item my-3 no-bs-dark-3">
          <img class="card-img"
             src="${product.img[0]}">
          <div class="card-header">
@@ -424,5 +431,7 @@ function createProductCard(product){
       </div>
    </div>`
 }
+
+
 
 /*E> PRINT PRODUCTS*/
