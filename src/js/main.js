@@ -163,7 +163,7 @@ function addProduct(product) {
         categories: selectedCategories
     }    
 
-    if(product !== undefined) data.products.splice(data.products.indexOf(product), 1)
+    if(product !== undefined) data.products.slice(data.products.indexOf(product), 1)
     data.products.push(newProduct)
     saveStorage()
 
