@@ -214,6 +214,27 @@ function showUpdateProduct(product) {
     $("#add_product_btn").click(() => createProduct(product))
 }
 
+
+ function showUpdateUser(user){
+    $(".manager-menu").hide()
+    $("#create_user").show()
+    
+    $("#create_user").children("h2").text("Update User")
+    $("#btnCreateUser").text("Save")
+    drawUsers()
+
+    $("#inputUserName").val(user.name)
+    $("#inputUserEmail").val(user.email)
+    $("#inputUserPass").val(user.password)
+
+    $("#btnCreateUser").off()
+    $("#btnCreateUser").click(()=>{
+        createUser(user)
+    })
+
+}
+
+
 /*E> DRAW ELEMENTS FUNCTIONS*/
 /******************************************************************************************************************************************************/
 /*S> CREATE OBJECT FUNCTIONS*/
@@ -393,10 +414,11 @@ function createUser(user)
         email: email.val(),
         password: pass.val()
     }
-
-    if(updatingUser) data.users[data.users.indexOf(user)] = newUser
+    if(updatingUser) data.users[data.users.indexOf(user)] = newUser 
     else data.users.push(newUser)
     saveStorage()
+
+    
 
     //Returns to products menu
     $(".manager-menu").hide()
