@@ -43,6 +43,13 @@ $(document).ready(() => {
         }
     })
     let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
+    let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart"]
+    eraseClick(problematicLinks)
+    function eraseClick(elements){
+        elements.forEach(function(element){
+            $(element).off("click")
+        })
+    }
     shippingToCustomer(buttonsShippingToCustomer)
     
     function customerValidation(){
