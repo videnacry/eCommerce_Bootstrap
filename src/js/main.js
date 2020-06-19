@@ -32,7 +32,6 @@ $(document).ready(() => {
 
     drawProductList()
     drawUsers()
-    $("#add_product_btn").click(addProduct)
 
     //change style
     $("#shipping-info").fadeOut()
