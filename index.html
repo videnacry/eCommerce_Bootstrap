@@ -21,7 +21,7 @@
                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                <button class="btn no-bs-dark-3 my-2 my-sm-0" type="submit">Search</button>
                <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-2" type="submit">Login</button>
-               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" data-toggle="modal" data-target="#checkout" type="button">Cart</button>
+               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" type="button" data-toggle="modal" data-target="#myModal2">Cart</button>
             </form>
          </div>
       </nav>
@@ -82,6 +82,10 @@
          </div>
       </div>
       <main>
+
+
+
+
          <div class="container">
             <div class="row">
                <div class="col-lg-6 col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product">
@@ -527,6 +531,43 @@
              </div>
            </div>
          </div>
+         <!-- Modal -->
+	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header sticky-top">
+               <h4 class="modal-title d-block w-100 " id="product-name">Cart</h4>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+               </button>
+            </div>
+
+				<div class="modal-body">
+					<div class="d-flex flex-column">
+                  <div class="d-flex flex-row card card-item mb-1 p-2">
+                     <div class="col-5">
+                        <img class="card-img"
+                        src="https://avatars.mds.yandex.net/get-pdb/2126974/728f0d95-15c9-4b1d-8cc2-da81b350bd8d/s1200?webp=false">
+                     </div>
+                     <div class="col-6">
+                        <h5 class="card-title mb-1">Item name</h5>
+                        <p class="card-text mb-1">Price <b><span>15 </span>€</b></p>
+                        <p class="mb-1">Color: <span>red</span></p>
+                        <p class="mb-1">
+                           Quantity: <br>
+                           <span class="cart__remove">-</span>
+                           <span class="cart__quantity">1</span>
+                           <span class="cart__add">+</span>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
 
       </main>
    </div>
