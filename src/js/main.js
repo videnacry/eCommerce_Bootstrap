@@ -9,12 +9,12 @@ $(document).ready(() => {
     })
 
     $("#pl_btn").click(drawProductList)
+    $("#add_product_btn").click(createProduct)
 
     $("#apf_btn").click(() => { 
         drawCategories()
         $("#add_product").children("h2").text("Add Product")
         $("#add_product_btn").text("Add Product")
-        $("#add_product_btn").click(createProduct)
     })
 
     $("#btnCreateUser").click(e => {
