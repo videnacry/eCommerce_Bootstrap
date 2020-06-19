@@ -71,6 +71,19 @@ body{
    opacity: 1;
 }
 
+.image__container{
+   position: relative;
+   min-height: 200px;
+   min-width: 200px;
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover{
+   background-color: rgba(100, 100, 100, 0.11);
+}
 
 .modal-header{
    background-color: inherit;
@@ -78,13 +91,12 @@ body{
 
 .fullscreen-modal .modal-dialog {
    width: 100%;
-   max-width: 700px;
+   max-width: 900px;
 }
 
 .modal-dialog {
    color: rgb(49, 49, 49);
 }
-
 
 .modal.right .modal-dialog {
    position: fixed;
