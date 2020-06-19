@@ -58,11 +58,11 @@
                   <div class="col-5 mx-auto">
                      <fieldset class="form-group pb-2">
                         <h4>Username</h4>
-                        <input type="text" class="form-control" id="al_username">
+                        <input type="text" class="form-control" id="al_username" autocomplete="off">
                      </fieldset>
                      <fieldset class="form-group">
                         <h4>Password</h4>
-                        <input type="password" class="form-control" id="al_password">
+                        <input type="password" class="form-control" id="al_password" autocomplete="off">
                      </fieldset>
                   </div>
                   <div class="w-100 d-none d-md-block"></div>
@@ -92,7 +92,7 @@
             <div id="add_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Add Category</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
-                  <input type="text" class="form-control mt-5 " placeholder="Title" id = "inputCategoryTitle">
+                  <input type="text" class="form-control mt-5 " placeholder="Title" id ="inputCategoryTitle" autocomplete="off">
                   <select class="form-control mt-5" id="selectCategoryColor">
                      <option selected>Choose color...</option>
                      <option value="black">Black</option>
@@ -110,7 +110,7 @@
                <h2 class="title">Update Category</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
 
-                  <input type="text" class="form-control mt-5 " placeholder="Title">
+                  <input type="text" class="form-control mt-5 " placeholder="Title" autocomplete="off">
                   <select class="form-control mt-5">
                      <option selected>Choose color...</option>
                      <option value="black">Black</option>
@@ -143,9 +143,9 @@
             <div id="create_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Create User</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
-                  <input type="text" class="form-control mt-5 " placeholder="Name" id="inputUserName">
-                  <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                  <input type="password" class="form-control mt-5 " placeholder="Password" id="inputUserPass">
+                  <input type="text" class="form-control mt-5 " placeholder="Name" id="inputUserName" autocomplete="off">
+                  <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" autocomplete="off">
+                  <input type="password" class="form-control mt-5 " placeholder="Password" id="inputUserPass" autocomplete="off">
                   
                   <button type="button" class=" btn btn-dark w-25 mt-5" id="btnCreateUser">Create</button>
                </div>
@@ -155,9 +155,9 @@
             <div id="update_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Update User</h2>
                <div class="form-group w-50  mx-auto mt-5 text-center">
-                  <input type="text" class="form-control mt-5 " placeholder="Name">
-                  <input type="email" class="form-control mt-5 " placeholder="Email">
-                  <input type="password" class="form-control mt-5 " placeholder="Password">
+                  <input type="text" class="form-control mt-5 " placeholder="Name" autocomplete="off">
+                  <input type="email" class="form-control mt-5 " placeholder="Email" autocomplete="off">
+                  <input type="password" class="form-control mt-5 " placeholder="Password" autocomplete="off">
                   
                   <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
                </div>
@@ -170,7 +170,7 @@
                   <div class="col-lg-7">
                      <fieldset class="form-group">
                         <h5>Product title</h5>
-                        <input type="text" class="form-control" id="apf_product_name" placeholder="Black sunglasses">
+                        <input type="text" class="form-control" id="apf_product_name" placeholder="Black sunglasses" autocomplete="off">
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Product Description</h5>
@@ -178,21 +178,21 @@
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Image URL</h5>
-                        <input type="url" class="form-control" id="apf_product_image" placeholder="www.domain.com/image.jpg">
+                        <input type="url" class="form-control" id="apf_product_image" placeholder="www.domain.com/image.jpg" autocomplete="off">
                      </fieldset>
                   </div>
                   <div class="col-lg-3">
                      <fieldset class="form-group">
                         <h5>Price</h5>
-                        <input type="number" class="form-control" id="apf_product_price" min="0" placeholder="29.95">
+                        <input type="number" class="form-control" id="apf_product_price" min="0" placeholder="29.95" autocomplete="off">
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Item stock</h5>
-                        <input type="number" class="form-control" id="apf_product_stock" min="0" placeholder="12">
+                        <input type="number" class="form-control" id="apf_product_stock" min="0" placeholder="12" autocomplete="off">
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Product Weight</h5>
-                        <input type="number" class="form-control" id="apf_product_weight" min="0" placeholder="1.23">
+                        <input type="number" class="form-control" id="apf_product_weight" min="0" placeholder="1.23" autocomplete="off">
                      </fieldset>
                   </div>
                   <div class="col-xl-1">
