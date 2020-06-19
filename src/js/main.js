@@ -18,10 +18,40 @@ function saveStorage() { localStorage.setItem("data", JSON.stringify(data)) }
 
 /*E> DATA WORK*/
 /******************************************************************************************************************************************************/
-/*X> ADMIN CONTROL*/
+/*S> ADMIN CONTROL*/
 let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || data.users[0] //This is just for debugging, by default it will be an empty object
 sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
 
+function tryLogIn() {
+    const name = $("#al_username")
+    const pass = $("#al_password")
+
+    let success = false
+    let loggedUsername = {}
+
+    for(const user of data.users) {
+        if(user.name == name.val()) { 
+            success = true
+            loggedUsername = user
+        }
+    }
+
+    if(success) {
+        if(loggedUsername.password == pass.val()) {
+            activeUser = loggedUsername
+            sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
+            drawProductList()
+        } else {
+            $(".apf_error").remove()
+            pass.after(`<div class="apf_error alert alert-danger mt-1 p-1">Password is incorrect</div>`)
+        }
+    } else {
+        $(".apf_error").remove()
+        name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Username not found</div>`)
+    }
+}
+
+/*E> ADMIN CONTROL*/
 /******************************************************************************************************************************************************/
 /*S> DOCUMENT LOAD*/
 
@@ -58,6 +88,8 @@ $(document).ready(() => {
         createCategory()
     })
 
+    $("#al_login_btm").click(tryLogIn)
+
     drawProductList()
 
     //ADMIN LOGIN CONTROL
@@ -71,6 +103,7 @@ $(document).ready(() => {
 function drawProductList() {
     if(!checkActiveUser()) return
 
+    $(".manager-menu").hide()
     $(".pl_product").remove()
     $("#products_list").show()
 
