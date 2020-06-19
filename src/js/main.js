@@ -141,6 +141,37 @@ function showUpdateProduct(product) {
     $("#add_product_btn").click(() => createProduct(product))
 }
 
+
+ function showUpdateUser(user){
+    $(".manager-menu").hide()
+    $("#update_user").show()
+
+    let name = $("#UserNameEdit")
+    let email = $("#UserEmailEdit")
+    let pass = $("#UserPassEdit")
+
+    name.val(user.name)
+    email.val(user.email)
+    pass.val(user.password)
+
+    
+    
+    $("#btnUpdateUser").click(()=>{
+        
+            user.id =user.id
+            user.name = name.val()
+            user.email= email.val()
+            user.password= pass.val()
+        
+        createUser(user)
+
+        $(".manager-menu").hide()
+    $("#users_list").show()
+    })
+
+}
+
+
 /*E> DRAW ELEMENTS FUNCTIONS*/
 /******************************************************************************************************************************************************/
 /*S> CREATE OBJECT FUNCTIONS*/
