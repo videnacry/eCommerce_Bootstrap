@@ -132,7 +132,7 @@ function drawProductList() {
     $(".pl_remove_btn").click(e => {
         const id = e.target.getAttribute("data-productId")
         e.target.parentElement.parentElement.remove()
-        data.products.splice(transformIdToObj(data.products, id), 1) 
+        data.products.splice(data.products.indexOf(transformIdToObj(data.products, id)), 1) 
         saveStorage()
     })
 }
@@ -150,12 +150,21 @@ function drawUsers() {
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td><button type="button" class="btn btn-primary ul_edit_btn" data-userId="${user.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-danger ul_remove_btn px-3 py-1" data-userId="${user.id}">Remove</button></td>
         </tr>`)
+        if(user.name == "admin") $(".ul_remove_btn").remove()
     }
 
     $(".ul_edit_btn").click(e => {
         const id = e.target.getAttribute("data-userId")
         showUpdateUser(transformIdToObj(data.users, id))
+    })
+
+    $(".ul_remove_btn").click(e => {
+        const id = e.target.getAttribute("data-userId")
+        e.target.parentElement.parentElement.remove()
+        data.users.splice(data.users.indexOf(transformIdToObj(data.users, id)), 1) 
+        saveStorage()
     })
 }
 
