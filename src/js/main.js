@@ -94,6 +94,11 @@ $(document).ready(() => {
         checkActiveUser()
     })
 
+    // 
+
+
+   
+
     drawProductList()
 
     //ADMIN LOGIN CONTROL
@@ -196,29 +201,19 @@ function showUpdateProduct(product) {
 
  function showUpdateUser(user){
     $(".manager-menu").hide()
-    $("#update_user").show()
-
-    let name = $("#UserNameEdit")
-    let email = $("#UserEmailEdit")
-    let pass = $("#UserPassEdit")
-
-    name.val(user.name)
-    email.val(user.email)
-    pass.val(user.password)
-
+    $("#create_user").show()
     
-    
-    $("#btnUpdateUser").click(()=>{
-        
-            user.id =user.id
-            user.name = name.val()
-            user.email= email.val()
-            user.password= pass.val()
-        
+    $("#create_user").children("h2").text("Update User")
+    $("#btnCreateUser").text("Save")
+    drawUsers()
+
+    $("#inputUserName").val(user.name)
+    $("#inputUserEmail").val(user.email)
+    $("#inputUserPass").val(user.password)
+
+    $("#btnCreateUser").off()
+    $("#btnCreateUser").click(()=>{
         createUser(user)
-
-        $(".manager-menu").hide()
-    $("#users_list").show()
     })
 
 }
@@ -405,10 +400,11 @@ function createUser(user)
         email: email.val(),
         password: pass.val()
     }
-
-    if(updatingUser) data.users[data.users.indexOf(user)] = newUser
+    if(updatingUser) data.users[data.users.indexOf(user)] = newUser 
     else data.users.push(newUser)
     saveStorage()
+
+    
 
     //Returns to products menu
     $(".manager-menu").hide()
