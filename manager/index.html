@@ -12,40 +12,46 @@
 
 <body>
    <div class="container-fluid vh-100 d-flex flex-column align-items-stretch">
+      <!--Header-->
       <div class="row no-bs-dark-1 align-items-center p-3 d-flex justify-content-between">
-         <!--Header-->
+         
          <h1 class="ml-3">eCommerce Admin</h1>
          <button type="button" id="log_out_btn" class="btn btn-dark px-2 py-1 mr-3 font-weight-bold">Log Out</button>
       </div>
-      <div class="row flex-grow-1">
-         <!--Main-->
-         <div class="no-bs-dark-2 d-flex flex-column align-items-start">
-            <!--Aside-->
-            <!--Temporal anchors, in the future they'll be more fancy :u-->
-            <div class="d-flex flex-column mt-3 p-2 px-5">
-               <h4 class="mb-0">Products</h4>
-               <a id="pl_btn" href="#" data-href="#products_list">Products</a>
-            </div>
-
-            <div class="d-flex flex-column mt-3 p-2 px-5">
-               <h4 class="mb-0">Create</h4>
-               <a id="apf_btn" href="#" data-href="#add_product">Add Product</a>
-               <a href="#" data-href="#add_category">Add Category</a>
-            </div>
-
-            <div class="d-flex flex-column mt-3 p-2 px-5">
-               <h4 class="mb-0">Update</h4>
-               <a href="#" data-href="#products_list">Update Product</a>
-               <a href="#" data-href="#update_category">Update Category</a>
-            </div>
-
-            <div class="d-flex flex-column mt-3 p-2 px-5">
-               <h4 class="mb-0">Users</h4>
-               <a id="ul_btn" href="#" data-href="#users_list">Users</a>
-               <a href="#" data-href="#create_user">Create user</a>
-               <a href="#" data-href="#update_user">Update user</a>  
-            </div>
+      <!--Main-->
+      <!--Aside-->
+      <nav class="navbar navbar-expand-lg navbar-dark no-bs-dark-2 mx-0" id="header_manager">
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+         </button>
+       
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <ul class="navbar-nav mr-auto">
+             <li class="nav-item active mr-4">
+               <a class="nav-link" id="pl_btn" href="#" data-href="#products_list">Products</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" id="apf_btn" href="#" data-href="#add_product">Add Product</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" href="#" data-href="#products_list">Update Product</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" href="#" data-href="#add_category">Add Category</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" id="ul_btn" href="#" data-href="#users_list">Users</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" href="#" data-href="#create_user">Create User</a>
+             </li>
+             <li class="nav-item active mr-4">
+               <a class="nav-link" href="#" data-href="#users_list">Update User</a>
+             </li>
+            </ul>
          </div>
+      </nav>
+      <div class="row flex-grow-1">
          <!--Content-->
          <div class="col no-bs-dark-3">
             <!--Login form-->
@@ -100,7 +106,7 @@
                      <option value="green">Green</option>
                      <option value="yellow">Yellow</option>
                   </select>
-                  <button type="button" class="btn btn-dark w-25 mt-5" id="btnCreateCategory">Create</button>
+                  <button type="button" class="btn btn-primary w-25 mt-5" id="btnCreateCategory">Create</button>
                </div>
             </div>
             <!-- update category -->
@@ -118,7 +124,7 @@
                      <option value="green">Green</option>
                      <option value="yellow">Yellow</option>
                   </select>
-                  <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
+                  <button type="button" class=" btn btn-primary w-25 mt-5">Save</button>
                </div>
             </div>
             <!-- user or manager tab -->
@@ -146,7 +152,7 @@
                   <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" autocomplete="off">
                   <input type="password" class="form-control mt-5 " placeholder="Password" id="inputUserPass" autocomplete="off">
                   
-                  <button type="button" class=" btn btn-dark w-25 mt-5" id="btnCreateUser">Create</button>
+                  <button type="button" class=" btn btn-primary w-25 mt-5" id="btnCreateUser">Create</button>
                </div>
 
             </div>
@@ -158,7 +164,7 @@
                   <input type="email" class="form-control mt-5 " placeholder="Email" autocomplete="off">
                   <input type="password" class="form-control mt-5 " placeholder="Password" autocomplete="off">
                   
-                  <button type="button" class=" btn btn-dark w-25 mt-5">Save</button>
+                  <button type="button" class=" btn btn-primary w-25 mt-5">Save</button>
                </div>
 
             </div>

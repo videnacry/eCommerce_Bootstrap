@@ -21,19 +21,19 @@ body{
 }
 
 .no-bs-dark-1{
-    background-color: rgb(10, 10, 10);
-    color: rgb(228, 228, 228);
+    background-color: rgb(10, 10, 10)!important;
+    color: rgb(228, 228, 228)!important;
 }
 
 .no-bs-dark-2 {
-   background-color: rgb(17, 17, 17);
-   color: rgb(231, 231, 231);
+   background-color: rgb(17, 17, 17)!important;
+   color: rgb(231, 231, 231)!important;
 }
 
 .no-bs-dark-3,
 .dropdown-item-dark:hover {
-   background-color: rgb(26, 26, 26);
-   color: rgb(238, 238, 238);
+   background-color: rgb(26, 26, 26)!important;
+   color: rgb(238, 238, 238)!important;
 }
 
 .no-bs-dark-4 {
@@ -43,6 +43,10 @@ body{
 
 
 /*MANAGER*/
+#header_manager {
+   font-size: 20px!important;
+}
+
 .manager-menu {
     display: none;
     min-width: 500px;
