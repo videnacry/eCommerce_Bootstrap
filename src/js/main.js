@@ -76,6 +76,7 @@ $(document).ready(() => {
 
         $("#add_product_btn").off()
         $("#add_product_btn").click(createProduct)
+        $(".apf_product_color").checked = false
     })
 
     $("#btnCreateUser").click(e => {
@@ -115,16 +116,24 @@ function drawProductList() {
         $("#pl_list").append(`
         <tr class="no-bs-dark-2 pl_product">
             <td>${prod.id}</td>
-            <td>${prod.name}</td>
+            <td class="pl_name_column">${prod.name}</td>
             <td>${prod.price}</td>
             <td>${prod.stock}</td>
-            <td><button type="button" class="btn btn-primary pl_edit_btn" data-productId="${prod.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn px-3 py-1" data-productId="${prod.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-danger pl_remove_btn px-3 py-1" data-productId="${prod.id}">Remove</button></td>
         </tr>`)
     }
 
     $(".pl_edit_btn").click(e => {
         const id = e.target.getAttribute("data-productId")
         showUpdateProduct(transformIdToObj(data.products, id))
+    })
+
+    $(".pl_remove_btn").click(e => {
+        const id = e.target.getAttribute("data-productId")
+        e.target.parentElement.parentElement.remove()
+        data.products.splice(transformIdToObj(data.products, id), 1) 
+        saveStorage()
     })
 }
 

@@ -54,8 +54,17 @@ body{
 
 #products_list {
    display: block;
+   overflow-x: auto;
 }
 
+.pl_name_column {
+   width: 60%; 
+   min-width: 300px;
+   max-width: 700px;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
 
 /*USER*/
 .carousel-height, .carousel-height img{
