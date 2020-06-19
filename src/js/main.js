@@ -9,6 +9,7 @@ $(document).ready(() => {
     })
 
     $("#pl_btn").click(drawProductList)
+    $("#ul_btn").click(drawUsers)
 
     $("#apf_btn").click(() => { 
         drawCategories()
@@ -30,6 +31,7 @@ $(document).ready(() => {
     })
 
     drawProductList()
+    drawUsers()
 })
 
 /*E> DOCUMENT LOAD*/
@@ -40,11 +42,13 @@ let data = getStorage() || {
     products: [],
     categories: [],
     users: [{
+        id: 1,
         name: "admin",
         email: "admin@ecommerce.com",
         password: "admin"
     }]
 }
+saveStorage()
 
 function getStorage() { return JSON.parse(localStorage.getItem("data")) }
 function saveStorage() { localStorage.setItem("data", JSON.stringify(data)) }
@@ -70,7 +74,27 @@ function drawProductList() {
 
     $(".pl_edit_btn").click(e => {
         const id = e.target.getAttribute("data-productId")
-        showUpdateProduct(productIdToObj(id))
+        showUpdateProduct(transformIdToObj(data.products, id))
+    })
+}
+
+function drawUsers() {
+    $(".ul_user").remove()
+    $("#users_list").show()
+
+    for(const user of data.users) {
+        $("#ul_list").append(`
+        <tr class="no-bs-dark-2 ul_user">
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td><button type="button" class="btn btn-primary ul_edit_btn" data-userId="${user.id}">Edit</button></td>
+        </tr>`)
+    }
+
+    $(".ul_edit_btn").click(e => {
+        const id = e.target.getAttribute("data-userId")
+        showUpdateUser(transformIdToObj(data.users, id))
     })
 }
 
@@ -209,8 +233,6 @@ function createProduct(product) {
         create one before adding a product</div>`)
     }
 
-    
-
     if(!validate) return
     //VALIDATION DONE
     
@@ -238,8 +260,8 @@ function createProduct(product) {
         categories: selectedCategories
     }    
 
-    if(updatingProduct) data.products.splice(data.products.indexOf(product), 1)
-    data.products.push(newProduct)
+    if(updatingProduct) data.products[data.products.indexOf(product)] = newProduct
+    else data.products.push(newProduct)
     saveStorage()
 
     //Returns to products menu
@@ -247,13 +269,18 @@ function createProduct(product) {
     drawProductList()
 }
 
-function createUser()
+function createUser(user)
 {
     $(".apf_error").remove()
 
     const name = $("#inputUserName");
     const email = $("#inputUserEmail");
     const pass = $("#inputUserPass");
+
+    let updatingUser = false
+    try {
+        if(user.id !== undefined) updatingUser = true
+    } catch(e) { updatingUser = false }
 
     let validate = true
 
@@ -290,25 +317,33 @@ function createUser()
     if(!validate) return
 
     const newUser = {
+        id: updatingUser ? user.id : (data.users[data.users.length - 1].id) + 1,
         name: name.val(),
         email: email.val(),
         password: pass.val()
     }
 
-    data.users.push(newUser)
+    if(updatingUser) data.users[data.users.indexOf(user)] = newUser
+    else data.users.push(newUser)
     saveStorage()
 
     //Returns to products menu
     $(".manager-menu").hide()
-    drawProductList()
+    drawUsers()
 }
 
-function createCategory()
+function createCategory(category)
 {
     $(".apf_error").remove()
 
     const title = $("#inputCategoryTitle");
     const color = $("#selectCategoryColor");
+
+    let updatingCategory = false
+
+    try{
+        if(category.id !== undefined) updatingCategory = true
+    } catch(e) { updatingCategory = false }
 
     let validate = true
 
@@ -328,12 +363,19 @@ function createCategory()
 
     if(!validate) return
 
+    let lastCategoryId = 1
+    if(data.categories.length > 0)
+        lastCategoryId = (data.categories[data.categories.length - 1].id) + 1
+    if(updatingCategory) lastCategoryId = category.id   
+
     const newCategory = {
+        id: lastCategoryId,
         name: title.val(),
         color: color.val()
     }
 
-    data.categories.push(newCategory)
+    if(updatingCategory) data.categories[data.categories.indexOf(category)] = newCategory
+    else data.categories.push(newCategory)
     saveStorage()
 
     //Returns to products menu
@@ -345,15 +387,16 @@ function createCategory()
 /******************************************************************************************************************************************************/
 /*S> HELPER FUNCTIONS*/
 
-function productIdToObj(id) {
-    for(const prod of data.products)
-        if(prod.id == id) return prod
-}
-
 //Helper function to transform category name to object
 function categoryNameToObj(name) {
     for(const cat of data.categories) 
         if(cat.name == name) return cat
+}
+
+//Helper function to transform an id to object
+function transformIdToObj(list, id) {
+    for(const elem of list)
+        if(elem.id == id) return elem
 }
 
 //Helper function to search for existent objects by name
