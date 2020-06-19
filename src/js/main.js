@@ -1,8 +1,65 @@
+/*S> DATA WORK*/
+
+let data = getStorage() || {
+    products: [],
+    categories: [],
+    users: [{
+        id: 1,
+        name: "admin",
+        email: "admin@ecommerce.com",
+        password: "admin"
+    }]
+}
+
+saveStorage()
+
+function getStorage() { return JSON.parse(localStorage.getItem("data")) }
+function saveStorage() { localStorage.setItem("data", JSON.stringify(data)) }
+
+/*E> DATA WORK*/
+/******************************************************************************************************************************************************/
+/*S> ADMIN CONTROL*/
+let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || data.users[0] //This is just for debugging, by default it will be an empty object
+sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
+
+function tryLogIn() {
+    const name = $("#al_username")
+    const pass = $("#al_password")
+
+    let success = false
+    let loggedUsername = {}
+
+    for(const user of data.users) {
+        if(user.name == name.val()) { 
+            success = true
+            loggedUsername = user
+        }
+    }
+
+    if(success) {
+        if(loggedUsername.password == pass.val()) {
+            activeUser = loggedUsername
+            sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
+            drawProductList()
+        } else {
+            $(".apf_error").remove()
+            pass.after(`<div class="apf_error alert alert-danger mt-1 p-1">Password is incorrect</div>`)
+        }
+    } else {
+        $(".apf_error").remove()
+        name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Username not found</div>`)
+    }
+}
+
+/*E> ADMIN CONTROL*/
+/******************************************************************************************************************************************************/
 /*S> DOCUMENT LOAD*/
 
 $(document).ready(() => {
     //EVENT LISTENERS
     $("a").click(e => {
+        if(!checkActiveUser()) return
+
         $(".manager-menu").hide()
         $("input, textarea").val("")
         $("" + e.target.getAttribute("data-href") + "").show()
@@ -12,6 +69,7 @@ $(document).ready(() => {
     $("#ul_btn").click(drawUsers)
 
     $("#apf_btn").click(() => { 
+        if(!checkActiveUser()) return
         drawCategories()
         $("#add_product").children("h2").text("Add Product")
         $("#add_product_btn").text("Add Product")
@@ -30,34 +88,26 @@ $(document).ready(() => {
         createCategory()
     })
 
+    $("#al_login_btn").click(tryLogIn)
+    $("#log_out_btn").click(() => {
+        activeUser = {}
+        checkActiveUser()
+    })
+
     drawProductList()
-    drawUsers()
+
+    //ADMIN LOGIN CONTROL
+    checkActiveUser()
 })
 
 /*E> DOCUMENT LOAD*/
 /******************************************************************************************************************************************************/
-/*S> DATA WORK*/
-
-let data = getStorage() || {
-    products: [],
-    categories: [],
-    users: [{
-        id: 1,
-        name: "admin",
-        email: "admin@ecommerce.com",
-        password: "admin"
-    }]
-}
-saveStorage()
-
-function getStorage() { return JSON.parse(localStorage.getItem("data")) }
-function saveStorage() { localStorage.setItem("data", JSON.stringify(data)) }
-
-/*E> DATA WORK*/
-/******************************************************************************************************************************************************/
 /*S> DRAW ELEMENTS FUNCTIONS*/
 
 function drawProductList() {
+    if(!checkActiveUser()) return
+
+    $(".manager-menu").hide()
     $(".pl_product").remove()
     $("#products_list").show()
 
@@ -79,6 +129,8 @@ function drawProductList() {
 }
 
 function drawUsers() {
+    if(!checkActiveUser()) return
+
     $(".ul_user").remove()
     $("#users_list").show()
 
@@ -434,6 +486,15 @@ function transformIdToObj(list, id) {
 function searchForSameName(list, name) {
     for(const elem of list)
         if(elem.name == name) return true
+}
+
+function checkActiveUser() {
+    if(Object.keys(activeUser).length == 0) {
+        $(".manager-menu").hide()
+        $("input").val("")
+        $("#admin_login").show()
+        return false
+    } else return true
 }
 
 /*E> HELPER FUNCTIONS*/
