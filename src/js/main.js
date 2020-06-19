@@ -76,6 +76,7 @@ $(document).ready(() => {
 
         $("#add_product_btn").off()
         $("#add_product_btn").click(createProduct)
+        $(".apf_product_color").checked = false
     })
 
     $("#btnCreateUser").click(e => {
@@ -120,16 +121,24 @@ function drawProductList() {
         $("#pl_list").append(`
         <tr class="no-bs-dark-2 pl_product">
             <td>${prod.id}</td>
-            <td>${prod.name}</td>
+            <td class="pl_name_column">${prod.name}</td>
             <td>${prod.price}</td>
             <td>${prod.stock}</td>
-            <td><button type="button" class="btn btn-primary pl_edit_btn" data-productId="${prod.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-primary pl_edit_btn px-3 py-1" data-productId="${prod.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-danger pl_remove_btn px-3 py-1" data-productId="${prod.id}">Remove</button></td>
         </tr>`)
     }
 
     $(".pl_edit_btn").click(e => {
         const id = e.target.getAttribute("data-productId")
         showUpdateProduct(transformIdToObj(data.products, id))
+    })
+
+    $(".pl_remove_btn").click(e => {
+        const id = e.target.getAttribute("data-productId")
+        e.target.parentElement.parentElement.remove()
+        data.products.splice(data.products.indexOf(transformIdToObj(data.products, id)), 1) 
+        saveStorage()
     })
 }
 
@@ -146,12 +155,21 @@ function drawUsers() {
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td><button type="button" class="btn btn-primary ul_edit_btn" data-userId="${user.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-danger ul_remove_btn px-3 py-1" data-userId="${user.id}">Remove</button></td>
         </tr>`)
+        if(user.name == "admin") $(".ul_remove_btn").remove()
     }
 
     $(".ul_edit_btn").click(e => {
         const id = e.target.getAttribute("data-userId")
         showUpdateUser(transformIdToObj(data.users, id))
+    })
+
+    $(".ul_remove_btn").click(e => {
+        const id = e.target.getAttribute("data-userId")
+        e.target.parentElement.parentElement.remove()
+        data.users.splice(data.users.indexOf(transformIdToObj(data.users, id)), 1) 
+        saveStorage()
     })
 }
 
@@ -167,7 +185,7 @@ function drawCategories() {
     let id = 0
     for(const cat of data.categories) {
         $("#apf_product_categories").append(`
-        <div class="custom-control custom-checkbox p-1 ml-4">
+        <div class="custom-control custom-checkbox p-1 ml-4  mr-3">
             <input type="checkbox" class="custom-control-input apf_product_category" name="${cat.name}" id="apf_product_cat_${id}">
             <label class="custom-control-label" for="apf_product_cat_${id}">${cat.name}</label>
         </div>`)
@@ -191,6 +209,9 @@ function showUpdateProduct(product) {
     $("#apf_product_weight").val(product.weight)
     $("#apf_product_color").val(product.color)
     
+    for(const col of $(".apf_product_color"))
+        if(searchForSameName(product.colors, col.name)) col.checked = true
+
     for(const cat of $(".apf_product_category"))
         if(searchForSameName(product.categories, cat.name)) cat.checked = true
         
@@ -230,7 +251,7 @@ function createProduct(product) {
     const price = $("#apf_product_price")
     const stock = $("#apf_product_stock")
     const weight = $("#apf_product_weight")
-    const color = $("#apf_product_color")
+    const colors = $(".apf_product_color")
     const categories = $(".apf_product_category")
     
     let updatingProduct = false
@@ -286,11 +307,6 @@ function createProduct(product) {
         stock.after(`<div class="apf_error alert alert-danger mt-1 p-1">Stock is required</div>`)
     }
 
-    if(color.val() == "Choose color...") {
-        validate = false
-        color.after(`<div class="apf_error alert alert-danger mt-1 p-1">A color is required</div>`)
-    }
-
     if(weight.val().length == 0 || weight.val() <= 0) {
         validate = false
 
@@ -314,10 +330,13 @@ function createProduct(product) {
     if(!validate) return
     //VALIDATION DONE
     
-    //Transform category checkbox to strings
+    //Transform category checkbox to category object
     let selectedCategories = []
     for(const cat of categories) if(cat.checked) selectedCategories.push(categoryNameToObj(cat.name))
 
+    //Transform color checkbox to color string
+    let selectedColors = []
+    for(const col of colors) if(col.checked) selectedColors.push(col.name)
     
     //FIRST PRODUCT INDEX HANDLER
     let lastProductId = 1
@@ -334,7 +353,7 @@ function createProduct(product) {
         price: price.val(),
         stock: stock.val(),
         weight: weight.val(),
-        color: color.val(),
+        colors: selectedColors,
         categories: selectedCategories
     }    
 
