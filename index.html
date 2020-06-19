@@ -22,6 +22,9 @@
                <button class="btn no-bs-dark-3 my-2 my-sm-0" type="submit">Search</button>
                <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-2" type="submit">Login</button>
                <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" type="button" data-toggle="modal" data-target="#myModal2">Cart</button>
+               <button class="btn no-bs-dark-3 my-2 my-sm-0" type="button">Search</button>
+               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-2" type="button">Login</button>
+               <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" data-toggle="modal" data-target="#checkout" type="button">Cart</button>
             </form>
          </div>
       </nav>
@@ -386,7 +389,7 @@
                          <input id="checkout-name" class="form-control" type="text" placeholder="Name">
                        </div>
                        <div class="form-group col-6">
-                          <input id="checkout-last-name" class="form-control" type="text" placeholder="Last name">
+                          <input id="checkout-lastname" class="form-control" type="text" placeholder="Lastname">
                        </div>
                        <div class="form-group col-12">
                          <input id="checkout-address" class="form-control" type="text" placeholder="Adress">
@@ -410,25 +413,25 @@
                         <a class="btn" id="return-to-cart">&lt; RETURN TO CART</a>
                        </div>                   
                        <div class="form-group col-6">
-                         <input type="submit" id="continue-to-shipping" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
+                         <input type="button" id="continue-to-shipping" class="btn no-bs-dark-1" value="CONTINUE TO SHIPING">
                        </div>
                      </div>
                      <div id="shipping-info">
-                        <div class="bg-light border rounded px-4">
+                        <div class="bg-light border rounded px-4 mt-4">
                            <ul class="list-group list-group-flush text-dark">
                               <li class="list-group-item d-flex justify-content-between px-0">
                                  <div class="col-9 row">
                                     <span class="text-muted col-3 px-0">Contact</span>
                                     <span id="" class="col-9">email</span>
                                  </div>
-                                 <a class="text-primary px-0">Change</a>
+                                 <a id="checkout-change-email" class="text-primary px-0 btn">Change</a>
                               </li>
                               <li class="list-group-item d-flex justify-content-between px-0">
                                  <div class="col-9 row">
                                     <span class="text-muted col-3 px-0">Ship to</span>
                                     <span id="" class="col-9">Address</span>
                                  </div>
-                                 <a class="text-primary px-0">Change</a>
+                                 <a id="checkout-change-address" class="text-primary px-0 btn">Change</a>
                               </li>
                            </ul>
                         </div>
@@ -459,10 +462,10 @@
                            </ul>     
                            <div class="form-row mt-3">
                               <div class="form-group col-6">
-                               <a class="btn">&lt; RETURN TO CUSTOMER INFO</a>
+                               <a id="return-to-customer-info" class="btn">&lt; RETURN TO CUSTOMER INFO</a>
                               </div>                   
-                              <div class="form-group col-6 mt-3">
-                                <input type="submit" class="btn no-bs-dark-1" value="CONTINUE TO SUMMERY">
+                              <div class="form-group col-6 mt-l-3">
+                                <input type="button" class="btn no-bs-dark-1" value="CONTINUE TO SUMMERY">
                               </div>                              
                            </div>
                         </div>
