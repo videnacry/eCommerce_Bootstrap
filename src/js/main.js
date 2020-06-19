@@ -406,3 +406,23 @@ function searchForSameName(list, name) {
 }
 
 /*E> HELPER FUNCTIONS*/
+/******************************************************************************************************************************************************/
+/*S> PRINT PRODUCTS*/
+
+
+
+function createProductCard(product){
+   return `
+   <div class="col-lg-6 col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product" data-product-id="${product.id}">
+      <div class="card card-item mno-bs-dark-3">
+         <img class="card-img"
+            src="${product.img[0]}">
+         <div class="card-header">
+            <h5 class="card-title">${product.name}</h5>
+            <p class="card-text">${product.price}</p>
+         </div>
+      </div>
+   </div>`
+}
+
+/*E> PRINT PRODUCTS*/
