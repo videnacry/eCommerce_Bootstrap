@@ -88,7 +88,11 @@ $(document).ready(() => {
         createCategory()
     })
 
-    $("#al_login_btm").click(tryLogIn)
+    $("#al_login_btn").click(tryLogIn)
+    $("#log_out_btn").click(() => {
+        activeUser = {}
+        checkActiveUser()
+    })
 
     drawProductList()
 
