@@ -167,7 +167,7 @@
             <div id="add_product" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Add product</h2>
                <form class="mt-3 row">
-                  <div class="col">
+                  <div class="col-lg-7">
                      <fieldset class="form-group">
                         <h5>Product title</h5>
                         <input type="text" class="form-control" id="apf_product_name" placeholder="Black sunglasses">
@@ -191,25 +191,52 @@
                         <input type="number" class="form-control" id="apf_product_stock" min="0" placeholder="12">
                      </fieldset>
                      <fieldset class="form-group">
-                        <h5>Color</h5>
-                        <select class="form-control custom-select" id="apf_product_color" placeholder="Choose color">
-                           <option selected>Choose color...</option>
-                           <option value="black">Black</option>
-                           <option value="white">White</option>
-                           <option value="red">Red</option>
-                           <option value="blue">Blue</option>
-                           <option value="green">Green</option>
-                           <option value="yellow">Yellow</option>
-                        </select>
-                     </fieldset>
-                  </div>
-                  <div class="col-xl-3">
-                     <fieldset class="form-group">
                         <h5>Product Weight</h5>
                         <input type="number" class="form-control" id="apf_product_weight" min="0" placeholder="1.23">
                      </fieldset>
-                     <fieldset id="apf_product_categories" class="form-group">
+                  </div>
+                  <div class="col-xl-1">
+                     <fieldset class="form-group d-flex flex-row">
+                        <h5>Colors</h5>
+                        <div class="d-flex flex-row flex-wrap mt-n2 apf_product_colors">
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Black" id="apf_product_color_1">
+                              <label class="custom-control-label" for="apf_product_color_1">Black</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="White" id="apf_product_color_2">
+                              <label class="custom-control-label" for="apf_product_color_2">White</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Red" id="apf_product_color_3">
+                              <label class="custom-control-label" for="apf_product_color_3">Red</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Magenta" id="apf_product_color_4">
+                              <label class="custom-control-label" for="apf_product_color_4">Magenta</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Blue" id="apf_product_color_5">
+                              <label class="custom-control-label" for="apf_product_color_5">Blue</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Green" id="apf_product_color_6">
+                              <label class="custom-control-label" for="apf_product_color_6">Green</label>
+                           </div>
+                           <div class="custom-control custom-checkbox p-1 ml-4">
+                              <input type="checkbox" class="custom-control-input apf_product_color" name="Yellow" id="apf_product_color_7">
+                              <label class="custom-control-label" for="apf_product_color_7">Yellow</label>
+                           </div>
+                        </div>
+                     </fieldset>
+                  </div>
+                  <div class="w-100 d-none d-md-block"></div>
+                  <div class="col-xl">
+                     <fieldset class="form-group">
                         <h5>Category</h5>
+                        <div id="apf_product_categories" class="d-flex flex-row flex-wrap">
+
+                        </div>
                      </fieldset>
                   </div>
                   <div class="w-100 d-none d-md-block"></div>
