@@ -86,6 +86,10 @@ body{
    max-width: 700px;
 }
 
+#checkout .modal-dialog{
+   max-width: 960px;
+}
+
 .modal-dialog {
    color: rgb(49, 49, 49);
 }
@@ -168,4 +172,33 @@ body{
    -ms-border-radius: 5px;
    -o-border-radius: 5px;
 
+}
+
+@media screen and (max-width:450px){
+   #checkout .modal-dialog{
+      margin-left:0;
+      margin-right:0;
+   }
+
+   #checkout .modal-header{
+      padding-left:0;
+      padding-right:0;
+   }
+
+   #checkout .modal-section{
+      padding-left:10px !important;
+      padding-right:10px !important;
+   }
+}
+
+@media screen and (max-width:260px){
+   #checkout .order-items{
+      padding-left:0 !important;
+      padding-right:0 !important;
+   }
+
+   #checkout .modal-section{
+      padding-left:5px !important;
+      padding-right:5px !important;
+   }
 }

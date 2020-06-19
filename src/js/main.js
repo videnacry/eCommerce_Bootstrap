@@ -43,7 +43,8 @@ $(document).ready(() => {
         }
     })
     let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
-    let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart"]
+    let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart","#checkout-service-terms",
+                          "#checkout-refund-policy"]
     eraseClick(problematicLinks)
     function eraseClick(elements){
         elements.forEach(function(element){
