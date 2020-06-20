@@ -123,6 +123,10 @@ body{
    border: solid 1px #000;
 }
 
+[name="color-option"]:checked + .product-colors{
+   outline: solid 3px black;
+}
+
 /* CART */
 .modal-dialog {
    color: rgb(49, 49, 49);
