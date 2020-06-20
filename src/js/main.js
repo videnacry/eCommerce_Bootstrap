@@ -521,6 +521,9 @@ function checkActiveUser() {
 /******************************************************************************************************************************************************/
 /*S> PRINT PRODUCTS*/
 
+/**
+ * Print product cards in Gallery
+ */
 function printProducts() {
    const products = getStorage().products
    $(products).each(function (index, prod) {
@@ -531,6 +534,11 @@ function printProducts() {
 
 }
 
+/**
+ * Create product Card
+ * @param {*Number} index 
+ * @param {*Object} product 
+ */
 function createProductCard(index, product) {
    return `
    <div class="col-lg-${index > 1 ? "3" : "6"} col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product" data-product-id="${product.id}">
@@ -545,6 +553,10 @@ function createProductCard(index, product) {
    </div>`
 }
 
+/**
+ * Insert product data in modal
+ * @param {*Object} product 
+ */
 function createProductModal(product) {
    $("#product-name").text(product.name)
    $("#product-description").empty()
@@ -557,6 +569,10 @@ function createProductModal(product) {
    createColorOptions(product)
 }
 
+/**
+ * Create product carousel gallery
+ * @param {*Object} product 
+ */
 function createProductGallery(product) {
    $("#product-gallery-pics").empty()
    $("#product-gallery-indicators").empty()
@@ -576,6 +592,10 @@ function createProductGallery(product) {
 
 }
 
+/**
+ * Create product color options
+ * @param {*Object} product 
+ */
 function createColorOptions(product) {
    $("#product-colors-list").empty()
    if (product.colors.length) {
