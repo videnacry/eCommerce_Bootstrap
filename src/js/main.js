@@ -620,6 +620,10 @@ function createColorOptions(product) {
    }
 }
 
+/**
+ * Add product to card and save it in localStorage
+ * @param {*Object} product 
+ */
 function addToCart(product){
    let cartProduct = $('<div class="d-flex flex-row card card-item mb-1 p-1"></div>')
    let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
