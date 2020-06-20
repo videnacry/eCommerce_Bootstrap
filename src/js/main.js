@@ -13,12 +13,12 @@ let data = getStorage() || {
 
 saveStorage()
 
-function getStorage() {
-   return JSON.parse(localStorage.getItem("data"))
+function getStorage(key = "data") {
+   return JSON.parse(localStorage.getItem(key))
 }
 
-function saveStorage() {
-   localStorage.setItem("data", JSON.stringify(data))
+function saveStorage(key = "data", toSave = data) {
+   localStorage.setItem(key, JSON.stringify(toSave))
 }
 
 /*E> DATA WORK*/
