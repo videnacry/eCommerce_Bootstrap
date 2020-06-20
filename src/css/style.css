@@ -24,19 +24,19 @@ body{
 }
 
 .no-bs-dark-1{
-    background-color: rgb(10, 10, 10);
-    color: rgb(228, 228, 228);
+    background-color: rgb(10, 10, 10)!important;
+    color: rgb(228, 228, 228)!important;
 }
 
 .no-bs-dark-2 {
-   background-color: rgb(17, 17, 17);
-   color: rgb(231, 231, 231);
+   background-color: rgb(17, 17, 17)!important;
+   color: rgb(231, 231, 231)!important;
 }
 
 .no-bs-dark-3,
 .dropdown-item-dark:hover {
-   background-color: rgb(26, 26, 26);
-   color: rgb(238, 238, 238);
+   background-color: rgb(26, 26, 26)!important;
+   color: rgb(238, 238, 238)!important;
 }
 
 .no-bs-dark-4 {
@@ -46,19 +46,32 @@ body{
 
 
 /*MANAGER*/
+#header_manager {
+   font-size: 20px!important;
+}
+
 .manager-menu {
     display: none;
-    min-width: 300px;
+    min-width: 500px;
 }
 
 .manager-menu .col {
-    min-width: 250px;
+    min-width: 450px;
 }
 
 #products_list {
    display: block;
+   overflow-x: auto;
 }
 
+.pl_name_column {
+   width: 60%; 
+   min-width: 300px;
+   max-width: 700px;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
 
 /*USER*/
 .carousel-height, .carousel-height img{
