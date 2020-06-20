@@ -85,6 +85,13 @@ body{
    opacity: 1;
 }
 
+.line-clamp {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;  
+   overflow: hidden;
+ }
+
 .image__container{
    position: relative;
    min-height: 200px;
@@ -92,11 +99,6 @@ body{
    background-size: cover;
    background-position: center;
    background-repeat: no-repeat;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover{
-   background-color: rgba(100, 100, 100, 0.11);
 }
 
 .modal-header{
@@ -108,6 +110,15 @@ body{
    max-width: 900px;
 }
 
+.product-colors{
+   width: 40px;
+   height: 40px;
+   margin: 5px;
+   background-color: red;
+   border: solid 1px #000;
+}
+
+/* CART */
 .modal-dialog {
    color: rgb(49, 49, 49);
 }
@@ -134,7 +145,7 @@ body{
    padding: 15px 15px 80px;
 }
 
-/*Right*/
+
 .modal.right.fade .modal-dialog {
    right: -300px;
    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
@@ -164,9 +175,3 @@ body{
 
 }
 
-.line-clamp {
-   display: -webkit-box;
-   -webkit-line-clamp: 2;
-   -webkit-box-orient: vertical;  
-   overflow: hidden;
- }

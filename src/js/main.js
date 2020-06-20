@@ -500,6 +500,19 @@ function searchForSameName(list, name) {
 }
 
 /*E> HELPER FUNCTIONS*/
+
+function checkActiveUser() {
+   if(Object.keys(activeUser).length == 0) {
+       $(".manager-menu").hide()
+       $("input").val("")
+       $("#admin_login").show()
+       return false
+   } else return true
+}
+
+/*E> HELPER FUNCTIONS*/
+
+
 /******************************************************************************************************************************************************/
 /*S> PRINT PRODUCTS*/
 
@@ -536,6 +549,7 @@ function createProductModal(product) {
    $("#product-price").text(product.price)
    $("#product-quantity").val("1")
    createProductGallery(product)
+   createColorOptions(product)
 }
 
 function createProductGallery(product) {
@@ -557,17 +571,20 @@ function createProductGallery(product) {
 
 }
 
+function createColorOptions(product){
+   $("#product-colors-list").empty()
+   if(product.colors.length){
+      for(const color of product.colors){
+         let colorItem = $('<div class="product-colors"></div>')
+         $(colorItem).css("background-color", `${color}`)
+         $("#product-colors-list").append(colorItem)
+      }
+   }else{
+      $("#product-colors-list").append("<div>Unique option</div>")
+   }
+}
+
 printProducts()
 
 
 /*E> PRINT PRODUCTS*/
-function checkActiveUser() {
-    if(Object.keys(activeUser).length == 0) {
-        $(".manager-menu").hide()
-        $("input").val("")
-        $("#admin_login").show()
-        return false
-    } else return true
-}
-
-/*E> HELPER FUNCTIONS*/
