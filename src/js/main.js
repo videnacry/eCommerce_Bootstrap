@@ -57,7 +57,7 @@ function tryLogIn() {
 
 $(document).ready(() => {
     //EVENT LISTENERS
-    $("a").click(e => {
+    $(".manager-nav a").click(e => {
         if(!checkActiveUser()) return
 
         $(".manager-menu").hide()
