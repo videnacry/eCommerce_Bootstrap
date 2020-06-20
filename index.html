@@ -177,10 +177,10 @@
                                     <p class="mb-0"><b>Available Colors:</b></p>
 
                                     <div class="d-flex flex-wrap flex-start" id="product-colors-list">
-                                       <label for="color-radio" class="product-colors d-block" style="background-color: yellow;">
+                                       <!-- <label for="color-radio" class="product-colors d-block" style="background-color: yellow;">
 
                                           <input type="radio" name="color-option" id="color-radio" value="yellow">
-                                       </label>
+                                       </label> -->
                                        <!-- <div class="product-colors">
                                           color
                                        </div>
@@ -200,7 +200,7 @@
                                     <input type="number" name="" id="product-quantity" min="1" max="10" step="1">
                                  </div>
                                  <div class="col-12 p-0 text-center mt-3">
-                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <button class="btn btn-primary" id="add-to-cart">Add to Cart</button>
                                  </div>
                               </div>
                            </div>
@@ -226,26 +226,40 @@
                </div>
 
                <div class="modal-body">
-                  <div class="d-flex flex-column">
-                     <div class="d-flex flex-row card card-item mb-1 p-2">
-                        <div class="col-5">
-                           <img class="card-img"
-                              src="https://avatars.mds.yandex.net/get-pdb/2126974/728f0d95-15c9-4b1d-8cc2-da81b350bd8d/s1200?webp=false">
+                  <div class="d-flex flex-column" id="cart-product-list">
+                     <div class="d-flex flex-row card card-item mb-1 p-1">
+                        <div class="col-6 p-1 cart-product-image">
+                           <!-- <img class="card-img"
+                              src="https://avatars.mds.yandex.net/get-pdb/2126974/728f0d95-15c9-4b1d-8cc2-da81b350bd8d/s1200?webp=false"> -->
                         </div>
-                        <div class="col-6">
-                           <h5 class="card-title mb-1">Item name</h5>
+                        <div class="col-6 p-1 cart-data">
+                           <h5 class="line-clamp mb-1">Item name</h5>
                            <p class="card-text mb-1">Price <b><span>15 </span>€</b></p>
+                           <!-- <p class="mb-1"> -->
+                              <label for="product-quantity"><b>Quantity:</b> </label>
+                                    <input type="number" name="" id="cart-product-quantity" min="1" max="10" step="1">
+                           <!-- </p> -->
                            <p class="mb-1">Color: <span>red</span></p>
-                           <p class="mb-1">
-                              Quantity: <br>
-                              <span class="cart__remove">-</span>
-                              <span class="cart__quantity">1</span>
-                              <span class="cart__add">+</span>
-                           </p>
+                           <button type="button" class="btn btn-sm btn-danger my-2">Remove</button>
                         </div>
                      </div>
+                     
                   </div>
                </div>
+               <div class="modal-footer">
+                  <div class="d-flex justify-content-between w-100" id="cart-shipping">
+                     <p><b>Shipping</b></p>
+                     <p id="cart-shipping-price">35€</p>
+                  </div>
+                  <div class="d-flex justify-content-between w-100" id="cart-total">
+                     <p><b>Total</b></p>
+                     <p id="cart-shipping-price">35€</p>
+                  </div>
+                  <div>
+                     <button type="button" class="btn btn-primary">Checkout</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
 
             </div><!-- modal-content -->
          </div><!-- modal-dialog -->

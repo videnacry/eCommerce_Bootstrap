@@ -567,6 +567,11 @@ function createProductModal(product) {
    $("#product-quantity").val("1").attr("max", product.stock)
    createProductGallery(product)
    createColorOptions(product)
+   $("#add-to-cart").off().click(function(){
+      product.quantity = $("#product-quantity").val()
+      product.colorSelected = $('[name="color-option"]:checked').val()
+      addToCart(product)
+   })
 }
 
 /**
@@ -613,6 +618,22 @@ function createColorOptions(product) {
       let colorItem = $(`<label for="option-unique">Unique option</label>`)
       $("#product-colors-list").append(inputRadio).append(colorItem)
    }
+}
+
+function addToCart(product){
+   let cartProduct = $('<div class="d-flex flex-row card card-item mb-1 p-1"></div>')
+   let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
+   let cartData = $('<div class="col-6 p-1 cart-data"></div>')
+   cartData.append(`<h5 class="line-clamp mb-1">${product.name}</h5>`)
+   cartData.append(`<p class="card-text mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
+   cartData.append(`<label for="cart-product-quantity-${product.id}"><b>Quantity:</b> </label>`)
+   cartData.append($(`<input type="number" name="" id="cart-product-quantity-${product.id}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
+      // .change() add event on change
+      )
+   cartData.append(`<p class="mb-1">Color: ${product.colorSelected}</p>`)
+   cartData.append($(`<button type="button" class="btn btn-sm btn-danger my-2">Remove</button>`).click(()=>{cartProduct.remove()}))
+   cartProduct.append(cartImage).append(cartData)
+   $("#cart-product-list").append(cartProduct)
 }
 
 printProducts()
