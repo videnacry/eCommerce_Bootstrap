@@ -520,7 +520,7 @@ function createProductCard(index, product) {
          <div class="image__container" style="background-image: url('${product.img[0]}')">
          </div>
          <div class="card-header">
-            <h5 class="card-title">${product.name}</h5>
+            <h5 class="card-title line-clamp" title="${product.name}">${product.name}</h5>
             <p class="card-text">${product.price}</p>
          </div>
       </div>
