@@ -564,7 +564,7 @@ function createProductModal(product) {
    <p><b>Description:</b></p>
    <p>${product.description}</p>`)
    $("#product-price").text(product.price)
-   $("#product-quantity").val("1")
+   $("#product-quantity").val("1").attr("max", product.stock)
    createProductGallery(product)
    createColorOptions(product)
 }
