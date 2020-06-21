@@ -636,7 +636,7 @@ function addToCart(product) {
    let cart = getStorage("cart") || []
 
    if (findInCart(product) >= 0) {
-      cart[findInCart(product)].quantity += product.quantity
+      cart[findInCart(product)].quantity += parseInt(product.quantity)
    } else cart.push(product)
    saveStorage("cart", cart)
    printCart()
@@ -654,8 +654,8 @@ function printCart() {
       return
    }
 
-   $(cart).each(function(index, product){
-   // for (const product of cart) {
+   $(cart).each(function (index, product) {
+      // for (const product of cart) {
       let cartProduct = $(`<div class="d-flex flex-row card card-item mb-1 p-1" id="product-cart-${index}"></div >`)
       let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
@@ -687,7 +687,13 @@ function printCart() {
 function findInCart(product) {
    let cart = getStorage("cart") || []
    return cart.map(function (e) {
-      if (parseInt(e.id) == parseInt(product.id) && e.colorSelected == product.colorSelected) return e.id
+      if (parseInt(e.id) == parseInt(product.id)) return e.id
+      /**
+       * if we wanted to show in the cart a product for each selected color 
+       * it would be done this way but it would be necessary to modify 
+       * the function that checks the stock
+       */
+      // if (parseInt(e.id) == parseInt(product.id) && e.colorSelected == product.colorSelected) return e.id
    }).indexOf(product.id)
 
 }
@@ -715,7 +721,8 @@ function updateinCart(product) {
    let cart = getStorage("cart")
    if (findInCart(product) >= 0) {
 
-      cart[findInCart(product)].quantity = product.quantity
+      cart[findInCart(product)].quantity = parseInt(product.quantity)
+      cart[findInCart(product)].stock = product.stock
       saveStorage("cart", cart)
    }
    updateTotalPrice()
@@ -749,25 +756,42 @@ function updateTotalPrice() {
 }
 
 //Move listener to listener section.
-$("#cart-checkout").click(function(){
+$("#cart-checkout").click(function () {
    checkProductAvailability()
 })
 
-function checkProductAvailability(){
-   // debugger
+/**
+ * check availability of products before continuing with the purchase
+ */
+function checkProductAvailability() {
    let cart = getStorage("cart")
    let products = getStorage().products
-   
-   $(cart).each(function(index, prodCart){
-      // debugger
-      let prodData = products.find((e)=> {if(e.id == prodCart.id) return e})
-      if(parseInt(prodData.stock) == 0){
-         alert($(`#product-cart-${index} button`).text())
-         $(`#product-cart-${index} div`).next().append(`<div class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock})</div>`)
-      }
-      
+   let goToCheckout = true
+
+   $(cart).each(function (index, prodCart) {
+      let prodData = products.find((e) => {
+         if (e.id == prodCart.id) return e
+      })
+      if (parseInt(prodData.stock) == 0) {
+         $(`#no-stock-${index}`).remove()
+         $(`#product-cart-${index} div`).next().append(`<div id="no-stock-${index}" class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock}). Press remove this product to continue to checkout</div>`)
+         prodCart.stock = parseInt(prodData.stock)
+         updateinCart(prodCart)
+         goToCheckout = false
+      } else if (prodCart.quantity > parseInt(prodData.stock)) {
+         $(`#no-quantity-${index}`).remove()
+         $(`#product-cart-${index} div`).next().append(`<div id="no-quantity-${index}" class="alert alert-warning w-100">Your order exceeds the available quantity at this time: ${prodData.stock}. Press checkout to continue</div>`)
+         $(`#cart-product-quantity-${index}`).val(parseInt(prodData.stock))
+         prodCart.quantity = parseInt(prodData.stock)
+         prodCart.stock = parseInt(prodData.stock)
+         updateinCart(prodCart)
+         goToCheckout = false
+      } else if (prodCart.quantity > 0 && prodCart.quantity <= prodData.stock)
+         $(`#no-quantity-${index}`).remove()
+
    })
 
+   return goToCheckout
 }
 
 
