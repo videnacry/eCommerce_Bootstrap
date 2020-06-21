@@ -660,8 +660,8 @@ function printCart() {
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
       cartData.append(`<h5 class="line-clamp mb-1" title="${product.name}">${product.name}</h5>`)
       cartData.append(`<p class="card-text mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
-      cartData.append(`<label for="cart-product-quantity-${product.id}"><b>Quantity:</b> </label>`)
-      cartData.append($(`<input type="number" name="" id="cart-product-quantity-${product.id}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
+      cartData.append(`<label for="cart-product-quantity-${findInCart(product)}"><b>Quantity:</b> </label>`)
+      cartData.append($(`<input type="number" id="cart-product-quantity-${findInCart(product)}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
          .change(function () {
             product.quantity = parseInt($(this).val())
             updateinCart(product)
