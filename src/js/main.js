@@ -571,12 +571,13 @@ function createProductModal(product) {
    createProductGallery(product)
    createColorOptions(product)
    $("#add-to-cart").off().click(function () {
-      product.quantity = $("#product-quantity").val()
+      product.quantity = parseInt($("#product-quantity").val())
       product.colorSelected = $('[name="color-option"]:checked').val()
       addToCart(product)
-      $("#add-to-cart").text("Go to cart").removeClass("btn-primary").addClass("btn-success").click(function(){
+      $("#add-to-cart").off().text("Go to cart").removeClass("btn-primary").addClass("btn-success").click(function () {
          $("#modal-product").modal("toggle")
          $("#myModal2").modal("toggle")
+         $("#add-to-cart").off()
       })
    })
 }
@@ -633,7 +634,11 @@ function createColorOptions(product) {
  */
 function addToCart(product) {
    let cart = getStorage("cart") || []
-   cart.push(product)
+   console.log(findInCart(product));
+
+   if (findInCart(product) >= 0) {
+      cart[findInCart(product)].quantity += product.quantity
+   } else cart.push(product)
    saveStorage("cart", cart)
    printCart()
 }
@@ -645,7 +650,7 @@ function printCart() {
    $("#cart-product-list").empty()
    let cart = getStorage("cart") || []
 
-   if(!cart || cart.length == 0){
+   if (!cart || cart.length == 0) {
       $("#cart-product-list").html("<h5>Add something to your cart</h5>")
       return
    }
@@ -658,7 +663,10 @@ function printCart() {
       cartData.append(`<p class="card-text mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
       cartData.append(`<label for="cart-product-quantity-${product.id}"><b>Quantity:</b> </label>`)
       cartData.append($(`<input type="number" name="" id="cart-product-quantity-${product.id}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
-         // .change() add event on change
+         .change(function () {
+            product.quantity = parseInt($(this).val())
+            updateinCart(product)
+         })
       )
       cartData.append(`<p class="mb-1">Color: ${product.colorSelected}</p>`)
       cartData.append($(`<button type="button" class="btn btn-sm btn-danger my-2">Remove</button>`).click(() => {
@@ -669,22 +677,43 @@ function printCart() {
       $("#cart-product-list").append(cartProduct)
    }
 
+
+}
+
+/**
+ * Find product position in cart (localStorage)
+ * @param {*Object} product 
+ */
+function findInCart(product) {
+   let cart = getStorage("cart") || []
+   return cart.map(function (e) {
+      if (parseInt(e.id) == parseInt(product.id) && e.colorSelected == product.colorSelected) return e.id
+   }).indexOf(product.id)
+
 }
 
 /**
  * Remove product from cart in LocalSotage
  * @param {*Object} product 
  */
-function removeFromCart(product){
+function removeFromCart(product) {
    let cart = getStorage("cart")
-   //Find position
-   let pos = cart.map(function(e){
-      if(JSON.stringify(e) == JSON.stringify(product)) return JSON.stringify(e)
-   }).indexOf(JSON.stringify(product))
-   cart.splice(pos, 1)
+
+   cart.splice(findInCart(product), 1)
    saveStorage("cart", cart)
-   if(cart.length == 0)
+   if (cart.length == 0)
       $("#cart-product-list").html("<h5>Add something to your cart</h5>")
+}
+
+function updateinCart(product) {
+   let cart = getStorage("cart")
+   if (findInCart(product) >= 0) {
+      console.log("si");
+      
+      cart[findInCart(product)].quantity = product.quantity
+      console.log(cart[findInCart(product)].quantity);
+      saveStorage("cart", cart)
+   }
 }
 
 printProducts()
