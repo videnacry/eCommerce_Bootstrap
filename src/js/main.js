@@ -572,10 +572,10 @@ function createProductModal(product) {
       product.quantity = $("#product-quantity").val()
       product.colorSelected = $('[name="color-option"]:checked').val()
       addToCart(product)
-      $("#add-to-cart").off().text("Go to cart").click(function(){
+      $("#add-to-cart").off().removeClass("btn-primary").addClass("btn-success").text("Go to cart").click(function(){
          $("#modal-product").modal("toggle")
          $("#myModal2").modal("toggle")
-         $("#add-to-cart").text("Add to cart").off()
+         $("#add-to-cart").text("Add to cart").removeClass("btn-success").addClass("btn-primary").off()
       })
    })
 }
@@ -645,7 +645,8 @@ function printCart() {
    let cart = getStorage("cart") || []
 
    if(!cart || cart.length == 0){
-      $("#cart-product-list").html("<h5>Add something to cart</h5>")
+      $("#cart-product-list").html("<h5>Add something to your cart</h5>")
+      return
    }
 
    for (const product of cart) {
@@ -661,11 +662,28 @@ function printCart() {
       cartData.append(`<p class="mb-1">Color: ${product.colorSelected}</p>`)
       cartData.append($(`<button type="button" class="btn btn-sm btn-danger my-2">Remove</button>`).click(() => {
          cartProduct.remove()
+         removeFromCart(product)
       }))
       cartProduct.append(cartImage).append(cartData)
       $("#cart-product-list").append(cartProduct)
    }
 
+}
+
+/**
+ * Remove product from cart in LocalSotage
+ * @param {*Object} product 
+ */
+function removeFromCart(product){
+   let cart = getStorage("cart")
+   //Find position
+   let pos = cart.map(function(e){
+      if(JSON.stringify(e) == JSON.stringify(product)) return JSON.stringify(e)
+   }).indexOf(JSON.stringify(product))
+   cart.splice(pos, 1)
+   saveStorage("cart", cart)
+   if(cart.length == 0)
+      $("#cart-product-list").html("<h5>Add something to your cart</h5>")
 }
 
 printProducts()
