@@ -559,6 +559,8 @@ function createProductCard(index, product) {
  * @param {*Object} product 
  */
 function createProductModal(product) {
+   //reset button
+   $("#add-to-cart").text("Add to cart").removeClass("btn-success").addClass("btn-primary").off()
    $("#product-name").text(product.name)
    $("#product-description").empty()
    $("#product-description").append(`
@@ -572,10 +574,9 @@ function createProductModal(product) {
       product.quantity = $("#product-quantity").val()
       product.colorSelected = $('[name="color-option"]:checked').val()
       addToCart(product)
-      $("#add-to-cart").off().removeClass("btn-primary").addClass("btn-success").text("Go to cart").click(function(){
+      $("#add-to-cart").text("Go to cart").removeClass("btn-primary").addClass("btn-success").click(function(){
          $("#modal-product").modal("toggle")
          $("#myModal2").modal("toggle")
-         $("#add-to-cart").text("Add to cart").removeClass("btn-success").addClass("btn-primary").off()
       })
    })
 }
