@@ -572,6 +572,11 @@ function createProductModal(product) {
       product.quantity = $("#product-quantity").val()
       product.colorSelected = $('[name="color-option"]:checked').val()
       addToCart(product)
+      $("#add-to-cart").off().text("Go to cart").click(function(){
+         $("#modal-product").modal("toggle")
+         $("#myModal2").modal("toggle")
+         $("#add-to-cart").text("Add to cart").off()
+      })
    })
 }
 
@@ -622,7 +627,7 @@ function createColorOptions(product) {
 }
 
 /**
- * Add product to card and save it in localStorage
+ * Add product to cart in localStorage
  * @param {*Object} product 
  */
 function addToCart(product) {
@@ -632,6 +637,9 @@ function addToCart(product) {
    printCart()
 }
 
+/**
+ * Print products saved in the cart
+ */
 function printCart() {
    $("#cart-product-list").empty()
    let cart = getStorage("cart") || []
