@@ -42,15 +42,24 @@ $(document).ready(() => {
             replace($("#customer-info"),$("#shipping-info"))
         }
     })
+    $("#return-to-cart").click(function(){
+       $("#checkout").modal("toggle")
+       setTimeout(function(){
+          $("#modal-cart").modal({
+             toggle:true,
+             focus:true
+          })
+         },400)
+      })
     let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
-    let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart","#checkout-service-terms",
+    /*let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart","#checkout-service-terms",
                           "#checkout-refund-policy"]
     eraseClick(problematicLinks)
     function eraseClick(elements){
         elements.forEach(function(element){
             $(element).off("click")
         })
-    }
+    }*/
     shippingToCustomer(buttonsShippingToCustomer)
     
     function customerValidation(){
@@ -705,7 +714,7 @@ function printProducts() {
  */
 function createProductCard(index, product) {
    return `
-   <div class="col-lg-${index > 1 ? "3" : "6"} col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product" data-product-id="${product.id}">
+   <div class="col-lg-${index > 1 ? "3" : "6"} col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product">
       <div class="card card-item my-3 no-bs-dark-3">
          <div class="image__container" style="background-image: url('${product.img[0]}')">
          </div>
@@ -739,7 +748,7 @@ function createProductModal(product) {
       addToCart(product)
       $("#add-to-cart").off().text("Go to cart").removeClass("btn-primary").addClass("btn-success").click(function () {
          $("#modal-product").modal("toggle")
-         $("#myModal2").modal("toggle")
+         $("#modal-cart").modal("toggle")
          $("#add-to-cart").off()
       })
    })
@@ -818,8 +827,9 @@ function printCart() {
       return
    }
 
-   for (const product of cart) {
-      let cartProduct = $('<div class="d-flex flex-row card card-item mb-1 p-1"></div>')
+   $(cart).each(function(index, product){
+   // for (const product of cart) {
+      let cartProduct = $(`<div class="d-flex flex-row card card-item mb-1 p-1" id="product-cart-${index}"></div >`)
       let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
       cartData.append(`<h5 class="line-clamp mb-1" title="${product.name}">${product.name}</h5>`)
@@ -838,7 +848,7 @@ function printCart() {
       }))
       cartProduct.append(cartImage).append(cartData)
       $("#cart-product-list").append(cartProduct)
-   }
+   })
    updateTotalPrice()
 
 }
@@ -909,6 +919,34 @@ function updateTotalPrice() {
       $("#cart-shipping-price").text("16.60€")
       $("#cart-total-price").text((Math.round(((totalPrice + 16.6) + Number.EPSILON) * 100) / 100) + "€")
    }
+}
+
+//Move listener to listener section.
+$("#cart-checkout").click(function(){
+   checkProductAvailability()
+})
+$("#cart-checkout").click(function(){
+   $("#modal-cart").modal("toggle")
+   setTimeout(function(){
+      $("#checkout").modal("toggle")
+   },400)
+})
+
+function checkProductAvailability(){
+   // debugger
+   let cart = getStorage("cart")
+   let products = getStorage().products
+   
+   $(cart).each(function(index, prodCart){
+      // debugger
+      let prodData = products.find((e)=> {if(e.id == prodCart.id) return e})
+      if(parseInt(prodData.stock) == 0){
+         alert($(`#product-cart-${index} button`).text())
+         $(`#product-cart-${index} div`).next().append(`<div class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock})</div>`)
+      }
+      
+   })
+
 }
 
 
