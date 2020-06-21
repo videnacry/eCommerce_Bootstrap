@@ -1,38 +1,6 @@
 /*S> DOCUMENT LOAD*/
 
 $(document).ready(() => {
-    //EVENT LISTENERS
-    $("a").click(e => {
-        $(".manager-menu").hide()
-        $("input, textarea").val("")
-        $("" + e.target.getAttribute("data-href") + "").show()
-    })
-
-    $("#pl_btn").click(drawProductList)
-    $("#ul_btn").click(drawUsers)
-
-    $("#apf_btn").click(() => { 
-        drawCategories()
-        $("#add_product").children("h2").text("Add Product")
-        $("#add_product_btn").text("Add Product")
-
-        $("#add_product_btn").off()
-        $("#add_product_btn").click(createProduct)
-    })
-
-    $("#btnCreateUser").click(e => {
-        e.preventDefault()
-        createUser()
-    })
-
-    $("#btnCreateCategory").click(e => {
-        e.preventDefault()
-        createCategory()
-    })
-
-    drawProductList()
-    drawUsers()
-
     //change style
     $("#shipping-info").fadeOut()
     $("#customer-info form").submit(function(event){event.preventDefault()})
