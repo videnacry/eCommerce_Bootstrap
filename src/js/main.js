@@ -542,7 +542,7 @@ function printProducts() {
  */
 function createProductCard(index, product) {
    return `
-   <div class="col-lg-${index > 1 ? "3" : "6"} col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product" data-product-id="${product.id}">
+   <div class="col-lg-${index > 1 ? "3" : "6"} col-md-4 col-sm-6" data-toggle="modal" data-target="#modal-product">
       <div class="card card-item my-3 no-bs-dark-3">
          <div class="image__container" style="background-image: url('${product.img[0]}')">
          </div>
@@ -576,7 +576,7 @@ function createProductModal(product) {
       addToCart(product)
       $("#add-to-cart").off().text("Go to cart").removeClass("btn-primary").addClass("btn-success").click(function () {
          $("#modal-product").modal("toggle")
-         $("#myModal2").modal("toggle")
+         $("#modal-cart").modal("toggle")
          $("#add-to-cart").off()
       })
    })
