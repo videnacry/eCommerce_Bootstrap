@@ -654,8 +654,9 @@ function printCart() {
       return
    }
 
-   for (const product of cart) {
-      let cartProduct = $('<div class="d-flex flex-row card card-item mb-1 p-1"></div>')
+   $(cart).each(function(index, product){
+   // for (const product of cart) {
+      let cartProduct = $(`<div class="d-flex flex-row card card-item mb-1 p-1" id="product-cart-${index}"></div >`)
       let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
       cartData.append(`<h5 class="line-clamp mb-1" title="${product.name}">${product.name}</h5>`)
@@ -674,7 +675,7 @@ function printCart() {
       }))
       cartProduct.append(cartImage).append(cartData)
       $("#cart-product-list").append(cartProduct)
-   }
+   })
    updateTotalPrice()
 
 }
@@ -745,6 +746,28 @@ function updateTotalPrice() {
       $("#cart-shipping-price").text("16.60€")
       $("#cart-total-price").text((Math.round(((totalPrice + 16.6) + Number.EPSILON) * 100) / 100) + "€")
    }
+}
+
+//Move listener to listener section.
+$("#cart-checkout").click(function(){
+   checkProductAvailability()
+})
+
+function checkProductAvailability(){
+   // debugger
+   let cart = getStorage("cart")
+   let products = getStorage().products
+   
+   $(cart).each(function(index, prodCart){
+      // debugger
+      let prodData = products.find((e)=> {if(e.id == prodCart.id) return e})
+      if(parseInt(prodData.stock) == 0){
+         alert($(`#product-cart-${index} button`).text())
+         $(`#product-cart-${index} div`).next().append(`<div class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock})</div>`)
+      }
+      
+   })
+
 }
 
 
