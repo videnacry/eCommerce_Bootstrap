@@ -548,7 +548,7 @@ function createProductCard(index, product) {
          </div>
          <div class="card-header">
             <h5 class="card-title line-clamp" title="${product.name}">${product.name}</h5>
-            <p class="card-text">${product.price}</p>
+            <p class="card-text">${product.price} €</p>
          </div>
       </div>
    </div>`
@@ -566,7 +566,7 @@ function createProductModal(product) {
    $("#product-description").append(`
    <p><b>Description:</b></p>
    <p>${product.description}</p>`)
-   $("#product-price").text(product.price)
+   $("#product-price").text(product.price + " €")
    $("#product-quantity").val("1").attr("max", product.stock)
    createProductGallery(product)
    createColorOptions(product)
@@ -634,7 +634,6 @@ function createColorOptions(product) {
  */
 function addToCart(product) {
    let cart = getStorage("cart") || []
-   console.log(findInCart(product));
 
    if (findInCart(product) >= 0) {
       cart[findInCart(product)].quantity += product.quantity
@@ -659,7 +658,7 @@ function printCart() {
       let cartProduct = $('<div class="d-flex flex-row card card-item mb-1 p-1"></div>')
       let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
-      cartData.append(`<h5 class="line-clamp mb-1">${product.name}</h5>`)
+      cartData.append(`<h5 class="line-clamp mb-1" title="${product.name}">${product.name}</h5>`)
       cartData.append(`<p class="card-text mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
       cartData.append(`<label for="cart-product-quantity-${product.id}"><b>Quantity:</b> </label>`)
       cartData.append($(`<input type="number" name="" id="cart-product-quantity-${product.id}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
@@ -676,7 +675,7 @@ function printCart() {
       cartProduct.append(cartImage).append(cartData)
       $("#cart-product-list").append(cartProduct)
    }
-
+   updateTotalPrice()
 
 }
 
@@ -703,18 +702,51 @@ function removeFromCart(product) {
    saveStorage("cart", cart)
    if (cart.length == 0)
       $("#cart-product-list").html("<h5>Add something to your cart</h5>")
+   updateTotalPrice()
+
 }
 
+/**
+ * Update product quantity in localstorage
+ * @param {*Object} product 
+ */
 function updateinCart(product) {
    let cart = getStorage("cart")
    if (findInCart(product) >= 0) {
-      console.log("si");
-      
+
       cart[findInCart(product)].quantity = product.quantity
-      console.log(cart[findInCart(product)].quantity);
       saveStorage("cart", cart)
    }
+   updateTotalPrice()
 }
+
+/**
+ * Update shipping price and total price according to selected products
+ */
+function updateTotalPrice() {
+   let cart = getStorage("cart")
+   let totalWeight = 0
+   let totalPrice = 0
+   for (product of cart) {
+      totalWeight += parseFloat(product.weight) * parseInt(product.quantity)
+      totalPrice += parseFloat(product.price) * parseInt(product.quantity)
+   }
+
+   if (totalWeight <= 1) {
+      $("#cart-shipping-price").text("Free")
+      $("#cart-total-price").text((Math.round((totalPrice + Number.EPSILON) * 100) / 100) + "€")
+   } else if (totalWeight > 1 && totalWeight <= 2) {
+      $("#cart-shipping-price").text("10.90€")
+      $("#cart-total-price").text((Math.round(((totalPrice + 10.9) + Number.EPSILON) * 100) / 100) + "€")
+   } else if (totalWeight > 2 && totalWeight <= 3) {
+      $("#cart-shipping-price").text("12.85€")
+      $("#cart-total-price").text((Math.round(((totalPrice + 12.85) + Number.EPSILON) * 100) / 100) + "€")
+   } else if (totalWeight > 3) {
+      $("#cart-shipping-price").text("16.60€")
+      $("#cart-total-price").text((Math.round(((totalPrice + 16.6) + Number.EPSILON) * 100) / 100) + "€")
+   }
+}
+
 
 printProducts()
 printCart()
