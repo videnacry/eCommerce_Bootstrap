@@ -3,10 +3,9 @@ body{
     overflow-x: hidden;
 }
 
-button:focus {
-   outline:none;
-   box-shadow: none;
- }
+::placeholder {
+   opacity: 0.5!important;
+}
 
 ::-webkit-scrollbar {
    background-color: transparent;
@@ -112,13 +111,21 @@ button:focus {
    overflow-x: auto;
 }
 
-.pl_name_column {
+.table_name_column {
    width: 60%; 
    min-width: 300px;
    max-width: 700px;
    overflow: hidden;
    white-space: nowrap;
    text-overflow: ellipsis;
+}
+
+.table_btn_column {
+   width: 5%;
+}
+
+.apf_error.p-1 {
+   padding: 5px 10px!important;
 }
 
 /*USER*/

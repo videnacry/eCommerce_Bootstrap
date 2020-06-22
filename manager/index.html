@@ -46,7 +46,7 @@
                </a>
               </li>
               <li class="nav-item">
-               <a href="#" data-href="#add_category" class="nav-link no-bs-dark-3">
+               <a href="#" id="acf_btn" data-href="#add_category" class="nav-link no-bs-dark-3">
                   <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
                   Add category
                </a>
@@ -62,7 +62,7 @@
                </a>
               </li>
               <li class="nav-item">
-               <a href="#" data-href="#update_category" class="nav-link no-bs-dark-3">
+               <a href="#" id="cl_btn" data-href="#categories_list" class="nav-link no-bs-dark-3">
                   <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
                   Update category
                </a>
@@ -78,7 +78,7 @@
                </a>
               </li>
               <li class="nav-item">
-               <a href="#" data-href="#create_user" class="nav-link no-bs-dark-3">
+               <a href="#" id="auf_btn" data-href="#create_user" class="nav-link no-bs-dark-3">
                   <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
                   Create user
                </a>
@@ -121,11 +121,11 @@
                   <thead>
                      <tr class="no-bs-dark-2">
                         <th scope="col">id</th>
-                        <th scope="col" class="pl_name_column">Name</th>
+                        <th scope="col" class="table_name_column">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Stock</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" class="table_btn_column"></th>
+                        <th scope="col" class="table_btn_column"></th>
                      </tr>
                   </thead>
                   <tbody id="pl_list">
@@ -136,35 +136,41 @@
             <div id="add_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Add Category</h2>
                <form class="form-group w-50  mx-auto mt-5 text-center" name="addcategory">
-                  <input type="text" class="form-control mt-5 " placeholder="Title" id ="inputCategoryTitle" autocomplete="off">
-                  <select class="form-control mt-5" id="selectCategoryColor">
-                     <option selected>Choose color...</option>
-                     <option value="black">Black</option>
-                     <option value="white">White</option>
-                     <option value="red">Red</option>
-                     <option value="blue">Blue</option>
-                     <option value="green">Green</option>
-                     <option value="yellow">Yellow</option>
-                  </select>
-                  <button type="button" class="btn btn-primary w-25 mt-5" id="btnCreateCategory">Create</button>
+                  <fieldset class="form-group mb-4">
+                     <h4>Category name</h4>
+                     <input type="text" class="form-control" placeholder="Clothes" id="inputCategoryTitle" autocomplete="off">
+                  </fieldset>
+                  <fieldset class="form-group">
+                     <h4>Category color</h4>
+                     <select class="form-control" id="selectCategoryColor">
+                        <option selected>Choose color...</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                     </select>
+                  </fieldset>
+                  <button type="button" class="btn btn-primary w-25 mt-4" id="btnCreateCategory">Create</button>
                </form>
             </div>
-            <!-- update category -->
-            <div id="update_category" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
-               <h2 class="title">Update Category</h2>
-               <form class="form-group w-50  mx-auto mt-5 text-center" name="updatecategory">
-                  <input type="text" class="form-control mt-5 " placeholder="Title" autocomplete="off">
-                  <select class="form-control mt-5">
-                     <option selected>Choose color...</option>
-                     <option value="black">Black</option>
-                     <option value="white">White</option>
-                     <option value="red">Red</option>
-                     <option value="blue">Blue</option>
-                     <option value="green">Green</option>
-                     <option value="yellow">Yellow</option>
-                  </select>
-                  <button type="button" class=" btn btn-primary w-25 mt-5">Save</button>
-               </form>
+            <!-- category tab -->
+            <div id="categories_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
+               <h2 class="title">Categories</h2>
+               <table class="table w-75 mt-5 mx-auto text-aling-center">
+                  <thead>
+                     <tr class="no-bs-dark-2">
+                        <th scope="col">id</th>
+                        <th scope="col" class="table_name_column">Name</th>
+                        <th scope="col">Color</th>
+                        <th scope="col" class="table_btn_column"></th>
+                        <th scope="col" class="table_btn_column"></th>
+                     </tr>
+                  </thead>
+                  <tbody id="cl_list">
+                  </tbody>
+               </table>
             </div>
             <!-- user or manager tab -->
             <div id="users_list" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
@@ -173,10 +179,10 @@
                   <thead>
                      <tr class="no-bs-dark-2">
                         <th scope="col">id</th>
-                        <th scope="col">name</th>
-                        <th scope="col">email</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" class="table_name_column">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="table_btn_column"></th>
+                        <th scope="col" class="table_btn_column"></th>
                      </tr>
                   </thead>
                   <tbody id="ul_list">
@@ -187,26 +193,21 @@
             <div id="create_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 >Create User</h2>
                <form class="form-group w-50  mx-auto mt-5 text-center" name="createuser">
-                  <input type="text" class="form-control mt-5 " placeholder="Name" id="inputUserName" autocomplete="off">
-                  <input type="email" class="form-control mt-5 " placeholder="Email" id="inputUserEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" autocomplete="off">
-                  <input type="password" class="form-control mt-5 " placeholder="Password" id="inputUserPass" autocomplete="off">
-                  
-                  <button type="button" class=" btn btn-primary w-25 mt-5" id="btnCreateUser">Create</button>
+                  <fieldset class="form-group mb-4">
+                     <h4>Username</h4>
+                     <input type="text" class="form-control" placeholder="Name" id="inputUserName" autocomplete="off">
+                  </fieldset>
+                  <fieldset class="form-group mb-4">
+                     <h4>Email</h4>
+                     <input type="email" class="form-control" placeholder="Email" id="inputUserEmail" autocomplete="off">
+                  </fieldset>
+                  <fieldset class="form-group mb-4">
+                     <h4>Password</h4>
+                     <input type="password" class="form-control" placeholder="Password" id="inputUserPass" autocomplete="off">
+                  </fieldset>
+                  <button type="button" class=" btn btn-primary w-25 mt-4" id="btnCreateUser">Create</button>
                </form>
-
             </div>
-            <!-- Update user -->
-            <!-- <div id="update_user" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
-               <h2 class="title">Update User</h2>
-               <div class="form-group w-50  mx-auto mt-5 text-center">
-                  <input type="text" class="form-control mt-5 " placeholder="Name" autocomplete="off">
-                  <input type="email" class="form-control mt-5 " placeholder="Email" autocomplete="off">
-                  <input type="password" class="form-control mt-5 " placeholder="Password" autocomplete="off">
-                  
-                  <button type="button" class=" btn btn-primary w-25 mt-5">Save</button>
-               </div>
-
-            </div> -->
             <!-- Add product -->
             <div id="add_product" class="manager-menu mx-auto p-5 mt-5 col-11 no-bs-dark-2 rounded-lg">
                <h2 class="title">Add product</h2>
@@ -218,7 +219,7 @@
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Product Description</h5>
-                        <textarea type="text" class="form-control" id="apf_product_description" placeholder="Not too long description..." rows="1"></textarea>
+                        <textarea type="text" class="form-control" id="apf_product_description" placeholder="Not too long description..."></textarea>
                      </fieldset>
                      <fieldset class="form-group">
                         <h5>Image URL</h5>
