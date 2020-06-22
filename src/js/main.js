@@ -949,6 +949,7 @@ function searchProduct(val){
          return e
       }
    })
+   $("#filter-category").val("")
    printProducts(result)
 }
 /*E> SEARCH PRODUCTS*/
