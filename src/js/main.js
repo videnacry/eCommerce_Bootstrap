@@ -12,21 +12,18 @@ $(document).ready(() => {
        let i = 0
        products.forEach(function(element,index){
          i = index
-         carrouselPage(index)
+         carrousel.headers[i].textContent=element.name
+         carrousel.descriptions[i].textContent=element.description
+         carrousel.imgs[i].src=element.img[0]
+         carrousel.imgs[i].addEventListener("mouseover",function(event){
+            event.currentTarget.style.opacity=1
+            event.currentTarget.parentElement.children[1].style.opacity=0
+         })
+         carrousel.imgs[i].addEventListener("mouseout",function(event){
+            event.currentTarget.style.opacity=0.7
+            event.currentTarget.parentElement.children[1].style.opacity=1
+         })
        })
-    }
-    function carrouselPage(){
-      carrousel.headers[i].textContent=element.name
-      carrousel.descriptions[i].textContent=element.description
-      carrousel.imgs[i].src=element.img[0]
-      carrousel.imgs[i].addEventListener("mouseover",function(event){
-         event.currentTarget.style.opacity=1
-         event.currentTarget.parentElement.children[1].style.opacity=0
-      })
-      carrousel.imgs[i].addEventListener("mouseout",function(event){
-         event.currentTarget.style.opacity=0.7
-         event.currentTarget.parentElement.children[1].style.opacity=1
-      })
     }
     $("#shipping-info").fadeOut()
     $("#payment-method").fadeOut()
