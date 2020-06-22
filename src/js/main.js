@@ -898,13 +898,13 @@ function updateTotalPrice() {
 //Move listener to listener section.
 $("#cart-checkout").click(function(){
    if(checkProductAvailability()){
-      $("#modal-cart").modal("toggle")
-      setTimeout(function(){
-         $("#checkout").modal("toggle")
-      },400)
    }
 })
 $("#cart-checkout").click(function(){
+   $("#modal-cart").modal("toggle")
+   setTimeout(function(){
+      $("#checkout").modal("toggle")
+   },400)
 })
 
 function checkProductAvailability(){
