@@ -354,8 +354,8 @@ function createProduct(product) {
    //Product object creation
    const newProduct = {
       id: lastProductId,
-      name: name.val(),
-      description: description.val(),
+      name: name.val().replace(/"/g, '\"'),
+      description: description.val().replace(/"/g, '\"'),
       img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
       price: parseFloat(price.val()),
       stock: parseInt(stock.val()),
