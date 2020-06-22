@@ -9,7 +9,23 @@ $(document).ready(() => {
         let rep = customerValidation()
         if(rep){
             replace($("#customer-info"),$("#shipping-info"))
+            $("#check-email").text($("#checkout-email").val())
+            $("#check-address").text($("#checkout-address").val())
         }
+        
+      let shippingPrice=$("#shipping-price")
+       $("input[type=radio][name=shipping]").each(function(index,element){
+        
+         let val=parseFloat(element.getAttribute("data-val").replace("€",""))
+         let val2 = parseFloat(shippingPrice.text().replace("€",""))
+         let total = val+val2
+         element.setAttribute("data-total",total.toFixed(2))
+       })
+    })
+    $("input[type=radio][name=shipping]").click(function(event){
+      let shippingPrice=$("#shipping-price")
+       shippingPrice.text(event.currentTarget.getAttribute("data-total"))
+
     })
     $("#continue-to-payment").click(function(){
        replace($("#shipping-method"),$("#payment-method"))
@@ -171,7 +187,7 @@ function saveStorage(key = "data", toSave = data) {
 /*E> DATA WORK*/
 /******************************************************************************************************************************************************/
 /*S> ADMIN CONTROL*/
-let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || data.users[0] //This is just for debugging, by default it will be an empty object
+let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || {} //User: admin, pass: admin
 sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
 
 function tryLogIn() {
@@ -209,11 +225,14 @@ function tryLogIn() {
 
 $(document).ready(() => {
    //EVENT LISTENERS
+   $('#sidebarCollapse').on('click', function() {
+      $('#sidebar, #sidebarCollapse').toggleClass('active');
+   });
+
    $(".manager-nav a").click(e => {
       if (!checkActiveUser()) return
 
       $(".manager-menu").hide()
-      $("input, textarea").val("")
       $("" + e.target.getAttribute("data-href") + "").show()
    })
 
@@ -243,9 +262,14 @@ $(document).ready(() => {
 
    $("#al_login_btn").click(tryLogIn)
    $("#log_out_btn").click(() => {
+      resetForm("login")
       activeUser = {}
       checkActiveUser()
    })
+   $("#log_in_btn").click(e => { 
+      e.preventDefault()
+      location.pathname = '/manager' 
+   });
 
    drawProductList()
 
@@ -496,12 +520,12 @@ function createProduct(product) {
    //Product object creation
    const newProduct = {
       id: lastProductId,
-      name: name.val(),
-      description: description.val(),
+      name: name.val().replace(/"/g, '\"'),
+      description: description.val().replace(/"/g, '\"'),
       img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
-      price: price.val(),
-      stock: stock.val(),
-      weight: weight.val(),
+      price: parseFloat(price.val()),
+      stock: parseInt(stock.val()),
+      weight: parseFloat(weight.val()),
       colors: selectedColors,
       categories: selectedCategories
    }
@@ -511,6 +535,7 @@ function createProduct(product) {
    saveStorage()
 
    //Returns to products menu
+   resetForm("addproduct")
    $(".manager-menu").hide()
    drawProductList()
 }
@@ -525,9 +550,7 @@ function createUser(user) {
    let updatingUser = false
    try {
       if (user.id !== undefined) updatingUser = true
-   } catch (e) {
-      updatingUser = false
-   }
+   } catch (e) { }
 
    let validate = true
 
@@ -570,9 +593,8 @@ function createUser(user) {
    else data.users.push(newUser)
    saveStorage()
 
-
-
    //Returns to products menu
+   resetForm("createuser")
    $(".manager-menu").hide()
    drawUsers()
 }
@@ -587,9 +609,7 @@ function createCategory(category) {
 
    try {
       if (category.id !== undefined) updatingCategory = true
-   } catch (e) {
-      updatingCategory = false
-   }
+   } catch (e) { }
 
    let validate = true
 
@@ -625,6 +645,7 @@ function createCategory(category) {
    saveStorage()
 
    //Returns to products menu
+   resetForm("addcategory")
    $(".manager-menu").hide()
    drawProductList()
 }
@@ -651,8 +672,6 @@ function searchForSameName(list, name) {
       if (elem.name == name) return true
 }
 
-/*E> HELPER FUNCTIONS*/
-
 function checkActiveUser() {
    if (Object.keys(activeUser).length == 0) {
       $(".manager-menu").hide()
@@ -660,6 +679,10 @@ function checkActiveUser() {
       $("#admin_login").show()
       return false
    } else return true
+}
+
+function resetForm(name) {
+   document[name].reset();
 }
 
 /*E> HELPER FUNCTIONS*/
@@ -671,8 +694,15 @@ function checkActiveUser() {
 /**
  * Print product cards in Gallery
  */
-function printProducts() {
-   const products = getStorage().products
+function printProducts(data) {
+   addFilterOptions()
+   $("#product-result").empty()
+   let products
+   if(!data) {
+      products = getStorage().products
+   }else{
+      products = data
+   }
    $(products).each(function (index, prod) {
       $("#product-result").append($(createProductCard(index, prod)).click(function () {
          createProductModal(prod)
@@ -783,10 +813,49 @@ function addToCart(product) {
    let cart = getStorage("cart") || []
 
    if (findInCart(product) >= 0) {
-      cart[findInCart(product)].quantity += product.quantity
+      cart[findInCart(product)].quantity += parseInt(product.quantity)
    } else cart.push(product)
    saveStorage("cart", cart)
    printCart()
+}
+
+$("#cart-checkout").click(showInSummery)
+
+function showInSummery(){
+   let cart = getStorage("cart")||[]
+   let orderItems = $("#checkout-summery>form>div>.order-items")
+   let subtotalPrice=0;
+   let subtotalElement=$("#subtotal-price")
+   orderItems.html("")
+   if(cart.length>0){
+      cart.forEach(function(element){
+         let price = element.price*element.stock
+         subtotalPrice+=price
+         orderItems.append(
+         "<div class='row text-dark p-3'>"+
+         "<img src="+element.img[0]+">"+
+         "<p class=m-auto>"+element.name+"</p>"+
+         "<p class=m-auto>"+price+" €</p>"+
+         "</div>")
+      })
+      subtotalElement.text(subtotalPrice+"€")
+   }
+}
+
+$("#pay").click(purchaseDone)
+
+function purchaseDone(){
+   let cart = getStorage("cart")
+   let data = getStorage()
+   cart.forEach(function(element){
+      data.products.forEach(function(element2){
+         if(element.id==element2.id){
+            element2.stock-=element.stock
+         }
+      })
+   })
+   saveStorage("data",data)
+   localStorage.removeItem("cart")
 }
 
 /**
@@ -801,13 +870,13 @@ function printCart() {
       return
    }
 
-   $(cart).each(function(index, product){
-   // for (const product of cart) {
-      let cartProduct = $(`<div class="d-flex flex-row card card-item mb-1 p-1" id="product-cart-${index}"></div >`)
+   $(cart).each(function (index, product) {
+      // for (const product of cart) {
+      let cartProduct = $(`<div class="d-flex flex-row mb-1 p-1" id="product-cart-${index}"></div >`)
       let cartImage = $('<div/>').addClass("col-6 p-1 cart-product-image").css('background-image', `url("${product.img[0]}")`)
       let cartData = $('<div class="col-6 p-1 cart-data"></div>')
       cartData.append(`<h5 class="line-clamp mb-1" title="${product.name}">${product.name}</h5>`)
-      cartData.append(`<p class="card-text mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
+      cartData.append(`<p class="mb-1">Price <b><span data-price="${product.name}">${product.price}</span>€</b></p>`)
       cartData.append(`<label for="cart-product-quantity-${findInCart(product)}"><b>Quantity:</b> </label>`)
       cartData.append($(`<input type="number" id="cart-product-quantity-${findInCart(product)}" min="1" max="${product.stock}" step="1" value="${product.quantity}">`)
          .change(function () {
@@ -834,7 +903,13 @@ function printCart() {
 function findInCart(product) {
    let cart = getStorage("cart") || []
    return cart.map(function (e) {
-      if (parseInt(e.id) == parseInt(product.id) && e.colorSelected == product.colorSelected) return e.id
+      if (parseInt(e.id) == parseInt(product.id)) return e.id
+      /**
+       * if we wanted to show in the cart a product for each selected color 
+       * it would be done this way but it would be necessary to modify 
+       * the function that checks the stock
+       */
+      // if (parseInt(e.id) == parseInt(product.id) && e.colorSelected == product.colorSelected) return e.id
    }).indexOf(product.id)
 
 }
@@ -862,7 +937,8 @@ function updateinCart(product) {
    let cart = getStorage("cart")
    if (findInCart(product) >= 0) {
 
-      cart[findInCart(product)].quantity = product.quantity
+      cart[findInCart(product)].quantity = parseInt(product.quantity)
+      cart[findInCart(product)].stock = product.stock
       saveStorage("cart", cart)
    }
    updateTotalPrice()
@@ -897,31 +973,47 @@ function updateTotalPrice() {
 
 //Move listener to listener section.
 $("#cart-checkout").click(function(){
-   if(checkProductAvailability()){
+   if(checkProductAvailability()){      
+      $("#shipping-price").text($("#cart-shipping-price").text())
+      $("#modal-cart").modal("toggle")
+      setTimeout(function(){
+         $("#checkout").modal("toggle")
+      },400)
    }
 })
-$("#cart-checkout").click(function(){
-   $("#modal-cart").modal("toggle")
-   setTimeout(function(){
-      $("#checkout").modal("toggle")
-   },400)
-})
 
-function checkProductAvailability(){
-   // debugger
+/**
+ * check availability of products before continuing with the purchase
+ */
+function checkProductAvailability() {
    let cart = getStorage("cart")
    let products = getStorage().products
-   
-   $(cart).each(function(index, prodCart){
-      // debugger
-      let prodData = products.find((e)=> {if(e.id == prodCart.id) return e})
-      if(parseInt(prodData.stock) == 0){
-         alert($(`#product-cart-${index} button`).text())
-         $(`#product-cart-${index} div`).next().append(`<div class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock})</div>`)
-      }
-      
+   let goToCheckout = true
+
+   $(cart).each(function (index, prodCart) {
+      let prodData = products.find((e) => {
+         if (e.id == prodCart.id) return e
+      })
+      if (parseInt(prodData.stock) == 0) {
+         $(`#no-stock-${index}`).remove()
+         $(`#product-cart-${index} div`).next().append(`<div id="no-stock-${index}" class="alert alert-danger w-100">Product not avilable (stock: ${prodData.stock}). Press remove this product to continue to checkout</div>`)
+         prodCart.stock = parseInt(prodData.stock)
+         updateinCart(prodCart)
+         goToCheckout = false
+      } else if (prodCart.quantity > parseInt(prodData.stock)) {
+         $(`#no-quantity-${index}`).remove()
+         $(`#product-cart-${index} div`).next().append(`<div id="no-quantity-${index}" class="alert alert-warning w-100">Your order exceeds the available quantity at this time: ${prodData.stock}. Press checkout to continue</div>`)
+         $(`#cart-product-quantity-${index}`).val(parseInt(prodData.stock))
+         prodCart.quantity = parseInt(prodData.stock)
+         prodCart.stock = parseInt(prodData.stock)
+         updateinCart(prodCart)
+         goToCheckout = false
+      } else if (prodCart.quantity > 0 && prodCart.quantity <= prodData.stock)
+         $(`#no-quantity-${index}`).remove()
+
    })
 
+   return goToCheckout
 }
 
 
@@ -930,3 +1022,63 @@ printCart()
 
 
 /*E> PRINT PRODUCTS*/
+
+/******************************************************************************************************************************************************/
+/*S> SEARCH PRODUCTS*/
+
+//Move listener to listener section.
+$("#search-prod").keyup(function(){
+   searchProduct($("#search-prod").val())
+})
+
+/**
+ * Search products in the complete product list
+ * @param {*String} val 
+ */
+function searchProduct(val){
+   const products = getStorage().products
+   let result = products.filter(function(e){
+      if(e.name.toLowerCase().indexOf(val.toLowerCase()) > -1){
+         return e
+      }
+   })
+   printProducts(result)
+}
+/*E> SEARCH PRODUCTS*/
+
+/******************************************************************************************************************************************************/
+/*S> FILTER PRODUCTS BY CATEGORY*/
+
+/**
+ * Add filter options
+ */
+function addFilterOptions(){
+   const options = getStorage().categories
+   $("#filter-list").empty()
+   $(options).each(function(index, category){
+      $("#filter-list").append(`<option value="${category.name}">${category.name}</option>`)
+   })
+}
+
+/**
+ * Show products according selected category
+ * @param {*String} val 
+ */
+function showFilterProducts(val){
+   const products = getStorage().products
+   let result = products.filter(function(e){
+      for(const category of e.categories){
+         if(category.name.toLowerCase().indexOf(val.toLowerCase()) > -1){
+            return e
+         }
+      }
+   })
+   printProducts(result)
+}
+
+//Move listener to listener section.
+$("#filter-category").change(function(){
+   showFilterProducts($("#filter-category").val())
+})
+
+/*E> FILTER PRODUCTS BY CATEGORY*/
