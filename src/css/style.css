@@ -52,8 +52,6 @@ body{
    min-width: 17rem;
    width: 17rem;
    transition: all 0.4s;
-
-   padding-top: 20px;
 }
 
 .vertical-nav a {

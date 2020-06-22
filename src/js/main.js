@@ -111,7 +111,6 @@ $(document).ready(() => {
    $("#log_out_btn").click(() => {
       resetForm()
       $('#sidebar, #sidebarCollapse').toggleClass('active')
-      $("#log_out_btn").hide()
       activeUser = {}
       checkActiveUser()
    })
@@ -122,9 +121,6 @@ $(document).ready(() => {
 
    //START
    drawProductList()
-   $('#sidebar, #sidebarCollapse').toggleClass('active')
-   $("#log_out_btn").hide()
-
 
    //ADMIN LOGIN CONTROL
    checkActiveUser()
@@ -590,6 +586,7 @@ function searchForSameName(list, name) {
 function checkActiveUser() {
    if (Object.keys(activeUser).length == 0) {
       $(".manager-menu").hide()
+      $("#log_out_btn").hide()
       resetForm()
       $("#admin_login").show()
       return false
