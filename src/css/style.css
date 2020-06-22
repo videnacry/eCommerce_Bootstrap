@@ -3,6 +3,10 @@ body{
     overflow-x: hidden;
 }
 
+button:focus {
+   outline:none;
+   box-shadow: none;
+ }
 
 ::-webkit-scrollbar {
    background-color: transparent;
@@ -44,6 +48,47 @@ body{
 
 
 /*MANAGER*/
+.vertical-nav {
+   position: relative;
+   min-width: 17rem;
+   width: 17rem;
+   transition: all 0.4s;
+
+   padding-top: 20px;
+}
+
+.vertical-nav a {
+   background-color: rgb(24, 24, 24)!important;
+   font-size: 16px;
+   transition: background-color 0.2s;
+}
+
+.vertical-nav a:hover {
+   background-color: rgb(48, 48, 48)!important;
+}
+
+ /* for toggle behavior */
+ 
+ #sidebar.active {
+   margin-left: -17rem;
+ }
+ 
+ 
+ @media (max-width: 900px) {
+   #sidebar {
+     margin-left: -17rem;
+   }
+   #sidebar.active {
+     margin-left: 0;
+   }
+}
+
+#sidebarCollapse {
+   position: absolute;
+   top: 5px;
+   left: 276px;
+}
+
 #header_manager {
    font-size: 20px!important;
 }
