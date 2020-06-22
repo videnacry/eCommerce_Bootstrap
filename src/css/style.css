@@ -301,3 +301,13 @@ body{
 }
 
 
+.cart-data{
+   font-size: 14px;
+}
+
+.cart-product-image{
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
