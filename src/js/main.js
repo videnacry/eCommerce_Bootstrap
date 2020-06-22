@@ -2,6 +2,32 @@
 
 $(document).ready(() => {
     //change style
+    let carrousel = {}
+    carrousel.headers=$("#header-carrousel h5")
+    carrousel.descriptions=$("#header-carrousel p")
+    carrousel.imgs=$("#header-carrousel img")
+    let products = getStorage()||3
+    if(products!=3){
+       products = products.products
+       let i = 0
+       products.forEach(function(element,index){
+         i = index
+         carrouselPage(index)
+       })
+    }
+    function carrouselPage(){
+      carrousel.headers[i].textContent=element.name
+      carrousel.descriptions[i].textContent=element.description
+      carrousel.imgs[i].src=element.img[0]
+      carrousel.imgs[i].addEventListener("mouseover",function(event){
+         event.currentTarget.style.opacity=1
+         event.currentTarget.parentElement.children[1].style.opacity=0
+      })
+      carrousel.imgs[i].addEventListener("mouseout",function(event){
+         event.currentTarget.style.opacity=0.7
+         event.currentTarget.parentElement.children[1].style.opacity=1
+      })
+    }
     $("#shipping-info").fadeOut()
     $("#payment-method").fadeOut()
     $("#customer-info form").submit(function(event){event.preventDefault()})
