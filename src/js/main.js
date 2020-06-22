@@ -20,14 +20,6 @@ $(document).ready(() => {
          },400)
       })
     let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
-    /*let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart","#checkout-service-terms",
-                          "#checkout-refund-policy"]
-    eraseClick(problematicLinks)
-    function eraseClick(elements){
-        elements.forEach(function(element){
-            $(element).off("click")
-        })
-    }*/
     shippingToCustomer(buttonsShippingToCustomer)
     
     function customerValidation(){
@@ -891,13 +883,14 @@ function updateTotalPrice() {
 
 //Move listener to listener section.
 $("#cart-checkout").click(function(){
-   checkProductAvailability()
+   if(checkProductAvailability()){
+      $("#modal-cart").modal("toggle")
+      setTimeout(function(){
+         $("#checkout").modal("toggle")
+      },400)
+   }
 })
 $("#cart-checkout").click(function(){
-   $("#modal-cart").modal("toggle")
-   setTimeout(function(){
-      $("#checkout").modal("toggle")
-   },400)
 })
 
 function checkProductAvailability(){
