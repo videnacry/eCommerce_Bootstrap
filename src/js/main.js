@@ -828,8 +828,8 @@ function showInSummery(){
    let subtotalElement=$("#subtotal-price")
    orderItems.html("")
    if(cart.length>0){
-      cart.forEach(function(element){
-         let price = element.price*element.stock
+      cart.forEach(function(element,index){
+         let price = element.price*$("#cart-product-quantity-"+index).attr("value")
          subtotalPrice+=price
          orderItems.append(
          "<div class='row text-dark p-3'>"+
@@ -847,16 +847,24 @@ $("#pay").click(purchaseDone)
 function purchaseDone(){
    let cart = getStorage("cart")
    let data = getStorage()
-   cart.forEach(function(element){
+   cart.forEach(function(element,i){
       data.products.forEach(function(element2){
          if(element.id==element2.id){
-            element2.stock-=element.stock
+            element2.stock-=$("#cart-product-quantity-"+i).attr("value")
          }
       })
    })
    saveStorage("data",data)
+   localStorage.setItem("cart","")
    localStorage.removeItem("cart")
 }
+
+$("#checkout").on("hide.bs.modal",function(){
+   $("#customer-info").fadeIn()
+   $("#checkout-summery>form>div>div:nth-of-type(2)").fadeIn()
+   $("#checkout-summery").addClass("col-md-6").children("h3").remove()
+   $(".order-items").css("height","")
+})
 
 /**
  * Print products saved in the cart
