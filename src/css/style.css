@@ -278,15 +278,6 @@ body{
    position:relative !important;
 }
 
-#header-carrousel{
-   font-size:36px;
-   text-shadow:3px 0 black, 0 3px 3px rgb(0, 211, 255), 0 -3px rgb(216, 0, 0);
-}
-#header-carrousel h5{
-   text-shadow:3px 0 black, 0 3px 3px rgb(255, 0, 231), 0 -3px rgb(230, 226, 0);
-   font-size:40px;
-}
-
 @media screen and (max-width:450px){
    .form-check.radio,.col-9.row.contact,#shipping-info>div:first-of-type{
       padding-left:5px !important;
@@ -309,24 +300,4 @@ body{
    }
 }
 
-@media screen and (max-width:260px){
-   #checkout .order-items{
-      padding-left:0 !important;
-      padding-right:0 !important;
-   }
-
-   #checkout .modal-section{
-      padding-left:5px !important;
-      padding-right:5px !important;
-   }
-}
-.cart-data{
-   font-size: 14px;
-}
-
-.cart-product-image{
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
-}
 
