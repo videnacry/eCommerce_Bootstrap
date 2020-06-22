@@ -46,6 +46,9 @@ function tryLogIn() {
       if (loggedUsername.password == pass.val()) {
          activeUser = loggedUsername
          sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
+
+         $('#sidebar, #sidebarCollapse').toggleClass('active')
+         $("#log_out_btn").show()
          drawProductList()
       } else {
          $(".apf_error").remove()
@@ -70,37 +73,45 @@ $(document).ready(() => {
    $(".manager-nav a").click(e => {
       if (!checkActiveUser()) return
 
+      resetForm()
       $(".manager-menu").hide()
       $("" + e.target.getAttribute("data-href") + "").show()
    })
 
    $("#pl_btn").click(drawProductList)
    $("#ul_btn").click(drawUsers)
+   $("#cl_btn").click(drawCategoryList)
 
    $("#apf_btn").click(() => {
-      if (!checkActiveUser()) return
       drawCategories()
       $("#add_product").children("h2").text("Add Product")
       $("#add_product_btn").text("Add Product")
 
       $("#add_product_btn").off()
       $("#add_product_btn").click(createProduct)
-      $(".apf_product_color").checked = false
    })
 
-   $("#btnCreateUser").click(e => {
-      e.preventDefault()
-      createUser()
+   $("#acf_btn").click(() => {
+      $("#add_category").children("h2").text("Create Category")
+      $("#btnCreateCategory").text("Create")
+
+      $("#btnCreateCategory").off()
+      $("#btnCreateCategory").click(createCategory)
    })
 
-   $("#btnCreateCategory").click(e => {
-      e.preventDefault()
-      createCategory()
+   $("#auf_btn").click(() => {
+      $("#create_user").children("h2").text("Create User")
+      $("#btnCreateUser").text("Create")
+
+      $("#btnCreateUser").off()
+      $("#btnCreateUser").click(createUser)
    })
 
    $("#al_login_btn").click(tryLogIn)
    $("#log_out_btn").click(() => {
-      resetForm("login")
+      resetForm()
+      $('#sidebar, #sidebarCollapse').toggleClass('active')
+      $("#log_out_btn").hide()
       activeUser = {}
       checkActiveUser()
    })
@@ -154,6 +165,7 @@ function drawProductList() {
 function drawUsers() {
    if (!checkActiveUser()) return
 
+   $(".manager-menu").hide()
    $(".ul_user").remove()
    $("#users_list").show()
 
@@ -163,7 +175,7 @@ function drawUsers() {
             <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
-            <td><button type="button" class="btn btn-primary ul_edit_btn" data-userId="${user.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-primary px-3 py-1 ul_edit_btn " data-userId="${user.id}">Edit</button></td>
             <td><button type="button" class="btn btn-danger ul_remove_btn px-3 py-1" data-userId="${user.id}">Remove</button></td>
         </tr>`)
       if (user.name == "admin") $(".ul_remove_btn").remove()
@@ -182,13 +194,14 @@ function drawUsers() {
    })
 }
 
+//Show the categories in the product form
 function drawCategories() {
    $(".apf_product_category").parent().remove()
    $(".apf_error").remove()
 
    if (data.categories.length == 0) {
       $("#apf_product_categories").append(`<div class="apf_error alert alert-danger mt-1 p-1">There are no categories created, 
-        create one before adding a product</div>`)
+        create one before adding a product.</div>`)
    }
 
    let id = 0
@@ -202,7 +215,41 @@ function drawCategories() {
    }
 }
 
+//Generates a list of categories
+function drawCategoryList() { 
+   if (!checkActiveUser()) return
+
+   $(".manager-menu").hide()
+   $(".cl_category").remove()
+   $("#categories_list").show()
+
+   for (const cat of data.categories) {
+      $("#cl_list").append(`
+        <tr class="no-bs-dark-2 cl_category">
+            <td>${cat.id}</td>
+            <td>${cat.name}</td>
+            <td>${cat.color}</td>
+            <td><button type="button" class="btn btn-primary cl_edit_btn px-3 py-1" data-catId="${cat.id}">Edit</button></td>
+            <td><button type="button" class="btn btn-danger cl_remove_btn px-3 py-1" data-catId="${cat.id}">Remove</button></td>
+        </tr>`)
+   }
+
+   $(".cl_edit_btn").click(e => {
+      const id = e.target.getAttribute("data-catId")
+      showUpdateCategory(transformIdToObj(data.categories, id))
+   })
+
+   $(".cl_remove_btn").click(e => {
+      const id = e.target.getAttribute("data-catId")
+      e.target.parentElement.parentElement.remove()
+      data.categories.splice(data.categories.indexOf(transformIdToObj(data.categories, id)), 1)
+      saveStorage()
+   })
+}
+
 function showUpdateProduct(product) {
+   if (!checkActiveUser()) return
+
    $(".manager-menu").hide()
    $("#add_product").show()
 
@@ -218,9 +265,9 @@ function showUpdateProduct(product) {
    $("#apf_product_weight").val(product.weight)
    $("#apf_product_color").val(product.color)
 
-   for (const col of $(".apf_product_color"))
+   for (const col of $(".apf_product_color")) 
       if (searchForSameName(product.colors, col.name)) col.checked = true
-
+      
    for (const cat of $(".apf_product_category"))
       if (searchForSameName(product.categories, cat.name)) cat.checked = true
 
@@ -230,30 +277,45 @@ function showUpdateProduct(product) {
 
 
 function showUpdateUser(user) {
+   if (!checkActiveUser()) return
+
    $(".manager-menu").hide()
    $("#create_user").show()
 
    $("#create_user").children("h2").text("Update User")
    $("#btnCreateUser").text("Save")
-   drawUsers()
 
    $("#inputUserName").val(user.name)
    $("#inputUserEmail").val(user.email)
    $("#inputUserPass").val(user.password)
 
    $("#btnCreateUser").off()
-   $("#btnCreateUser").click(() => {
-      createUser(user)
-   })
-
+   $("#btnCreateUser").click(() => createUser(user))
 }
 
+function showUpdateCategory(cat) {
+   if (!checkActiveUser()) return
+   
+   $(".manager-menu").hide()
+   $("#add_category").show()
+
+   $("#add_category").children("h2").text("Update Category")
+   $("#btnCreateCategory").text("Save")
+
+   $("#inputCategoryTitle").val(cat.name)
+   $("#selectCategoryColor").val(cat.color)
+
+   $("#btnCreateCategory").off()
+   $("#btnCreateCategory").click(() => createCategory(cat))
+}
 
 /*E> DRAW ELEMENTS FUNCTIONS*/
 /******************************************************************************************************************************************************/
 /*S> CREATE OBJECT FUNCTIONS*/
 
 function createProduct(product) {
+   if (!checkActiveUser()) return
+
    const name = $("#apf_product_name")
    const description = $("#apf_product_description")
    const img = $("#apf_product_image")
@@ -273,13 +335,13 @@ function createProduct(product) {
    if (name.val().length < 3 || searchForSameName(data.products, name.val())) {
       //This doesn't have effect if admin is updating a product
       if (searchForSameName(data.products, name.val()) && !updatingProduct) {
-         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">There is a product already with this name</div>`)
+         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">There is a product already with this name.</div>`)
          validate = false
       } else if (name.val().length == 0) {
-         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name is required</div>`)
+         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name is required.</div>`)
          validate = false
       } else if (name.val().length < 3) {
-         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name has to be at least 3 characters</div>`)
+         name.after(`<div class="apf_error alert alert-danger mt-1 p-1">Product name has to be at least 3 characters.</div>`)
          validate = false
       }
    }
@@ -288,52 +350,52 @@ function createProduct(product) {
       validate = false
 
       if (description.val().length == 0)
-         description.after(`<div class="apf_error alert alert-danger mt-1 p-1">Description is required</div>`)
+         description.after(`<div class="apf_error alert alert-danger mt-1 p-1">Description is required.</div>`)
       else
-         description.after(`<div class="apf_error alert alert-danger mt-1 p-1">Description has to be at least 6 characters</div>`)
+         description.after(`<div class="apf_error alert alert-danger mt-1 p-1">Description has to be at least 6 characters.</div>`)
    }
 
    if (img.val().length < 1 || img.val().split(",").length > 4) {
       validate = false
 
       if (img.val().length < 1)
-         img.after(`<div class="apf_error alert alert-danger mt-1 p-1">An image is required</div>`)
+         img.after(`<div class="apf_error alert alert-danger mt-1 p-1">An image is required.</div>`)
       else
-         img.after(`<div class="apf_error alert alert-danger mt-1 p-1">You only can upload up to 4 images</div>`)
+         img.after(`<div class="apf_error alert alert-danger mt-1 p-1">You only can upload up to 4 images.</div>`)
    }
 
    if (price.val().length == 0 || price.val() <= 0) {
       validate = false
 
       if (price.val().length == 0)
-         price.after(`<div class="apf_error alert alert-danger mt-1 p-1">Price is required</div>`)
+         price.after(`<div class="apf_error alert alert-danger mt-1 p-1">Price is required.</div>`)
       else
-         price.after(`<div class="apf_error alert alert-danger mt-1 p-1">Price has to be bigger than 0</div>`)
+         price.after(`<div class="apf_error alert alert-danger mt-1 p-1">Price has to be bigger than 0.</div>`)
    }
 
    if (stock.val().length == 0) {
       validate = false
-      stock.after(`<div class="apf_error alert alert-danger mt-1 p-1">Stock is required</div>`)
+      stock.after(`<div class="apf_error alert alert-danger mt-1 p-1">Stock is required.</div>`)
    }
 
    if (weight.val().length == 0 || weight.val() <= 0) {
       validate = false
 
       if (weight.val().length == 0)
-         weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight is required</div>`)
+         weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight is required.</div>`)
       else
-         weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight has to be bigger than 0</div>`)
+         weight.after(`<div class="apf_error alert alert-danger mt-1 p-1">Weight has to be bigger than 0.</div>`)
    }
 
    if (data.categories.length > 0) {
       if (!categories.is(":checked")) {
          validate = false
-         categories.parent().parent().after(`<div class="apf_error alert alert-danger mt-1 p-1">Select at least 1 category</div>`)
+         categories.parent().parent().after(`<div class="apf_error alert alert-danger mt-1 p-1">Select at least 1 category.</div>`)
       }
    } else {
       validate = false
       $("#apf_product_categories").append(`<div class="apf_error alert alert-danger mt-1 p-1">There are no categories created, 
-        create one before adding a product</div>`)
+        create one before adding a product.</div>`)
    }
 
    if (!validate) return
@@ -358,8 +420,8 @@ function createProduct(product) {
    //Product object creation
    const newProduct = {
       id: lastProductId,
-      name: name.val().replace(/"/g, '\"'),
-      description: description.val().replace(/"/g, '\"'),
+      name: name.val().replace(/"/g, '&quot;'),
+      description: description.val().replace(/"/g, '&quot;'),
       img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
       price: parseFloat(price.val()),
       stock: parseInt(stock.val()),
@@ -373,13 +435,13 @@ function createProduct(product) {
    saveStorage()
 
    //Returns to products menu
-   resetForm("addproduct")
+   resetForm()
    $(".manager-menu").hide()
    drawProductList()
 }
 
 function createUser(user) {
-   $(".apf_error").remove()
+   if (!checkActiveUser()) return
 
    const name = $("#inputUserName");
    const email = $("#inputUserEmail");
@@ -391,30 +453,35 @@ function createUser(user) {
    } catch (e) { }
 
    let validate = true
+   $(".apf_error").remove()
 
    if (name.val() == "" || name.val().length < 3 || searchForSameName(data.users, name.val())) {
-      if (searchForSameName(data.products, name.val()))
-         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username is taken</div>')
-      else if (name.val().length < 3)
-         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username has to be at least 3 characters long</div>')
-      else
-         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username is required</div>')
-
-      validate = false
+      if (searchForSameName(data.products, name.val())) {
+         validate = false
+         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username is taken.</div>')
+      }
+      else if (name.val().length < 3) {
+         validate = false
+         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username has to be at least 3 characters long.</div>')
+      }
+      else if(name.val() == "") {
+         validate = false
+         name.after('<div class="apf_error alert alert-danger mt-1 p-1">Username is required.</div>')
+      }
    }
    if (email.val() == "" || !email.val().includes("@")) {
       if (!email.val().includes("@"))
-         email.after('<div class="apf_error alert alert-danger mt-1 p-1">Enter a valid email. Example: example@mail.com</div>')
+         email.after('<div class="apf_error alert alert-danger mt-1 p-1">Enter a valid email. Example: example@mail.com.</div>')
       else
-         email.after('<div class="apf_error alert alert-danger mt-1 p-1">Email is required</div>')
+         email.after('<div class="apf_error alert alert-danger mt-1 p-1">Email is required.</div>')
 
       validate = false
    }
    if (pass.val() == "" || pass.val().length < 8) {
       if (pass.val().length < 8)
-         pass.after('<div class="apf_error alert alert-danger mt-1 p-1">Enter a valid password</div>')
+         pass.after('<div class="apf_error alert alert-danger mt-1 p-1">Enter a valid password.</div>')
       else
-         pass.after('<div class="apf_error alert alert-danger mt-1 p-1">Password is required</div>')
+         pass.after('<div class="apf_error alert alert-danger mt-1 p-1">Password is required.</div>')
 
       validate = false
    }
@@ -432,13 +499,13 @@ function createUser(user) {
    saveStorage()
 
    //Returns to products menu
-   resetForm("createuser")
+   resetForm()
    $(".manager-menu").hide()
    drawUsers()
 }
 
 function createCategory(category) {
-   $(".apf_error").remove()
+   if (!checkActiveUser()) return
 
    const title = $("#inputCategoryTitle");
    const color = $("#selectCategoryColor");
@@ -450,18 +517,19 @@ function createCategory(category) {
    } catch (e) { }
 
    let validate = true
+   $(".apf_error").remove()
 
    if (title.val().length == 0 || searchForSameName(data.categories, title.val())) {
 
       if (searchForSameName(data.categories, title.val()))
-         title.after('<div class="apf_error alert alert-danger mt-1 p-1">There is a category already with this name</div>')
+         title.after('<div class="apf_error alert alert-danger mt-1 p-1">There is a category already with this name.</div>')
       else
-         title.after('<div class="apf_error alert alert-danger mt-1 p-1">Category name is required</div>')
+         title.after('<div class="apf_error alert alert-danger mt-1 p-1">Category name is required.</div>')
       validate = false
    }
 
    if (color.val() == "Choose color...") {
-      color.after('<div class="apf_error alert alert-danger mt-1 p-1">Category color is required</div>')
+      color.after('<div class="apf_error alert alert-danger mt-1 p-1">Category color is required.</div>')
       validate = false
    }
 
@@ -483,9 +551,9 @@ function createCategory(category) {
    saveStorage()
 
    //Returns to products menu
-   resetForm("addcategory")
+   resetForm()
    $(".manager-menu").hide()
-   drawProductList()
+   drawCategoryList()
 }
 
 /*E> CREATE OBJECT FUNCTIONS*/
@@ -506,21 +574,29 @@ function transformIdToObj(list, id) {
 
 //Helper function to search for existent objects by name
 function searchForSameName(list, name) {
-   for (const elem of list)
-      if (elem.name == name) return true
+   for (const elem of list) {
+      if(typeof elem == "object") {
+         if (elem.name == name) return true
+      } else if(typeof elem == "string") {
+         if (elem == name) return true
+      }   
+   }
 }
 
 function checkActiveUser() {
    if (Object.keys(activeUser).length == 0) {
       $(".manager-menu").hide()
-      $("input").val("")
+      resetForm()
       $("#admin_login").show()
       return false
    } else return true
 }
 
-function resetForm(name) {
-   document[name].reset();
+function resetForm() {
+   document["addproduct"].reset();
+   document["addcategory"].reset();
+   document["createuser"].reset();
+   document["login"].reset();
 }
 
 /*E> HELPER FUNCTIONS*/
