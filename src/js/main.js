@@ -17,7 +17,7 @@ $(document).ready(() => {
        $("input[type=radio][name=shipping]").each(function(index,element){
         
          let val=parseFloat(element.getAttribute("data-val").replace("€",""))
-         let val2 = parseFloat(shippingPrice.text().replace("€",""))
+         let val2 = parseFloat(shippingPrice.text().replace("€",""))||0
          let total = val+val2
          element.setAttribute("data-total",total.toFixed(2))
        })
@@ -29,6 +29,10 @@ $(document).ready(() => {
     })
     $("#continue-to-payment").click(function(){
        replace($("#shipping-method"),$("#payment-method"))
+       let subtotal = parseFloat($("#subtotal-price").text().replace("€",""))||0
+       let shipping = parseFloat($("#shipping-price").text().replace("€",""))||0
+       let total = subtotal+shipping
+       $("#total-price").text(total.toFixed(2)+"€")
     })
     $("#pay").click(function(){
        $("#shipping-info").fadeOut()
@@ -937,13 +941,19 @@ function purchaseDone(){
    saveStorage("data",data)
    localStorage.setItem("cart","")
    localStorage.removeItem("cart")
+   printCart()
 }
 
 $("#checkout").on("hide.bs.modal",function(){
+   $("#shipping-method").fadeIn()
+   $("#payment-method").fadeOut()
+   $("#shipping-info").fadeOut()
    $("#customer-info").fadeIn()
    $("#checkout-summery>form>div>div:nth-of-type(2)").fadeIn()
    $("#checkout-summery").addClass("col-md-6").children("h3").remove()
    $(".order-items").css("height","")
+   $("#total").text("Total price")
+   $("#subtotal-price").text("subtotal price")
 })
 
 /**
@@ -1061,7 +1071,7 @@ function updateTotalPrice() {
 
 //Move listener to listener section.
 $("#cart-checkout").click(function(){
-   if(checkProductAvailability()){      
+   if(checkProductAvailability()&&getStorage("cart")!=null){      
       $("#shipping-price").text($("#cart-shipping-price").text())
       $("#modal-cart").modal("toggle")
       setTimeout(function(){
