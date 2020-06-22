@@ -379,9 +379,7 @@ function createUser(user) {
    let updatingUser = false
    try {
       if (user.id !== undefined) updatingUser = true
-   } catch (e) {
-      updatingUser = false
-   }
+   } catch (e) { }
 
    let validate = true
 
@@ -441,9 +439,7 @@ function createCategory(category) {
 
    try {
       if (category.id !== undefined) updatingCategory = true
-   } catch (e) {
-      updatingCategory = false
-   }
+   } catch (e) { }
 
    let validate = true
 
@@ -504,8 +500,6 @@ function searchForSameName(list, name) {
    for (const elem of list)
       if (elem.name == name) return true
 }
-
-/*E> HELPER FUNCTIONS*/
 
 function checkActiveUser() {
    if (Object.keys(activeUser).length == 0) {
