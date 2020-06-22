@@ -532,8 +532,14 @@ function resetForm(name) {
 /**
  * Print product cards in Gallery
  */
-function printProducts() {
-   const products = getStorage().products
+function printProducts(data) {
+   $("#product-result").empty()
+   let products
+   if(!data) {
+      products = getStorage().products
+   }else{
+      products = data
+   }
    $(products).each(function (index, prod) {
       $("#product-result").append($(createProductCard(index, prod)).click(function () {
          createProductModal(prod)
@@ -807,3 +813,26 @@ printCart()
 
 
 /*E> PRINT PRODUCTS*/
+
+/******************************************************************************************************************************************************/
+/*S> SEARCH PRODUCTS*/
+
+//Move listener to listener section.
+$("#search-prod").keyup(function(){
+   searchProduct($("#search-prod").val())
+})
+
+/**
+ * Search products in the complete product list
+ * @param {*String} val 
+ */
+function searchProduct(val){
+   const products = getStorage().products
+   let result = products.filter(function(e){
+      if(e.name.toLowerCase().indexOf(val.toLowerCase()) > -1){
+         return e
+      }
+   })
+   printProducts(result)
+}
+/*E> SEARCH PRODUCTS*/
