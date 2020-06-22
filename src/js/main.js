@@ -3,12 +3,23 @@
 $(document).ready(() => {
     //change style
     $("#shipping-info").fadeOut()
+    $("#payment-method").fadeOut()
     $("#customer-info form").submit(function(event){event.preventDefault()})
     $("#continue-to-shipping").click(function(){
         let rep = customerValidation()
         if(rep){
             replace($("#customer-info"),$("#shipping-info"))
         }
+    })
+    $("#continue-to-payment").click(function(){
+       replace($("#shipping-method"),$("#payment-method"))
+    })
+    $("#pay").click(function(){
+       $("#shipping-info").fadeOut()
+       let thanks = "Thank you for your order!"
+       $("#checkout-summery>form>div>div:nth-of-type(2)").fadeOut()
+       $("#checkout-summery").removeClass("col-md-6").prepend($("<h3 class=my-3>"+thanks+"</h3>"))
+       $(".order-items").css("height","fit-content")
     })
     $("#return-to-cart").click(function(){
        $("#checkout").modal("toggle")
@@ -18,6 +29,9 @@ $(document).ready(() => {
              focus:true
           })
          },400)
+      })
+      $("#return-to-shipping").click(function(){
+         replace($("#payment-method"),$("#shipping-method"))
       })
     let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
     /*let problematicLinks=["#return-to-customer-info","#checkout-change-email","#checkout-change-address","#return-to-cart","#checkout-service-terms",

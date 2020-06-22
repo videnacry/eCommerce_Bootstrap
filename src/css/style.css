@@ -222,7 +222,17 @@ body{
 
 }
 
+#payment-method li:nth-of-type(2)>div input{
+   margin:5px 0 !important;
+   position:relative !important;
+}
+
 @media screen and (max-width:450px){
+   .form-check.radio,.col-9.row.contact,#shipping-info>div:first-of-type{
+      padding-left:5px !important;
+      padding-right:5px !important;
+   }
+
    #checkout .modal-dialog{
       margin-left:0;
       margin-right:0;
