@@ -63,6 +63,10 @@ function tryLogIn() {
 
 $(document).ready(() => {
    //EVENT LISTENERS
+   $('#sidebarCollapse').on('click', function() {
+      $('#sidebar, #sidebarCollapse').toggleClass('active');
+   });
+
    $(".manager-nav a").click(e => {
       if (!checkActiveUser()) return
 
