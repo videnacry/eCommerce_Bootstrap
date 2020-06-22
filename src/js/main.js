@@ -594,10 +594,12 @@ function checkActiveUser() {
 }
 
 function resetForm() {
-   document["addproduct"].reset();
-   document["addcategory"].reset();
-   document["createuser"].reset();
-   document["login"].reset();
+   if(window.location.pathname.indexOf("manager") > -1){
+      document["addproduct"].reset();
+      document["addcategory"].reset();
+      document["createuser"].reset();
+      document["login"].reset();
+   }
 }
 
 /*E> HELPER FUNCTIONS*/
