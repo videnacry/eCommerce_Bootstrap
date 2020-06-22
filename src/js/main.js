@@ -529,6 +529,7 @@ function resetForm(name) {
  * Print product cards in Gallery
  */
 function printProducts(data) {
+   addFilterOptions()
    $("#product-result").empty()
    let products
    if(!data) {
@@ -832,3 +833,40 @@ function searchProduct(val){
    printProducts(result)
 }
 /*E> SEARCH PRODUCTS*/
+
+/******************************************************************************************************************************************************/
+/*S> FILTER PRODUCTS BY CATEGORY*/
+
+/**
+ * Add filter options
+ */
+function addFilterOptions(){
+   const options = getStorage().categories
+   $("#filter-list").empty()
+   $(options).each(function(index, category){
+      $("#filter-list").append(`<option value="${category.name}">${category.name}</option>`)
+   })
+}
+
+/**
+ * Show products according selected category
+ * @param {*String} val 
+ */
+function showFilterProducts(val){
+   const products = getStorage().products
+   let result = products.filter(function(e){
+      for(const category of e.categories){
+         if(category.name.toLowerCase().indexOf(val.toLowerCase()) > -1){
+            return e
+         }
+      }
+   })
+   printProducts(result)
+}
+
+//Move listener to listener section.
+$("#filter-category").change(function(){
+   showFilterProducts($("#filter-category").val())
+})
+
+/*E> FILTER PRODUCTS BY CATEGORY*/
