@@ -19,7 +19,6 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarText">
          <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-prod">
-            <button class="btn no-bs-dark-3 my-2 my-sm-0" type="submit">Search</button>
             <button id="log_in_btn" class="btn no-bs-dark-3 my-2 my-sm-0 mx-2" type="submit">Login</button>
             <button class="btn no-bs-dark-3 my-2 my-sm-0 mx-1" type="button" data-toggle="modal"
                data-target="#modal-cart">Cart</button>
@@ -72,21 +71,10 @@
             <div class="col-12 d-flex justify-content-between">
                <label for="filter-category">Filter</label>
                <div class="dropdown">
-                  <input list="filter-list" id="filter-category" value="" class="form-control w-100 ">
+                  <input list="filter-list" id="filter-category" value="" class="form-control w-100" placeholder="Filter by category">
                   <datalist id="filter-list">
                   </datalist>
                </div>
-               <!-- <div class="dropdown">
-                  <button id="dropdown-filter" class="btn btn-secondary dropdown-toggle" type="button"
-                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Category
-                  </button>
-                  <div class="dropdown-menu">
-                     <a class="dropdown-item dropdown-item-dark" href="#">Action</a>
-                     <a class="dropdown-item dropdown-item-dark" href="#">Another action</a>
-                     <a class="dropdown-item dropdown-item-dark" href="#">Something else here</a>
-                  </div>
-               </div> -->
             </div>
          </div>
       </div>
@@ -95,7 +83,7 @@
          <div class="row my-2" id="product-result"></div>
          <div class="row justify-content-center no-bs-dark-4">
             <div style="width:300px">
-               <button type="button" class="btn no-bs-dark-3 btn-block mb-3">Load more</button>
+               <button type="button" class="btn no-bs-dark-3 btn-block mb-3" id="load-more">Load more</button>
             </div>
          </div>
       </div>
@@ -144,7 +132,7 @@
                                  </div>
                                  <div class="mt-3 w-100">
                                     <p class="mb-0"><b>Price:</b></p>
-                                    <p id="product-price"><b>15 €</b></p>
+                                    <p id="product-price"><b></b></p>
                                  </div>
                                  <div class="mt-3 w-100">
                                     <p class="mb-0"><b>Available Colors:</b></p>
