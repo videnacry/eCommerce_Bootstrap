@@ -25,7 +25,7 @@ function saveStorage(key = "data", toSave = data) {
 /*E> DATA WORK*/
 /******************************************************************************************************************************************************/
 /*S> ADMIN CONTROL*/
-let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || data.users[0] //This is just for debugging, by default it will be an empty object
+let activeUser = JSON.parse(sessionStorage.getItem("logged-user")) || {} //User: admin, pass: admin
 sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
 
 function tryLogIn() {
@@ -67,7 +67,6 @@ $(document).ready(() => {
       if (!checkActiveUser()) return
 
       $(".manager-menu").hide()
-      $("input, textarea").val("")
       $("" + e.target.getAttribute("data-href") + "").show()
    })
 
@@ -97,9 +96,14 @@ $(document).ready(() => {
 
    $("#al_login_btn").click(tryLogIn)
    $("#log_out_btn").click(() => {
+      resetForm("login")
       activeUser = {}
       checkActiveUser()
    })
+   $("#log_in_btn").click(e => { 
+      e.preventDefault()
+      location.pathname = '/manager' 
+   });
 
    drawProductList()
 
@@ -353,9 +357,9 @@ function createProduct(product) {
       name: name.val(),
       description: description.val(),
       img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
-      price: price.val(),
-      stock: stock.val(),
-      weight: weight.val(),
+      price: parseFloat(price.val()),
+      stock: parseInt(stock.val()),
+      weight: parseFloat(weight.val()),
       colors: selectedColors,
       categories: selectedCategories
    }
@@ -365,6 +369,7 @@ function createProduct(product) {
    saveStorage()
 
    //Returns to products menu
+   resetForm("addproduct")
    $(".manager-menu").hide()
    drawProductList()
 }
@@ -422,9 +427,8 @@ function createUser(user) {
    else data.users.push(newUser)
    saveStorage()
 
-
-
    //Returns to products menu
+   resetForm("createuser")
    $(".manager-menu").hide()
    drawUsers()
 }
@@ -475,6 +479,7 @@ function createCategory(category) {
    saveStorage()
 
    //Returns to products menu
+   resetForm("addcategory")
    $(".manager-menu").hide()
    drawProductList()
 }
@@ -508,6 +513,10 @@ function checkActiveUser() {
       $("#admin_login").show()
       return false
    } else return true
+}
+
+function resetForm(name) {
+   document[name].reset();
 }
 
 /*E> HELPER FUNCTIONS*/
