@@ -47,7 +47,6 @@ function tryLogIn() {
          activeUser = loggedUsername
          sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
 
-         $('#sidebar, #sidebarCollapse').toggleClass('active')
          $("#log_out_btn").show()
          drawProductList()
       } else {
@@ -587,10 +586,15 @@ function checkActiveUser() {
    if (Object.keys(activeUser).length == 0) {
       $(".manager-menu").hide()
       $("#log_out_btn").hide()
+      $(".vertical-nav").hide()
       resetForm()
       $("#admin_login").show()
       return false
-   } else return true
+   } else { 
+      $(".vertical-nav").show()
+      $('#sidebar, #sidebarCollapse').toggleClass('active')
+      return true
+   }
 }
 
 function resetForm() {
