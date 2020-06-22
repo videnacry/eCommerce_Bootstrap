@@ -120,7 +120,11 @@ $(document).ready(() => {
       location.pathname = '/manager' 
    });
 
+   //START
    drawProductList()
+   $('#sidebar, #sidebarCollapse').toggleClass('active')
+   $("#log_out_btn").hide()
+
 
    //ADMIN LOGIN CONTROL
    checkActiveUser()
@@ -411,6 +415,10 @@ function createProduct(product) {
    for (const col of colors)
       if (col.checked) selectedColors.push(col.name)
 
+   let selectedImages = img.val().trim()
+   if(img.val().includes(",")) selectedImages = img.val().trim().split(",")
+   console.log(selectedImages)
+
    //FIRST PRODUCT INDEX HANDLER
    let lastProductId = 1
    if (data.products.length > 0)
@@ -422,7 +430,7 @@ function createProduct(product) {
       id: lastProductId,
       name: name.val().replace(/"/g, '&quot;'),
       description: description.val().replace(/"/g, '&quot;'),
-      img: img.val().includes(",") ? img.val().trim().split(",") : img.val().trim(),
+      img: selectedImages,
       price: parseFloat(price.val()),
       stock: parseInt(stock.val()),
       weight: parseFloat(weight.val()),
