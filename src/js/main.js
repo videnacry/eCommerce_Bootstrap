@@ -649,6 +649,12 @@ function createProductCard(index, product) {
    </div>`
 }
 
+/*E> PRINT PRODUCTS*/
+/******************************************************************************************************************************************************/
+/*S> SHOW PRODUCT - MODAL*/
+
+
+
 /**
  * Insert product data in modal
  * @param {*Object} product 
@@ -722,6 +728,13 @@ function createColorOptions(product) {
       $("#product-colors-list").append(inputRadio).append(colorItem)
    }
 }
+
+/*E> SHOW PRODUCT MODAL*/
+
+
+/******************************************************************************************************************************************************/
+/*S> CART FUNCTIONS*/
+
 
 /**
  * Add product to cart in localStorage
@@ -889,12 +902,18 @@ function checkProductAvailability() {
    return goToCheckout
 }
 
+/*E> CART FUNCTIONS*/
+
+
+/******************************************************************************************************************************************************/
+/*S> CART FUNCTIONS*/
+
 
 printProducts()
 printCart()
 
 
-/*E> PRINT PRODUCTS*/
+
 
 /******************************************************************************************************************************************************/
 /*S> SEARCH PRODUCTS*/
