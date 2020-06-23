@@ -1156,11 +1156,11 @@ function purchaseDone(){
 }
 
 $("#checkout").on("hide.bs.modal",function(){
-   $("#shipping-method").hide()
-   $("#payment-method").hide()
-   $("#shipping-info").hide()
-   $("#customer-info").show()
-   $("#checkout-summery>form>div>div:nth-of-type(2)").hide()
+   $("#shipping-method").hide(300)
+   $("#payment-method").hide(300)
+   $("#shipping-info").hide(300)
+   $("#customer-info").show(300)
+   $("#checkout-summery>form>div>div:nth-of-type(2)").show(300)
    $("#checkout-summery").addClass("col-md-6").children("h3").remove()
    $(".order-items").css("height","")
 })
