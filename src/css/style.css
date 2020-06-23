@@ -50,6 +50,10 @@ body{
     color: white;
 }
 
+.no-bs-dark-5{
+   background-color: rgb(60,60,60);
+}
+
 
 /*MANAGER*/
 .vertical-nav {
@@ -278,7 +282,90 @@ body{
    position:relative !important;
 }
 
+.flex-wrap{
+   display: flex;
+   flex-wrap: wrap;
+}
+/*------------------------------------------------------------CARROUSEL-BACKGROUND----------------------------------------------------------*/
+
+.bg-img{
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+   width:20%;
+}
+
+.carousel-item p{
+   font-size:20px;
+}
+
+.carousel-item h5{
+   font-size:24px;
+}
+/*--------------------------------------------------------------SUMMERY-STYLE-----------------------------------------------------------------*/
+
+.summery-text{
+   width: 60%;
+}
+
+/*-----------------------------------------------------------------MEDIA-QUERY----------------------------------------------------------------*/
+
+@media screen and (max-width:1000px){
+
+   .carousel-item h5{
+      font-size:20px;
+   }
+   
+   .carousel-item p{
+      font-size:16px;
+   }
+   
+   .summery-text{
+      width: 55%;
+   }
+}
+
+@media screen and (max-width:595px){
+   
+   .summery-text{
+      width: 60%;
+   }
+
+   .carousel-height{
+      height:50vw;
+   }
+
+   .carousel-item h5{
+      font-size:18px;
+   }
+   
+   .carousel-item p{
+      font-size:14px;
+   }
+}
+
 @media screen and (max-width:450px){
+   
+   .summery-text{
+      width: 55%;
+   }
+
+   .carousel-height{
+      height:60vw;
+   }
+
+   .carousel-item h5{
+      font-size:14px;
+   }
+   
+   .carousel-item p{
+      font-size:12px;
+   }
+
+   .summery-text{
+      font-size:13px;
+   }
+
    .form-check.radio,.col-9.row.contact,#shipping-info>div:first-of-type{
       padding-left:5px !important;
       padding-right:5px !important;
@@ -298,8 +385,17 @@ body{
       padding-left:10px !important;
       padding-right:10px !important;
    }
-}
 
+   #checkout .order-items{
+      padding-left:0 !important;
+      padding-right:0 !important;
+   }
+
+   #checkout .modal-section{
+      padding-left:5px !important;
+      padding-right:5px !important;
+   }
+}
 
 .cart-data{
    font-size: 14px;

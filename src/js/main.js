@@ -2,6 +2,63 @@
 
 $(document).ready(() => {
     //change style
+
+    //-------------------------------------------------------CARROUSEL----------------------------------------------------
+
+    let products = getStorage()||3
+    if(products!=3){
+      let carrousel = $("#header-carrousel")
+      carrousel.names = $("#header-carrousel h5")
+      carrousel.descriptions = $("#header-carrousel p")
+      carrousel.images = $("#header-carrousel .bg-img")
+
+      products = products.products
+      switch(products.length){
+         case 2:
+            imgPerProduct(2)
+            productImages(1)
+            break
+         case 1:
+            productImages()
+            break
+         case 0:
+            break
+         default:
+            imgPerProduct(3)
+            break                  
+      }
+
+      //-------------------------------------SWITCH TO PUT IMAGES FROM SAME PRODUCT----------------------------------------
+
+      function productImages(count){
+         switch(products.img.length){
+            case 3:
+               break
+         }
+      }
+
+      /**
+       * Creates a loop until i become less 1 count where it gives the carrousel items a name, description and image
+       * @param {INTEGER} count 
+       */
+
+      function imgPerProduct(count){
+         for(let i = 0; i < count ; i++){
+            let index = products.length-(i+1)
+            let description = products[index].description
+            description = admitedString(description,40)
+            let name = products[index].name
+            name = admitedString(name,30)
+            carrousel.names[i].textContent=name
+            carrousel.descriptions[i].textContent=description
+            carrousel.images[i].style.backgroundImage="url("+products[index].img[0]+")"
+         }
+      }
+    }
+
+
+    //----------------------------------------------------PURCHASE-MODAL---------------------------------------------------
+
     $("#shipping-info").fadeOut()
     $("#payment-method").fadeOut()
     $("#customer-info form").submit(function(event){event.preventDefault()})
@@ -11,6 +68,7 @@ $(document).ready(() => {
             replace($("#customer-info"),$("#shipping-info"))
             $("#check-email").text($("#checkout-email").val())
             $("#check-address").text($("#checkout-address").val())
+            showTotalPrice()
         }
         
       let shippingPrice=$("#shipping-price")
@@ -24,22 +82,13 @@ $(document).ready(() => {
     })
     $("input[type=radio][name=shipping]").click(function(event){
       let shippingPrice=$("#shipping-price")
-       shippingPrice.text(event.currentTarget.getAttribute("data-total"))
+      shippingPrice.text(event.currentTarget.getAttribute("data-total")+"€")
+      showTotalPrice()
 
     })
     $("#continue-to-payment").click(function(){
        replace($("#shipping-method"),$("#payment-method"))
-       let subtotal = parseFloat($("#subtotal-price").text().replace("€",""))||0
-       let shipping = parseFloat($("#shipping-price").text().replace("€",""))||0
-       let total = subtotal+shipping
-       $("#total-price").text(total.toFixed(2)+"€")
-    })
-    $("#pay").click(function(){
-       $("#shipping-info").fadeOut()
-       let thanks = "Thank you for your order!"
-       $("#checkout-summery>form>div>div:nth-of-type(2)").fadeOut()
-       $("#checkout-summery").removeClass("col-md-6").prepend($("<h3 class=my-3>"+thanks+"</h3>"))
-       $(".order-items").css("height","fit-content")
+       showTotalPrice()
     })
     $("#return-to-cart").click(function(){
        $("#checkout").modal("toggle")
@@ -53,18 +102,122 @@ $(document).ready(() => {
       $("#return-to-shipping").click(function(){
          replace($("#payment-method"),$("#shipping-method"))
       })
-    let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
-    shippingToCustomer(buttonsShippingToCustomer)
+   let buttonsShippingToCustomer=["#return-to-customer-info","#checkout-change-email","#checkout-change-address"]
+   shippingToCustomer(buttonsShippingToCustomer)
+
+   //------------------------------------------------------PAYMENT-METHOD-VALIDATE-----------------------------------------------
+
+   let creditCardNums = $("input[name=credit-card-num]")
+   creditCardNums.each(function(index,element){
+       element.addEventListener("keydown",function(){
+          let value = event.currentTarget.value
+         if(value.length>4&&event.key!="Delete"&&event.key!="Backspace"){
+            event.currentTarget.value = value.substr(0,4)
+         }
+       })
+      })
+      
+   let paymentMethod = $("input[name=payment]")
+   $("#pay").click(function(){
+      if(paymentMethod[1].checked){
+         validPayment()     
+      }
+      else{
+         let errorCount = 0
+         creditCardNums.each(function(index,element){
+            let value = element.value.replace("0","1")
+            errorCount += element.value>1?0:1
+         })
+         if(errorCount>0){
+            showValidation($("#credit-card-number"),"Sorry we can't validate those numbers","is-invalid","invalid-feedback")
+         }
+         else{
+            showValidation($("#credit-card-number"),"We work hard to asure a nice buying expirience, thank you!","is-valid","valid-feedback")
+         }
+         let creditCardExpiration = $("#credit-card-expiration").val()
+         creditCardExpiration.replace(" ","a")
+         if(creditCardExpiration.length==5){
+            let date = creditCardExpiration.split("/")
+            let month = date[0]
+            let day = date[1]
+            if(month < 13 && month > 0){
+               if(day < 31 && day > 0){
+                  showValidation($("#credit-card-expiration"),"Nice date! thank you!","is-valid","valid-feedback")
+               }
+               else{
+                  errorCount++
+                  showValidation($("#credit-card-expiration"),"Sorry we can't validate that date :c","is-invalid","invalid-feedback")                  
+               }
+            }
+            else{
+               errorCount++
+               showValidation($("#credit-card-expiration"),"Sorry we can't validate that date :c","is-invalid","invalid-feedback")               
+            }
+         }
+         else{
+            errorCount++
+            showValidation($("#credit-card-expiration"),"Sorry we can't validate that date :c","is-invalid","invalid-feedback")
+         }
+         let creditCardName = $("#credit-card-name")
+         let validation = validateCharacters(creditCardName.val())
+         if(validation.valid){
+            if(validation.text.length>3){
+               creditCardName.val(validation.text)
+               showValidation($("#credit-card-name"),"Nice name!, thank you","is-valid","valid-feedback")
+            }
+            else{
+               errorCount++
+               creditCardName.val(validation.text)
+               showValidation($("#credit-card-name"),"Sorry, we can't accept special characters","is-invalid","invalid-feedback")               
+            }
+         }
+         else{
+            errorCount++
+            creditCardName.val(validation.text)
+            showValidation($("#credit-card-name"),"Sorry, we can't accept special characters","is-invalid","invalid-feedback")
+         }
+         let creditCardCode = $("#credit-card-code")
+         if(creditCardCode.val().length=4){
+            let value = creditCardCode.val().replace("0","1")
+            if(value>1){
+               showValidation($("#credit-card-code"),"Safty purchaces is our goal!, thank you!","is-valid","valid-feedback")
+            }
+            else{
+               errorCount++
+               showValidation($("#credit-card-code"),"Sorry we can't validate that code :c","is-invalid","invalid-feedback")
+            }
+         }
+         else{
+            errorCount++
+            showValidation($("#credit-card-code"),"Sorry we can't validate that code :c","is-invalid","invalid-feedback")
+         }
+         if(errorCount==0){
+            validPayment()
+         }
+      }
+      function validPayment(){
+         $("#shipping-info").fadeOut()  
+         purchaseDone()
+         let thanks = "Thank you for your order!"
+         $("#checkout-summery>form>div>div:nth-of-type(2)").fadeOut()
+         $("#checkout-summery").removeClass("col-md-6").prepend($("<h3 class=my-3>"+thanks+"</h3>"))
+         $(".order-items").css("height","fit-content")
+      }
+   })
+
+    /**
+     * Validates inputs in customer-info section of the checkout modal
+     */
     
     function customerValidation(){
         let email = $("#checkout-email")
         let val = email.val().trim()
         let errorCount = 0
-        if(val.slice(-4)==".com"&&val.length-val.indexOf("@")>3){
+        if(val.length-val.indexOf("@")>3&&(val.slice(-4)==".com"||val.slice(-3)==".es")){
             showValidation(email,"Well done!, thank you!","is-valid","valid-feedback")
         }
         else{
-            showValidation(email,"Required!We can't detect the '.com' or '@', are they in their position?","is-invalid","invalid-feedback")
+            showValidation(email,"Required!We can't detect the '.com/.es' or '@', are they in their position?","is-invalid","invalid-feedback")
             errorCount++
         }
         let nombres = [$("#checkout-name"),$("#checkout-lastname"),$("#checkout-address"),$("#checkout-city"),$("#checkout-country"),
@@ -82,9 +235,34 @@ $(document).ready(() => {
             errorCount++            
         }
         let postalCode = $("#checkout-postal-code")
+        let postalAdded = postalCode.attr("data-postal")||"false"
         val = postalCode.val().trim()
         if(val.length==5&&val>1){
-            showValidation(postalCode,"Luck number!, thank you!","is-valid","valid-feedback")            
+           console.log(val.substr(0,3))
+           if(postalAdded == "true"){
+            if(val.substr(0,3)==086){}
+            else{ 
+               console.log("b")              
+               postalCode.attr("data-postal",false)
+               changeSubtotal(-10)
+            }     
+           }
+           else{
+            if(val.substr(0,3)==086){
+               console.log("a") 
+               postalCode.attr("data-postal",true)
+               changeSubtotal(10)
+            }            
+           }
+            showValidation(postalCode,"Luck number!, thank you!","is-valid","valid-feedback")  
+
+            function changeSubtotal(change){
+               let subtotalPriceElement = $("#subtotal-price")
+               let subtotal = parseFloat(subtotalPriceElement.text().replace("€",""))||0
+               console.log(subtotal)
+               subtotal = subtotal + change
+               subtotalPriceElement.text(subtotal.toFixed(2)+"€")
+            }         
         }
         else{
             showValidation(postalCode,"Required!Unfortunately we can't accept special characters","is-invalid","invalid-feedback")
@@ -112,6 +290,8 @@ $(document).ready(() => {
         }
     }
 
+
+
     /**
  * It fadeOut element and fadeIn replace
  * @param {jqueryElement} element 
@@ -134,7 +314,7 @@ function replace(element,replace){
 function showValidation(element,message,classElement,classFeedback){
     element.parent().children(".valid-feedback,.invalid-feedback").remove()
     element.removeClass("is-valid is-invalid")
-    let feedback = $("<div class="+classFeedback+">"+message+"</div>")
+    let feedback = $("<div class="+classFeedback+" style=width:100%>"+message+"</div>")
     element.addClass(classElement).after(feedback)
 }
 
@@ -944,17 +1124,19 @@ function showInSummery(){
          let price = element.price*$("#cart-product-quantity-"+index).attr("value")
          subtotalPrice+=price
          orderItems.append(
-         "<div class='row text-dark p-3'>"+
-         "<img src="+element.img[0]+">"+
-         "<p class=m-auto>"+element.name+"</p>"+
+         "<div class='row text-dark p-3' style=min-height:100px>"+
+         "<div class=bg-img style=background-image:url("+element.img[0]+")></div>"+
+         "<p class='my-auto mx-2 summery-text'>"+admitedString(element.name,40)+"</p>"+
          "<p class=m-auto>"+price+" €</p>"+
          "</div>")
       })
-      subtotalElement.text(subtotalPrice+"€")
+      subtotalElement.text(subtotalPrice.toFixed(2)+"€")
    }
 }
 
-$("#pay").click(purchaseDone)
+/**
+ * modificate stock in local storage and the cart
+ */
 
 function purchaseDone(){
    let cart = getStorage("cart")
@@ -980,8 +1162,6 @@ $("#checkout").on("hide.bs.modal",function(){
    $("#checkout-summery>form>div>div:nth-of-type(2)").fadeIn()
    $("#checkout-summery").addClass("col-md-6").children("h3").remove()
    $(".order-items").css("height","")
-   $("#total").text("Total price")
-   $("#subtotal-price").text("subtotal price")
 })
 
 /**
@@ -1105,8 +1285,31 @@ $("#cart-checkout").click(function(){
       setTimeout(function(){
          $("#checkout").modal("toggle")
       },400)
+      showTotalPrice()
    }
 })
+
+/**
+ * Gives the total price html element of the purchase modal the result of shipping price plus subtotal price
+ */
+function showTotalPrice(){
+   let subtotalPrice = parseFloat($("#subtotal-price").text().replace("€",""))||0
+   let shippingPrice = parseFloat($("#shipping-price").text().replace("€",""))||0
+   let totalPrice = subtotalPrice + shippingPrice
+   $("#total-price").text(totalPrice.toFixed(2)+"€")
+}
+
+/**
+ * it evaluates the length of the string to return it all or just a part of it followed by [...]
+ * @param {string} str 
+ * @param {integer} length 
+ */
+
+function admitedString(str,length){
+   str = str.length>length?str.substr(0,length)+"...":str
+   return str
+}
+
 
 /**
  * check availability of products before continuing with the purchase

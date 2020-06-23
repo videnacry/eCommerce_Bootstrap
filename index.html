@@ -34,21 +34,21 @@
          </ol>
          <div id="header-carrousel" class="carousel-inner carousel-height">
             <div class="carousel-item active">
-               <img src="https://i.ytimg.com/vi/lfzay35z1rA/maxresdefault.jpg" class="d-block w-100" alt="...">
+               <div class="d-block w-100 bg-img carousel-height no-bs-dark-2"></div>
                <div class="carousel-caption d-md-block">
                   <h5>First slide label</h5>
                   <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                </div>
             </div>
             <div class="carousel-item">
-               <img src="https://i.ytimg.com/vi/lfzay35z1rA/maxresdefault.jpg" class="d-block w-100" alt="...">
+               <div class="d-block w-100 bg-img carousel-height no-bs-dark-2"></div>
                <div class="carousel-caption d-md-block">
                   <h5>Second slide label</h5>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                </div>
             </div>
             <div class="carousel-item">
-               <img src="https://i.ytimg.com/vi/lfzay35z1rA/maxresdefault.jpg" class="d-block w-100" alt="...">
+               <div class="d-block w-100 bg-img carousel-height no-bs-dark-2"></div>
                <div class="carousel-caption d-md-block">
                   <h5>Third slide label</h5>
                   <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
@@ -287,11 +287,24 @@
                                  </li>
                                  <li class="list-group-item px-0">
                                     <div class="col-12">
-                                       <input class="form-check-input col-12 m-0" type="text" placeholder="Card number">
-                                       <input class="form-check-input col-12 m-0" type="text" placeholder="Name on card">
-                                       <div class="d-flex">
-                                          <input class="form-check-input col-6 m-0" type="text" placeholder="Expiration date (MM/YY)">
-                                          <input class="form-check-input col-6 m-0" type="text" placeholder="Security code">
+                                       <div>
+                                          <div id="credit-card-number" class="flex-wrap">
+                                             <input name="credit-card-num" class="form-check-input col-3 m-0" type="text" placeholder="Number">
+                                             <input name="credit-card-num" class="form-check-input col-3 m-0" type="text">
+                                             <input name="credit-card-num" class="form-check-input col-3 m-0" type="text">
+                                             <input name="credit-card-num" class="form-check-input col-3 m-0" type="text">
+                                          </div>
+                                       </div>
+                                       <div>
+                                          <input id="credit-card-name" class="form-check-input col-12 m-0" type="text" placeholder="Name on card">
+                                       </div>
+                                       <div class="flex-wrap">
+                                          <div class="col-6 p-0">
+                                             <input id="credit-card-expiration" class="form-check-input col-12 m-0" type="text" placeholder="Expir.(MM/YY)">
+                                          </div>
+                                          <div class="col-6 p-0">
+                                             <input id="credit-card-code" class="form-check-input col-12 m-0" type="password" placeholder="Security code">
+                                          </div>
                                        </div>
                                     </div>
                                  </li>
