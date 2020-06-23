@@ -66,6 +66,7 @@ $(document).ready(() => {
         let rep = customerValidation()
         if(rep){
             replace($("#customer-info"),$("#shipping-info"))
+            $("#shipping-method").show()
             $("#check-email").text($("#checkout-email").val())
             $("#check-address").text($("#checkout-address").val())
             showTotalPrice()
@@ -1155,11 +1156,11 @@ function purchaseDone(){
 }
 
 $("#checkout").on("hide.bs.modal",function(){
-   $("#shipping-method").toggle()
-   $("#payment-method").toggle()
-   $("#shipping-info").toggle()
-   $("#customer-info").toggle()
-   $("#checkout-summery>form>div>div:nth-of-type(2)").toggle()
+   $("#shipping-method").hide()
+   $("#payment-method").hide()
+   $("#shipping-info").hide()
+   $("#customer-info").show()
+   $("#checkout-summery>form>div>div:nth-of-type(2)").hide()
    $("#checkout-summery").addClass("col-md-6").children("h3").remove()
    $(".order-items").css("height","")
 })
