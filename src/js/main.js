@@ -402,6 +402,7 @@ function tryLogIn() {
          sessionStorage.setItem("logged-user", JSON.stringify(activeUser))
 
          $("#log_out_btn").show()
+         $('#sidebar, #sidebarCollapse').toggleClass('active')
          drawProductList()
       } else {
          $(".apf_error").remove()
@@ -463,7 +464,6 @@ $(document).ready(() => {
    $("#al_login_btn").click(tryLogIn)
    $("#log_out_btn").click(() => {
       resetForm()
-      $('#sidebar, #sidebarCollapse').toggleClass('active')
       activeUser = {}
       checkActiveUser()
    })
@@ -946,7 +946,6 @@ function checkActiveUser() {
       return false
    } else { 
       $(".vertical-nav").show()
-      $('#sidebar, #sidebarCollapse').toggleClass('active')
       return true
    }
 }
