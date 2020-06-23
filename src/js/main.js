@@ -597,10 +597,12 @@ function checkActiveUser() {
 }
 
 function resetForm() {
-   document["addproduct"].reset();
-   document["addcategory"].reset();
-   document["createuser"].reset();
-   document["login"].reset();
+   if(window.location.pathname.indexOf("manager") > -1){
+      document["addproduct"].reset();
+      document["addcategory"].reset();
+      document["createuser"].reset();
+      document["login"].reset();
+   }
 }
 
 /*E> HELPER FUNCTIONS*/
@@ -612,21 +614,34 @@ function resetForm() {
 /**
  * Print product cards in Gallery
  */
-function printProducts(data) {
+let loaded = 0
+let products
+function printProducts(data, from) {
    addFilterOptions()
-   $("#product-result").empty()
-   let products
+   if(!from) $("#product-result").empty()
    if(!data) {
       products = getStorage().products
    }else{
       products = data
    }
-   $(products).each(function (index, prod) {
-      $("#product-result").append($(createProductCard(index, prod)).click(function () {
-         createProductModal(prod)
-      }))
-   })
+   let limit = from ? from + 6 : 0 + 5
 
+   for(let i = from ? ++from : 0; i < limit; i++){
+      if(!products[i]) return
+      $("#product-result").append($(createProductCard(i, products[i])).click(function () {
+         createProductModal(products[i])
+      }))
+      loaded = i
+   }
+}
+
+$("#load-more").click(loadMore)
+
+/**
+ * Load more products from the latest printed products
+ */
+function loadMore(){
+   printProducts(products, loaded)
 }
 
 /**
@@ -933,6 +948,7 @@ function searchProduct(val){
          return e
       }
    })
+   $("#filter-category").val("")
    printProducts(result)
 }
 /*E> SEARCH PRODUCTS*/
@@ -973,3 +989,4 @@ $("#filter-category").change(function(){
 })
 
 /*E> FILTER PRODUCTS BY CATEGORY*/
+
