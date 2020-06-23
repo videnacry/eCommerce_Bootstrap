@@ -66,8 +66,8 @@ $(document).ready(() => {
 
     //----------------------------------------------------PURCHASE-MODAL---------------------------------------------------
 
-    $("#shipping-info").toggle()
-    $("#payment-method").toggle()
+    $("#shipping-info").hide()
+    $("#payment-method").hide()
     $("#customer-info form").submit(function(event){event.preventDefault()})
     $("#continue-to-shipping").click(function(){
         let rep = customerValidation()
