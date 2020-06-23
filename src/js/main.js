@@ -59,8 +59,8 @@ $(document).ready(() => {
 
     //----------------------------------------------------PURCHASE-MODAL---------------------------------------------------
 
-    $("#shipping-info").fadeOut()
-    $("#payment-method").fadeOut()
+    $("#shipping-info").toggle()
+    $("#payment-method").toggle()
     $("#customer-info form").submit(function(event){event.preventDefault()})
     $("#continue-to-shipping").click(function(){
         let rep = customerValidation()
@@ -196,10 +196,10 @@ $(document).ready(() => {
          }
       }
       function validPayment(){
-         $("#shipping-info").fadeOut()  
+         $("#shipping-info").toggle()  
          purchaseDone()
          let thanks = "Thank you for your order!"
-         $("#checkout-summery>form>div>div:nth-of-type(2)").fadeOut()
+         $("#checkout-summery>form>div>div:nth-of-type(2)").toggle()
          $("#checkout-summery").removeClass("col-md-6").prepend($("<h3 class=my-3>"+thanks+"</h3>"))
          $(".order-items").css("height","fit-content")
       }
@@ -293,14 +293,14 @@ $(document).ready(() => {
 
 
     /**
- * It fadeOut element and fadeIn replace
+ * It toggle element and toggle replace
  * @param {jqueryElement} element 
  * @param {jqueryElement} replace 
  */
 function replace(element,replace){
-    element.fadeOut(500)
+    element.toggle(500)
     setTimeout(function(){
-        replace.fadeIn(500)
+        replace.toggle(500)
     },500)
 }
 
@@ -1155,11 +1155,11 @@ function purchaseDone(){
 }
 
 $("#checkout").on("hide.bs.modal",function(){
-   $("#shipping-method").fadeIn()
-   $("#payment-method").fadeOut()
-   $("#shipping-info").fadeOut()
-   $("#customer-info").fadeIn()
-   $("#checkout-summery>form>div>div:nth-of-type(2)").fadeIn()
+   $("#shipping-method").toggle()
+   $("#payment-method").toggle()
+   $("#shipping-info").toggle()
+   $("#customer-info").toggle()
+   $("#checkout-summery>form>div>div:nth-of-type(2)").toggle()
    $("#checkout-summery").addClass("col-md-6").children("h3").remove()
    $(".order-items").css("height","")
 })
