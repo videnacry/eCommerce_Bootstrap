@@ -990,3 +990,4 @@ $("#filter-category").change(function(){
 })
 
 /*E> FILTER PRODUCTS BY CATEGORY*/
+
