@@ -16,12 +16,13 @@ $(document).ready(() => {
       switch(products.length){
          case 2:
             imgPerProduct(2)
-            productImages(1)
+            productImages(2,1)
             break
          case 1:
-            productImages()
+            productImages(0,3)
             break
          case 0:
+            $("#carouselExampleCaptions").hide()
             break
          default:
             imgPerProduct(3)
@@ -30,10 +31,16 @@ $(document).ready(() => {
 
       //-------------------------------------SWITCH TO PUT IMAGES FROM SAME PRODUCT----------------------------------------
 
-      function productImages(count){
-         switch(products.img.length){
-            case 3:
-               break
+      function productImages(begin,count){
+         count += begin
+         for(let i = begin; i<count; i++){
+            let description = products[0].description
+            description = admitedString(description,40)
+            let name = products[0].name
+            name = admitedString(name,30)
+            carrousel.names[i].textContent=name
+            carrousel.descriptions[i].textContent=description
+            carrousel.images[i].style.backgroundImage="url("+products[0].img[0]+")"
          }
       }
 
